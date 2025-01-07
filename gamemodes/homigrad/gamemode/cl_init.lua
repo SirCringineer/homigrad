@@ -1,15 +1,13 @@
 include("shared.lua")
 
-surface.CreateFont("HomigradFont",{
+surface.CreateFont("HomigradFont", {
 	font = "Roboto",
 	size = 18,
 	weight = 1100,
 	outline = false
 })
 
-
-
-surface.CreateFont("HomigradFontBig",{
+surface.CreateFont("HomigradFontBig", {
 	font = "Roboto",
 	size = 25,
 	weight = 1100,
@@ -17,35 +15,35 @@ surface.CreateFont("HomigradFontBig",{
 	shadow = true
 })
 
-surface.CreateFont("HomigradFontNotify",{
+surface.CreateFont("HomigradFontNotify", {
 	font = "Roboto",
 	size = ScreenScale(20),
 	weight = 1100,
 	outline = false
 })
 
-surface.CreateFont("HomigradFontBigger",{
+surface.CreateFont("HomigradFontBigger", {
 	font = "Roboto",
 	size = 24,
 	weight = 1100,
 	outline = false
 })
 
-surface.CreateFont("HomigradRoundFont",{
+surface.CreateFont("HomigradRoundFont", {
 	font = "Roboto",
 	size = ScreenScale(18),
 	weight = 1100,
 	outline = false
 })
 
-surface.CreateFont("HomigradFontLarge",{
+surface.CreateFont("HomigradFontLarge", {
 	font = "Roboto",
 	size = ScreenScale(30),
 	weight = 1100,
 	outline = false
 })
 
-surface.CreateFont("HomigradFontSmall",{
+surface.CreateFont("HomigradFontSmall", {
 	font = "Roboto",
 	size = ScreenScale(10),
 	weight = 1100,
@@ -53,8 +51,8 @@ surface.CreateFont("HomigradFontSmall",{
 })
 
 -- Harrisons puts ConVar in worst script, asked to leave
-CreateClientConVar("hg_scopespeed","0.5",true,false,"Changes the speed of the sniper scope when zoomed in.",0,5)
-CreateClientConVar("hg_usecustommodel","false",true,true,"Allows usage of custom models.")
+CreateClientConVar("hg_scopespeed", "0.5", true, false, "Changes the speed of the sniper scope when zoomed in.", 0, 5)
+CreateClientConVar("hg_usecustommodel", "false", true, true, "Allows usage of custom models.")
 
 -- For player models!!
 local validUserGroup = {
@@ -105,6 +103,7 @@ net.Receive("hg_sendchat_format", function(len)
 	end
 
 	local text = tbl[1]
+
 	local args = {unpack(tbl, 2)} -- Extract other args
 
 	if IsValid(ply) then
@@ -114,7 +113,7 @@ end)
 
 local view = {}
 
-hook.Add("PreCalcView","spectate",function(lply,pos,ang,fov,znear,zfar)
+hook.Add("PreCalcView", "spectate", function(lply, pos, ang, fov, znear, zfar)
 	lply = LocalPlayer()
 	if lply:Alive() or GetViewEntity() ~= lply then return end
 
@@ -130,14 +129,15 @@ hook.Add("PreCalcView","spectate",function(lply,pos,ang,fov,znear,zfar)
 
 	spec = IsValid(spec:GetNWEntity("Ragdoll")) and spec:GetNWEntity("Ragdoll") or spec
 
-	local dir = Vector(1,0,0)
+	local dir = Vector(1, 0, 0)
 	dir:Rotate(ang)
-	local tr = {}
 
 	local head = spec:LookupBone("ValveBiped.Bip01_Head1")
+	local tr = {}
 	tr.start = head and spec:GetBonePosition(head) or spec:EyePos()
 	tr.endpos = tr.start - dir * 75
-	tr.filter = {lply,spec,lply:GetVehicle()}
+
+	tr.filter = {lply, spec, lply:GetVehicle()}
 
 	view.origin = util.TraceLine(tr).HitPos
 	view.angles = ang
@@ -147,15 +147,14 @@ end)
 
 SpectateHideNick = SpectateHideNick or false
 
-local keyOld,keyOld2
+local keyOld, keyOld2
 flashlight = flashlight or nil
 flashlightOn = flashlightOn or false
 
 local gradient_d = Material("vgui/gradient-d")
 
-hook.Add("HUDPaint","spectate",function()
+hook.Add("HUDPaint", "spectate", function()
 	local lply = LocalPlayer()
-
 	local spec = lply:GetNWEntity("HeSpectateOn")
 
 	if lply:Alive() then
@@ -168,34 +167,36 @@ hook.Add("HUDPaint","spectate",function()
 	local result = lply:PlayerClassEvent("CanUseSpectateHUD")
 	if result == false then return end
 
-	if
-		(((not lply:Alive() or lply:Team() == 1002 or spec and lply:GetObserverMode() ~= OBS_MODE_NONE) or lply:GetMoveType() == MOVETYPE_NOCLIP)
-		and not lply:InVehicle()) or result or hook.Run("CanUseSpectateHUD")
-	then
+	if (((not lply:Alive() or lply:Team() == 1002 or spec and lply:GetObserverMode() ~= OBS_MODE_NONE) or lply:GetMoveType() == MOVETYPE_NOCLIP) and not lply:InVehicle()) or result or hook.Run("CanUseSpectateHUD") then
 		local ent = spec
 
 		if IsValid(ent) then
 			surface.SetFont("HomigradFont")
+
 			local tw = surface.GetTextSize(ent:GetName())
-			draw.SimpleText(ent:GetName(),"HomigradFont",ScrW() / 2 - tw / 2,ScrH() - 100,TEXT_ALING_CENTER,TEXT_ALING_CENTER)
-			tw = surface.GetTextSize("Health: " .. ent:Health())
-			draw.SimpleText("Health: " .. ent:Health(),"HomigradFont",ScrW() / 2 - tw / 2,ScrH() - 75,TEXT_ALING_CENTER,TEXT_ALING_CENTER)
+			draw.SimpleText(ent:GetName(), "HomigradFont", ScrW() / 2 - tw / 2, ScrH() - 100, TEXT_ALING_CENTER, TEXT_ALING_CENTER)
+
+			tw = surface.GetTextSize(language.GetPhrase("hg.spec.health"):format(ent:Health()))
+			draw.SimpleText(language.GetPhrase("hg.spec.health"):format(ent:Health()), "HomigradFont", ScrW() / 2 - tw / 2, ScrH() - 75, TEXT_ALING_CENTER, TEXT_ALING_CENTER)
 
 			local func = TableRound().HUDPaint_Spectate
-			if func then func(ent) end
+
+			if func then
+				func(ent)
+			end
 		end
 
 		local key = lply:KeyDown(IN_WALK)
+
 		if keyOld ~= key and key then
 			SpectateHideNick = not SpectateHideNick
-
 			--chat.AddText("Ники игроков: " .. tostring(not SpectateHideNick))
 		end
+
 		keyOld = key
-
-		draw.SimpleText("Enable / Disable Names in Spectator with ALT","HomigradFont",15,ScrH() - 15,showRoundInfoColor,TEXT_ALIGN_LEFT,TEXT_ALIGN_BOTTOM)
-
+		draw.SimpleText(language.GetPhrase("hg.spec.names"):format(string.upper(input.LookupBinding("+walk"))), "HomigradFont", 15, ScrH() - 15, showRoundInfoColor, TEXT_ALIGN_LEFT, TEXT_ALIGN_BOTTOM)
 		local key = input.IsButtonDown(KEY_F)
+
 		if not lply:Alive() and keyOld2 ~= key and key then
 			flashlightOn = not flashlightOn
 
@@ -205,7 +206,7 @@ hook.Add("HUDPaint","spectate",function()
 					flashlight:SetTexture("effects/flashlight001")
 					flashlight:SetFarZ(900)
 					flashlight:SetFOV(70)
-					flashlight:SetEnableShadows( false )
+					flashlight:SetEnableShadows(false)
 				end
 			else
 				if IsValid(flashlight) then
@@ -214,6 +215,7 @@ hook.Add("HUDPaint","spectate",function()
 				end
 			end
 		end
+
 		keyOld2 = key
 
 		if flashlight then
@@ -224,9 +226,13 @@ hook.Add("HUDPaint","spectate",function()
 
 		if not SpectateHideNick then
 			local func = TableRound().HUDPaint_ESP
-			if func then func() end
 
-			for _, v in ipairs(player.GetAll()) do --ESP
+			if func then
+				func()
+			end
+
+			-- ESP
+			for _, v in ipairs(player.GetAll()) do
 				if not v:Alive() or v == ent then continue end
 
 				local ent = IsValid(v:GetNWEntity("Ragdoll")) and v:GetNWEntity("Ragdoll") or v
@@ -260,7 +266,7 @@ hook.Add("HUDPaint","spectate",function()
 	end
 end)
 
-hook.Add("HUDDrawTargetID","no",function() return false end)
+hook.Add("HUDDrawTargetID", "no", function() return false end)
 
 local laserweps = {
 	["weapon_xm1014"] = true,
@@ -280,177 +286,181 @@ local laserweps = {
 	["weapon_mateba"] = true,
 	["weapon_beanbag"] = true,
 	["weapon_glock"] = true,
---	["weapon_hg_crossbow"] = true
+	--	["weapon_hg_crossbow"] = true
 }
+
 laserplayers = laserplayers or {}
 local mat = Material("sprites/bluelaser1")
 local mat2 = Material("Sprites/light_glow02_add_noz")
+
 hook.Add("PostDrawOpaqueRenderables", "laser", function()
-	for i,ply in pairs(laserplayers) do
-		if not IsValid(ply) then laserplayers[i] = nil end
+	for i, ply in pairs(laserplayers) do
+		if not IsValid(ply) then
+			laserplayers[i] = nil
+		end
+
 		ply.Laser = ply.Laser or false
+
 		local wep = ply:GetActiveWeapon()
 		wep = IsValid(wep) and wep or ply:GetNWEntity("ActiveWeapon")
+
 		if IsValid(wep) and IsValid(ply) and ply.Laser and not ply:GetNWInt("unconscious") and laserweps[wep:GetClass()] then
 			if not IsValid(wep) then continue end
 
 			local pos, ang = wep:GetTrace()
 
 			local t = {}
-
 			t.start = pos + ang:Right() * 0 + ang:Forward() * -5 + ang:Up() * -0.5
-
 			t.endpos = t.start + ang:Forward() * 9000
-
-			t.filter = {ply,wep,LocalPlayer(),ply:GetNWEntity("Ragdoll"),ply:GetNWEntity("ragdollWeapon")}
+			t.filter = {ply, wep, LocalPlayer(), ply:GetNWEntity("Ragdoll"), ply:GetNWEntity("ragdollWeapon")}
 			t.mask = MASK_SOLID
 			local tr = util.TraceLine(t)
 
-			cam.Start3D(EyePos(),EyeAngles())
+			cam.Start3D(EyePos(), EyeAngles())
+				render.SetMaterial(mat)
+				render.DrawBeam(tr.StartPos, tr.HitPos, 1, 0, 15.5, Color(255, 0, 0))
 
-			render.SetMaterial(mat)
-			render.DrawBeam(tr.StartPos, tr.HitPos, 1, 0, 15.5, Color(255, 0, 0))
+				local Size = math.random(3, 4)
+				render.SetMaterial(mat2)
 
-			local Size = math.random(3,4)
-			render.SetMaterial(mat2)
-			local tra = util.TraceLine({
-				start = tr.HitPos - (tr.HitPos - EyePos()):GetNormalized(),
-				endpos = EyePos(),
-				filter = {LocalPlayer(),ply,wep,ply:GetNWEntity("Ragdoll"),ply:GetNWEntity("ragdollWeapon")},
-				mask = MASK_SHOT
-			})
+				local tra = util.TraceLine({
+					start = tr.HitPos - (tr.HitPos - EyePos()):GetNormalized(),
+					endpos = EyePos(),
+					filter = {LocalPlayer(), ply, wep, ply:GetNWEntity("Ragdoll"), ply:GetNWEntity("ragdollWeapon")},
+					mask = MASK_SHOT
+				})
 
-			if not tra.Hit then
-				render.DrawSprite(tr.HitPos, Size, Size,Color(255,0,0))
-			end
-			--render.DrawQuadEasy(tr.HitPos, (tr.StartPos - tr.HitPos):GetNormal(), Size, Size, Color(255,0,0), 0)
-
+				if not tra.Hit then
+					render.DrawSprite(tr.HitPos, Size, Size, Color(255, 0, 0))
+				end
+				-- render.DrawQuadEasy(tr.HitPos, (tr.StartPos - tr.HitPos):GetNormal(), Size, Size, Color(255, 0, 0), 0)
 			cam.End3D()
 		end
 	end
 end)
 
 -- local function PlayerModelMenu()
--- 	local newv = list.Get( "DesktopWindows" )[ "PlayerEditor" ]
-
--- 	local Window = vgui.Create( "DFrame" )
--- 	Window:SetSize( newv.width, newv.height )
--- 	Window:SetTitle( newv.title )
+-- 	local newv = list.Get("DesktopWindows")["PlayerEditor"]
+-- 	local Window = vgui.Create("DFrame")
+-- 	Window:SetSize(newv.width, newv.height)
+-- 	Window:SetTitle(newv.title)
 -- 	Window:Center()
 -- 	Window:MakePopup()
 
--- 	newv.init( nil, Window )
+-- 	newv.init(nil, Window)
 -- end
 
 local function ToggleMenu(toggle)
-    if toggle then
-        local w,h = ScrW(), ScrH()
-        if IsValid(wepMenu) then wepMenu:Remove() end
-        local lply = LocalPlayer()
-        local wep = lply:GetActiveWeapon()
+	if toggle then
+		local w, h = ScrW(), ScrH()
+
+		if IsValid(wepMenu) then wepMenu:Remove() end
+
+		local lply = LocalPlayer()
+
+		local wep = lply:GetActiveWeapon()
 		wep = IsValid(wep) and wep or lply:GetNWEntity("ActiveWeapon")
-        if !IsValid(wep) then return end
-        wepMenu = vgui.Create("DMenu")
-        wepMenu:SetPos(w/3,h/2)
-        wepMenu:MakePopup()
-        wepMenu:SetKeyboardInputEnabled(false)
-		if wep:GetClass()!="weapon_hands" then
-			wepMenu:AddOption("Drop Weapon",function()
+		if not IsValid(wep) then return end
+
+		wepMenu = vgui.Create("DMenu")
+		wepMenu:SetPos(w / 3, h / 2)
+		wepMenu:MakePopup()
+		wepMenu:SetKeyboardInputEnabled(false)
+
+		if wep:GetClass() ~= "weapon_hands" then
+			wepMenu:AddOption("#hg.cmenu.drop", function()
 				LocalPlayer():ConCommand("say *drop")
 			end)
 		end
-        if wep:Clip1()>0 then
-            wepMenu:AddOption("Unload Magazine",function()
-                net.Start("Unload")
-                net.WriteEntity(wep)
-                net.SendToServer()
-            end)
-        end
-		if laserweps[wep:GetClass()] then
-        wepMenu:AddOption("Laser On/Off",function()
-            if LocalPlayer().Laser then
-				LocalPlayer().Laser = false
-				net.Start("lasertgg")
 
-				net.WriteBool(false)
+		if wep:Clip1() > 0 then
+			wepMenu:AddOption("#hg.cmenu.unload", function()
+				net.Start("Unload")
+				net.WriteEntity(wep)
 				net.SendToServer()
-				LocalPlayer():EmitSound("items/nvg_off.wav")
-			else
-				LocalPlayer().Laser = true
-				net.Start("lasertgg")
-				net.WriteBool(true)
-				net.SendToServer()
-				LocalPlayer():EmitSound("items/nvg_on.wav")
-			end
-        end)
+			end)
+		end
+
+		if laserweps[wep:GetClass()] then
+			wepMenu:AddOption("#hg.cmenu.laser", function()
+				if LocalPlayer().Laser then
+					LocalPlayer().Laser = false
+
+					net.Start("lasertgg")
+						net.WriteBool(false)
+					net.SendToServer()
+
+					LocalPlayer():EmitSound("items/nvg_off.wav")
+				else
+					LocalPlayer().Laser = true
+
+					net.Start("lasertgg")
+						net.WriteBool(true)
+					net.SendToServer()
+
+					LocalPlayer():EmitSound("items/nvg_on.wav")
+				end
+			end)
 		end
 
 		plyMenu = vgui.Create("DMenu")
-        plyMenu:SetPos(w/1.7,h/2)
-        plyMenu:MakePopup()
-        plyMenu:SetKeyboardInputEnabled(false)
+		plyMenu:SetPos(w / 1.7, h / 2)
+		plyMenu:MakePopup()
+		plyMenu:SetKeyboardInputEnabled(false)
 
-		local armorMenu = plyMenu:AddOption("Armor Menu",function()
-            LocalPlayer():ConCommand("jmod_ez_inv")
+		local armorMenu = plyMenu:AddOption("#hg.cmenu.armor", function()
+			LocalPlayer():ConCommand("jmod_ez_inv")
 			surface.PlaySound("UI/buttonclickrelease.wav")
-        end)
+		end)
+
 		armorMenu:SetIcon("icon16/shield.png")
 
-		local ammoMenu = plyMenu:AddOption("Ammo Menu",function()
+		local ammoMenu = plyMenu:AddOption("#hg.cmenu.ammo", function()
 			LocalPlayer():ConCommand("hg_ammomenu")
 			surface.PlaySound("UI/buttonclickrelease.wav")
 		end)
+
 		ammoMenu:SetIcon("icon16/box.png")
 
-		local plyModelMenu = plyMenu:AddOption("Player Model",function()
-			if validUserGroup[LocalPlayer():GetUserGroup()] then
+		if validUserGroup[LocalPlayer():GetUserGroup()] then
+			local plyModelMenu = plyMenu:AddOption("#hg.cmenu.model", function()
 				RunConsoleCommand("playermodel_selector")
 				surface.PlaySound("UI/buttonclickrelease.wav")
 				RunConsoleCommand("hg_usecustommodel", "true")
-			else
-				LocalPlayer():ChatPrint("<clr:red>Failed!<clr:white> Only <rainbow>:gem: Server Sponsor's<clr:white> can access this menu.\nBecome a <rainbow>:gem: Server Sponsor<clr:white> at <link:https://harrisonshomigrad.tip4serv.com/>")
-				surface.PlaySound("Friends/friend_join.wav")
-			end
+			end)
 
-		end)
-		plyModelMenu:SetIcon("icon16/user_suit.png")
+			plyModelMenu:SetIcon("icon16/user_suit.png")
 
-		if validUserGroup[LocalPlayer():GetUserGroup()] and LocalPlayer():GetInfo("hg_usecustommodel") == "true" then
-			local plyModelMenu = plyMenu:AddOption("Remove Custom Model",function()
-				if validUserGroup[LocalPlayer():GetUserGroup()] then
-					--print( )
+			if LocalPlayer():GetInfo("hg_usecustommodel") == "true" then
+				local plyModelMenu = plyMenu:AddOption("#hg.cmenu.rmodel", function()
 					LocalPlayer():ChatPrint("<clr:green>Success!<clr:white> Your player model has been reverted to a regular citizen model, and will be applied next round.")
 					--RunConsoleCommand("cl_playermodel", "none")
 					RunConsoleCommand("hg_usecustommodel", "false")
 					surface.PlaySound("UI/buttonclickrelease.wav")
-				else
-					LocalPlayer():ChatPrint("<clr:red>Failed!<clr:white> You do not have a model assigned.")
-					surface.PlaySound("Friends/friend_join.wav")
-				end
+				end)
 
-			end)
-			plyModelMenu:SetIcon("icon16/cancel.png")
+				plyModelMenu:SetIcon("icon16/cancel.png")
+			end
 		end
 
 		local EZarmor = LocalPlayer().EZarmor
+
 		if JMod.GetItemInSlot(EZarmor, "eyes") then
-			plyMenu:AddOption("Toggle Mask/Helmet Visor",function()
+			plyMenu:AddOption("#hg.cmenu.head", function()
 				LocalPlayer():ConCommand("jmod_ez_toggleeyes")
 			end)
 		end
-    else
-		if IsValid(wepMenu) then
-        	wepMenu:Remove()
-		end
-		if IsValid(plyMenu) then
-        	plyMenu:Remove()
-		end
-    end
+	else
+		if IsValid(wepMenu) then wepMenu:Remove() end
+		if IsValid(plyMenu) then plyMenu:Remove() end
+	end
 end
 
-local active,oldValue
-hook.Add("Think","Thinkhuyhuy",function()
+local active, oldValue
+
+hook.Add("Think", "Thinkhuyhuy", function()
 	active = input.IsKeyDown(KEY_C)
+
 	if oldValue ~= active then
 		oldValue = active
 
@@ -462,105 +472,99 @@ hook.Add("Think","Thinkhuyhuy",function()
 	end
 end)
 
-net.Receive("lasertgg",function(len)
+net.Receive("lasertgg", function(len)
 	local ply = net.ReadEntity()
 	local boolen = net.ReadBool()
-	if boolen then
-		laserplayers[ply:EntIndex()] = ply
-	else
-		laserplayers[ply:EntIndex()] = nil
-	end
+
+	if boolen then laserplayers[ply:EntIndex()] = ply
+	else laserplayers[ply:EntIndex()] = nil end
+
 	ply.Laser = boolen
 end)
 
 hook.Add("OnEntityCreated", "homigrad-colorragdolls", function(ent)
 	if ent:IsRagdoll() then
 		timer.Create("ragdollcolors-timer" .. tostring(ent), 0.1, 10, function()
-
 			if IsValid(ent) then
 				local owner = RagdollOwner(ent)
-
 				local plr_clr
 				if owner then
 					plr_clr = owner:GetPlayerColor()
 				end
 
 				ent.playerColor = ent:GetNWVector("plycolor", plr_clr) or plr_clr
+				ent.GetPlayerColor = function() return ent.playerColor end
 
-				ent.GetPlayerColor = function()
-					return ent.playerColor
-				end
 				timer.Remove("ragdollcolors-timer" .. tostring(ent))
 			end
 		end)
 	end
 end)
 
-local function GetClipForCurrentWeapon( ply )
-	if ( !IsValid( ply ) ) then return -1 end
-
+--[[
+local function GetClipForCurrentWeapon(ply)
+	if not IsValid(ply) then return -1 end
 	local wep = ply:GetActiveWeapon()
-	if ( !IsValid( wep ) ) then return -1 end
+	if not IsValid(wep) then return -1 end
 
-	return wep:Clip1(), wep:GetMaxClip1(), ply:GetAmmoCount( wep:GetPrimaryAmmoType() )
-end
+	return wep:Clip1(), wep:GetMaxClip1(), ply:GetAmmoCount(wep:GetPrimaryAmmoType())
+end --]]
 
-hook.Add("HUDShouldDraw","HideHUD_ammo",function(name)
-    if name == "CHudAmmo" then return false end
+hook.Add("HUDShouldDraw", "HideHUD_ammo", function(name)
+	if name == "CHudAmmo" then return false end
 end)
 
-local clipcolor = color_white
-local clipcolorlow = Color(247, 178, 40, 255)
-local clipcolorempty = Color(247, 40, 40, 255)
-local colorgray = Color(200, 200, 200)
-local shadow = color_black
-
-net.Receive("remove_jmod_effects",function(len)
+net.Receive("remove_jmod_effects", function(len)
 	LocalPlayer().EZvisionBlur = 0
 	LocalPlayer().EZflashbanged = 0
 end)
 
 local meta = FindMetaTable("Player")
 
-function meta:HasGodMode() return self:GetNWBool("HasGodMode") end
+function meta:HasGodMode()
+	return self:GetNWBool("HasGodMode")
+end
 
-concommand.Add("hg_getentity",function()
+concommand.Add("hg_getentity", function()
 	local ent = LocalPlayer():GetEyeTrace().Entity
-	print(ent)
 	if not IsValid(ent) then return end
+
+	print(ent)
 	print(ent:GetModel())
 	print(ent:GetClass())
 end)
 
 gameevent.Listen("player_spawn")
-hook.Add("player_spawn","gg",function(data)
-	--[[local ply = Player(data.userid)
+
+hook.Add("player_spawn", "gg", function(data)
+	--[[
+	local ply = Player(data.userid)
 
 	if ply.SetHull then
-		ply:SetHull(ply:GetNWVector("HullMin"),ply:GetNWVector("Hull"))
-		ply:SetHullDuck(ply:GetNWVector("HullMin"),ply:GetNWVector("HullDuck"))
+		ply:SetHull(ply:GetNWVector("HullMin"), ply:GetNWVector("Hull"))
+		ply:SetHullDuck(ply:GetNWVector("HullMin"), ply:GetNWVector("HullDuck"))
 	end
 
-	hook.Run("Player Spawn",ply)--]]
+	hook.Run("Player Spawn", ply)
+	--]]
 end)
 
-hook.Add("DrawDeathNotice","no",function() return false end)
+hook.Add("DrawDeathNotice", "no", function() return false end)
 
-function GM:MouthMoveAnimation( ply )
+function GM:MouthMoveAnimation(ply)
 	local ent = IsValid(ply:GetNWEntity("Ragdoll")) and ply:GetNWEntity("Ragdoll") or ply
 
 	local flexes = {
-		ent:GetFlexIDByName( "jaw_drop" ),
-		ent:GetFlexIDByName( "left_part" ),
-		ent:GetFlexIDByName( "right_part" ),
-		ent:GetFlexIDByName( "left_mouth_drop" ),
-		ent:GetFlexIDByName( "right_mouth_drop" )
+		ent:GetFlexIDByName("jaw_drop"),
+		ent:GetFlexIDByName("left_part"),
+		ent:GetFlexIDByName("right_part"),
+		ent:GetFlexIDByName("left_mouth_drop"),
+		ent:GetFlexIDByName("right_mouth_drop")
 	}
 
-	local weight = ply:IsSpeaking() and math.Clamp( ply:VoiceVolume() * 6, 0, 6 ) or 0
+	local weight = ply:IsSpeaking() and math.Clamp(ply:VoiceVolume() * 6, 0, 6) or 0
 
-	for k, v in ipairs( flexes ) do
-		ent:SetFlexWeight( v, weight * 4 )
+	for _, v in ipairs(flexes) do
+		ent:SetFlexWeight(v, weight * 4)
 	end
-
 end

@@ -7,7 +7,8 @@ SpawnPointsList = {
 
 	spawnpointst = {"red", Color(255, 0, 0)},
 	spawnpointsct = {"blue", Color(0, 0, 255)},
-	spawnpointshiders = {"hider", Color(0, 255, 0)},
+
+	dm = {"dm", Color(155, 155, 255)},
 
 	bahmut_vagner = {"vagner", Color(255, 0, 0)},
 	bahmut_nato = {"nato", Color(0, 0, 255)},
@@ -17,7 +18,7 @@ SpawnPointsList = {
 
 	spawnpoints_ss_police = {"police", Color(0, 0, 125)},
 	spawnpoints_ss_school = {"school", Color(0, 255, 0)},
-	-- spawnpoints_ss_hider = {"hider",Color(125,255,125)},
+	-- spawnpoints_ss_killer = {"killer", Color(255, 55, 55)},
 	spawnpoints_ss_exit = {"exit", Color(0, 125, 0), true},
 
 	points_nextbox = {"nextbot", Color(0, 255, 255)},
@@ -36,10 +37,12 @@ SpawnPointsList = {
 	controlpoint = {"control_point", Color(25, 25, 25)},
 
 	boxspawn = {"boxspawn", Color(25, 25, 25)},
+
 	basedefencebots = {"basedefencebots", Color(155, 155, 155)},
 	basedefencegred = {"basedefencegred", Color(255, 255, 255)},
 	basedefenceplayerspawns = {"basedefenceplayerspawns", Color(255, 255, 0)},
 	basedefencegred_ammo = {"basedefencegred_ammo", Color(25, 25, 25)},
+
 	gred_simfphys_brdm2 = {"gred_simfphys_brdm2", Color(25, 25, 25)},
 
 	car_red = {"car_red", Color(125, 125, 125)},
@@ -60,7 +63,6 @@ SpawnPointsList = {
 
 	scp173 = {"scp173", Color(255, 0, 0)},
 	scp096 = {"scp096", Color(255, 0, 0)},
-
 	scpWhite = {"scpWhite", Color(255, 255, 255)},
 
 	bhop = {"bhop", Color(255, 0, 0)},

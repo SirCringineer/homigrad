@@ -12,7 +12,7 @@ function tdm.SpawnCommand(tbl,aviable,func,funcShould)
 		if ply:Alive() then ply:KillSilent() end
 
 		if func then func(ply) end
-		
+
 		ply:Spawn()
 		ply.allowFlashlights = true
 

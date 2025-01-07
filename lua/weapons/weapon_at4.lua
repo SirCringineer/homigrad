@@ -41,11 +41,11 @@ SWEP.addAng = Angle(-5.5,-0.3,-90)
 SWEP.SightPos = Vector(-40,-3.6,-4.85)
 function SWEP:PrimaryAttack()
     if self:Clip1() <= 0 then return end
-    
+
     local pos, ang = self:GetTrace()
 
-    if SERVER then 
-        local rocket = ents.Create( "gb_rocket_rp3" )
+    if SERVER then
+        local rocket = ents.Create( "gb_rocket_rp3" ) -- FIXME: this ent doesn't exists
         rocket:SetPos(pos)
         rocket:SetAngles(ang)
         rocket:Spawn()
