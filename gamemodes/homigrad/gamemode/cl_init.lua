@@ -56,7 +56,6 @@ surface.CreateFont("HomigradFontSmall",{
 CreateClientConVar("hg_scopespeed","0.5",true,false,"Changes the speed of the sniper scope when zoomed in.",0,5)
 CreateClientConVar("hg_usecustommodel","false",true,true,"Allows usage of custom models.")
 
-
 -- For player models!!
 local validUserGroup = {
 	servermanager = true,
@@ -72,10 +71,45 @@ local validUserGroup = {
 	user = false,
 }
 
-net.Receive("round_active",function(len)
+net.Receive("round_active", function(len)
 	roundActive = net.ReadBool()
 	roundTimeStart = net.ReadFloat()
 	roundTime = net.ReadFloat()
+end)
+
+net.Receive("hg_sendchat", function(len)
+	local ply = LocalPlayer()
+	local msg = net.ReadTable()
+	if not msg then return end
+
+	local tbl = {}
+
+	for _, v in ipairs(msg) do
+		tbl[#tbl + 1] = (string.StartsWith(v, "#") and language.GetPhrase(v)) or v
+	end
+
+	if IsValid(ply) then
+		ply:ChatPrint(table.concat(tbl))
+	end
+end)
+
+net.Receive("hg_sendchat_format", function(len)
+	local ply = LocalPlayer()
+	local msg = net.ReadTable()
+	if not msg then return end
+
+	local tbl = {}
+
+	for _, v in ipairs(msg) do
+		tbl[#tbl + 1] = (string.StartsWith(v, "#") and language.GetPhrase(v)) or v
+	end
+
+	local text = tbl[1]
+	local args = {unpack(tbl, 2)} -- Extract other args
+
+	if IsValid(ply) then
+		ply:ChatPrint(language.GetPhrase(text):format(unpack(args)))
+	end
 end)
 
 local view = {}
@@ -114,7 +148,6 @@ end)
 SpectateHideNick = SpectateHideNick or false
 
 local keyOld,keyOld2
-local lply
 flashlight = flashlight or nil
 flashlightOn = flashlightOn or false
 
@@ -122,7 +155,7 @@ local gradient_d = Material("vgui/gradient-d")
 
 hook.Add("HUDPaint","spectate",function()
 	local lply = LocalPlayer()
-	
+
 	local spec = lply:GetNWEntity("HeSpectateOn")
 
 	if lply:Alive() then
@@ -135,10 +168,8 @@ hook.Add("HUDPaint","spectate",function()
 	local result = lply:PlayerClassEvent("CanUseSpectateHUD")
 	if result == false then return end
 
-
-
 	if
-		(((not lply:Alive() or lply:Team() == 1002 or spec and lply:GetObserverMode() != OBS_MODE_NONE) or lply:GetMoveType() == MOVETYPE_NOCLIP)
+		(((not lply:Alive() or lply:Team() == 1002 or spec and lply:GetObserverMode() ~= OBS_MODE_NONE) or lply:GetMoveType() == MOVETYPE_NOCLIP)
 		and not lply:InVehicle()) or result or hook.Run("CanUseSpectateHUD")
 	then
 		local ent = spec
@@ -196,7 +227,7 @@ hook.Add("HUDPaint","spectate",function()
 			if func then func() end
 
 			for _, v in ipairs(player.GetAll()) do --ESP
-				if !v:Alive() or v == ent then continue end
+				if not v:Alive() or v == ent then continue end
 
 				local ent = IsValid(v:GetNWEntity("Ragdoll")) and v:GetNWEntity("Ragdoll") or v
 				local screenPosition = ent:GetPos():ToScreen()
@@ -260,28 +291,26 @@ hook.Add("PostDrawOpaqueRenderables", "laser", function()
 		ply.Laser = ply.Laser or false
 		local wep = ply:GetActiveWeapon()
 		wep = IsValid(wep) and wep or ply:GetNWEntity("ActiveWeapon")
-		if IsValid(wep) and IsValid(ply) and ply.Laser and not ply:GetNWInt("unconscious") and laserweps[wep:GetClass()] then			
+		if IsValid(wep) and IsValid(ply) and ply.Laser and not ply:GetNWInt("unconscious") and laserweps[wep:GetClass()] then
 			if not IsValid(wep) then continue end
-			
+
 			local pos, ang = wep:GetTrace()
-			
+
 			local t = {}
 
 			t.start = pos + ang:Right() * 0 + ang:Forward() * -5 + ang:Up() * -0.5
-			
+
 			t.endpos = t.start + ang:Forward() * 9000
-			
+
 			t.filter = {ply,wep,LocalPlayer(),ply:GetNWEntity("Ragdoll"),ply:GetNWEntity("ragdollWeapon")}
 			t.mask = MASK_SOLID
 			local tr = util.TraceLine(t)
-			
-			local angle = (tr.StartPos - tr.HitPos):Angle()
-			
+
 			cam.Start3D(EyePos(),EyeAngles())
 
 			render.SetMaterial(mat)
 			render.DrawBeam(tr.StartPos, tr.HitPos, 1, 0, 15.5, Color(255, 0, 0))
-			
+
 			local Size = math.random(3,4)
 			render.SetMaterial(mat2)
 			local tra = util.TraceLine({
@@ -301,17 +330,17 @@ hook.Add("PostDrawOpaqueRenderables", "laser", function()
 	end
 end)
 
-local function PlayerModelMenu()
-	local newv = list.Get( "DesktopWindows" )[ "PlayerEditor" ]
+-- local function PlayerModelMenu()
+-- 	local newv = list.Get( "DesktopWindows" )[ "PlayerEditor" ]
 
-	local Window = vgui.Create( "DFrame" )
-	Window:SetSize( newv.width, newv.height )
-	Window:SetTitle( newv.title )
-	Window:Center()
-	Window:MakePopup()
+-- 	local Window = vgui.Create( "DFrame" )
+-- 	Window:SetSize( newv.width, newv.height )
+-- 	Window:SetTitle( newv.title )
+-- 	Window:Center()
+-- 	Window:MakePopup()
 
-	newv.init( nil, Window )
-end
+-- 	newv.init( nil, Window )
+-- end
 
 local function ToggleMenu(toggle)
     if toggle then
@@ -366,7 +395,7 @@ local function ToggleMenu(toggle)
 			surface.PlaySound("UI/buttonclickrelease.wav")
         end)
 		armorMenu:SetIcon("icon16/shield.png")
-		
+
 		local ammoMenu = plyMenu:AddOption("Ammo Menu",function()
 			LocalPlayer():ConCommand("hg_ammomenu")
 			surface.PlaySound("UI/buttonclickrelease.wav")
@@ -402,7 +431,7 @@ local function ToggleMenu(toggle)
 			end)
 			plyModelMenu:SetIcon("icon16/cancel.png")
 		end
-		
+
 		local EZarmor = LocalPlayer().EZarmor
 		if JMod.GetItemInSlot(EZarmor, "eyes") then
 			plyMenu:AddOption("Toggle Mask/Helmet Visor",function()
@@ -424,7 +453,7 @@ hook.Add("Think","Thinkhuyhuy",function()
 	active = input.IsKeyDown(KEY_C)
 	if oldValue ~= active then
 		oldValue = active
-		
+
 		if active then
 			ToggleMenu(true)
 		else
@@ -457,7 +486,7 @@ hook.Add("OnEntityCreated", "homigrad-colorragdolls", function(ent)
 				end
 
 				ent.playerColor = ent:GetNWVector("plycolor", plr_clr) or plr_clr
-				
+
 				ent.GetPlayerColor = function()
 					return ent.playerColor
 				end
@@ -486,39 +515,6 @@ local clipcolorempty = Color(247, 40, 40, 255)
 local colorgray = Color(200, 200, 200)
 local shadow = color_black
 
---[[hook.Add("HUDPaint","homigrad-fancyammo",function()
-	--[[local ply = LocalPlayer()
-	local clip, maxclip, ammo = GetClipForCurrentWeapon(ply)
-	local clipstring = tostring(clip)
-	local sw, sh = ScrW(), ScrH()
-	if clip != -1 and maxclip > 0 then
-		if oldclip != clip then
-			randomx = math.random(0, 10)
-			randomy = math.random(0, 10)
-			timer.Simple(0.15, function()
-				oldclip = clip
-			end)
-		else
-			randomx = 0
-			randomy = 0
-		end
-
-		if clip == 0 then
-			clipcolor = clipcolorempty
-		elseif maxclip / clip >= 6 or clip == 1 and maxclip != 1 then
-			clipcolor = clipcolorlow
-		else
-			clipcolor = color_white
-		end
-
-		draw.SimpleText("/ " .. ammo, "HomigradFontSmall", sw * 0.9 + 2 + #clipstring * sw * 0.02, sh * 0.97 + 2, shadow)
-		draw.SimpleText("/ " .. ammo, "HomigradFontSmall", sw * 0.9 + #clipstring * sw * 0.02, sh * 0.97, colorgray)
-
-		draw.SimpleText(clip, "HomigradFontLarge", sw * 0.89 + 5 + randomx, sh * 0.92 + 5 + randomy, shadow)
-		draw.SimpleText(clip, "HomigradFontLarge", sw * 0.89 + randomx, sh * 0.92 + randomy, clipcolor)
-	end
-end)
-]]
 net.Receive("remove_jmod_effects",function(len)
 	LocalPlayer().EZvisionBlur = 0
 	LocalPlayer().EZflashbanged = 0
@@ -552,7 +548,7 @@ hook.Add("DrawDeathNotice","no",function() return false end)
 
 function GM:MouthMoveAnimation( ply )
 	local ent = IsValid(ply:GetNWEntity("Ragdoll")) and ply:GetNWEntity("Ragdoll") or ply
-	
+
 	local flexes = {
 		ent:GetFlexIDByName( "jaw_drop" ),
 		ent:GetFlexIDByName( "left_part" ),
@@ -560,7 +556,7 @@ function GM:MouthMoveAnimation( ply )
 		ent:GetFlexIDByName( "left_mouth_drop" ),
 		ent:GetFlexIDByName( "right_mouth_drop" )
 	}
-	
+
 	local weight = ply:IsSpeaking() and math.Clamp( ply:VoiceVolume() * 6, 0, 6 ) or 0
 
 	for k, v in ipairs( flexes ) do
