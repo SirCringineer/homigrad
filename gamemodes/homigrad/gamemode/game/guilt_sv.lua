@@ -60,11 +60,11 @@ local validUserGroup = {
 COMMANDS.noguilt = {
 	function(ply, args)
 		if not ply:IsAdmin() then return end
-		local value = tonumber(args[2]) > 0
+		local value = (tonumber(args[2]) == 1 and true) or false
 
 		for _, ply in pairs(player.GetListByName(args[1]) or {ply}) do
 			ply.noguilt = value
-			-- ply:ChatPrint("Your Guilt is currently: " .. tostring(value) .. "% out of 100%")
+			ply:ChatPrint("NoGuilt is currently: " .. tostring(value))
 		end
 	end,
 	1
