@@ -1,10 +1,10 @@
---[[] This function iterates through all entities and removes any that are weapons.
+--[[ This function iterates through all entities and removes any that are weapons.
 local function RemoveMapWeapons()
-    for _, ent in ipairs(ents.GetAll()) do
-        if ent:IsWeapon() then
-            ent:Remove()
-        end
-    end
+	for _, ent in ipairs(ents.GetAll()) do
+		if ent:IsWeapon() then
+			ent:Remove()
+		end
+	end
 end
 
 -- Call the function immediately when the map loads.

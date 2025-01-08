@@ -1,51 +1,10 @@
-local BOXES = {
-	"models/props_junk/cardboard_box001a.mdl",
-	"models/props_junk/cardboard_box001b.mdl",
-	"models/props_junk/cardboard_box002a.mdl",
-	"models/props_junk/cardboard_box002b.mdl",
-	"models/props_junk/cardboard_box003a.mdl",
-	"models/props_junk/cardboard_box003b.mdl",
-	"models/props_junk/cardboard_box001a_present.mdl",
-	"models/props_junk/cardboard_box001b_present.mdl",
-	"models/props_junk/cardboard_box002a_present.mdl",
-	"models/props_junk/cardboard_box002b_present.mdl",
-	"models/props_junk/cardboard_box003a_present.mdl",
-	"models/props_junk/cardboard_box003b_present.mdl",
-	"models/props_junk/cardboard_box004a_present.mdl",
-	"models/props_junk/wood_crate001a.mdl",
-	"models/props_junk/wood_crate001a_damaged.mdl",
-	"models/props_junk/wood_crate001a_damagedmax.mdl",
-	"models/props_junk/wood_crate002a.mdl",
-	"models/props_c17/furnituredrawer001a.mdl",
-	"models/props_c17/furnituredrawer003a.mdl",
-	"models/props_c17/furnituredresser001a.mdl",
-	"models/props_c17/woodbarrel001.mdl",
-	"models/props_lab/dogobject_wood_crate001a_damagedmax.mdl",
-	"models/items/item_item_crate.mdl",
-	"models/props/de_inferno/claypot02.mdl",
-	"models/props/de_inferno/claypot01.mdl",
-	"models/props_junk/terracotta01.mdl",
-	"models/props_combine/breenbust.mdl",
-	"models/props_interiors/Furniture_chair01a.mdl",
-	"models/props_c17/FurnitureShelf001a.mdl",
-	"models/props_junk/cardboard_box004a.mdl",
-	"models/props_junk/wood_pallet001a.mdl",
-	"models/props_junk/gascan001a.mdl",
-	"models/props_wasteland/cafeteria_bench001a.mdl",
-	"models/props_c17/furnituredrawer002a.mdl",
-	"models/props_interiors/furniture_cabinetdrawer02a.mdl",
-	"models/props_c17/furniturecupboard001a.mdl",
-	"models/props_interiors/furniture_desk01a.mdl",
-	"models/props_interiors/furniture_vanity01a.mdl"
-}
-
+local BOXES = {"models/props_junk/cardboard_box001a.mdl", "models/props_junk/cardboard_box001b.mdl", "models/props_junk/cardboard_box002a.mdl", "models/props_junk/cardboard_box002b.mdl", "models/props_junk/cardboard_box003a.mdl", "models/props_junk/cardboard_box003b.mdl", "models/props_junk/cardboard_box001a_present.mdl", "models/props_junk/cardboard_box001b_present.mdl", "models/props_junk/cardboard_box002a_present.mdl", "models/props_junk/cardboard_box002b_present.mdl", "models/props_junk/cardboard_box003a_present.mdl", "models/props_junk/cardboard_box003b_present.mdl", "models/props_junk/cardboard_box004a_present.mdl", "models/props_junk/wood_crate001a.mdl", "models/props_junk/wood_crate001a_damaged.mdl", "models/props_junk/wood_crate001a_damagedmax.mdl", "models/props_junk/wood_crate002a.mdl", "models/props_c17/furnituredrawer001a.mdl", "models/props_c17/furnituredrawer003a.mdl", "models/props_c17/furnituredresser001a.mdl", "models/props_c17/woodbarrel001.mdl", "models/props_lab/dogobject_wood_crate001a_damagedmax.mdl", "models/items/item_item_crate.mdl", "models/props/de_inferno/claypot02.mdl", "models/props/de_inferno/claypot01.mdl", "models/props_junk/terracotta01.mdl", "models/props_combine/breenbust.mdl", "models/props_interiors/Furniture_chair01a.mdl", "models/props_c17/FurnitureShelf001a.mdl", "models/props_junk/cardboard_box004a.mdl", "models/props_junk/wood_pallet001a.mdl", "models/props_junk/gascan001a.mdl", "models/props_wasteland/cafeteria_bench001a.mdl", "models/props_c17/furnituredrawer002a.mdl", "models/props_interiors/furniture_cabinetdrawer02a.mdl", "models/props_c17/furniturecupboard001a.mdl", "models/props_interiors/furniture_desk01a.mdl", "models/props_interiors/furniture_vanity01a.mdl"}
 
 local BOXES_LOOKUP = {}
 
 for _, mdl in ipairs(BOXES) do
 	BOXES_LOOKUP[mdl] = true
 end
-
 
 local weaponscommon = {"weapon_binokle", "ent_drop_flashlight", "weapon_knife", "weapon_pipe", "splint", "med_band_small", "med_band_big"}
 local weaponsuncommon = {"weapon_hg_shovel", "weapon_hg_fubar", "weapon_bat", "weapon_hg_metalbat", "weapon_hg_hatchet", "*ammo*", "ent_jack_gmod_ezarmor_respirator", "ent_jack_gmod_ezarmor_lhead", "medkit"}
@@ -183,19 +142,20 @@ end)
 hook.Add("Boxes Think", "SpawnBoxes", function()
 	if #player.GetAll() == 0 or not roundActive or #spawns == 0 then return end
 
-	local randomWep = randomLoot()
-	if not randomWep then return end
+	local loot = randomLoot()
+	if loot == "*ammo*" then loot = ammos[math.random(#ammos)] end
+	if not loot then return end
 
-	local box = ents.Create(randomWep)
-	if not IsValid(box) then return end
+	local ent = ents.Create(loot)
+	if not IsValid(ent) then return end
 
 	local spawnPos = spawns[math.random(#spawns)]
 
 	if spawnPos then
-		box:SetPos(spawnPos + Vector(0, 0, 32))
-		box:Spawn()
+		ent:SetPos(spawnPos + Vector(0, 0, 32))
+		ent:Spawn()
 
-		box.Spawned = true
+		ent.Spawned = true
 	else
 		print("Error: spawn position not found.")
 	end

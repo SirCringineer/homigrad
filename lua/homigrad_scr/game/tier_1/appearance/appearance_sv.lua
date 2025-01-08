@@ -28,6 +28,7 @@ function EasyAppearance.GetRandomAppearance()
     local tRandomAppearance = {}
 
     tRandomAppearance.strModel = table.Random( table.GetKeys( EasyAppearance.Models ) )
+	tRandomAppearance.strPath = EasyAppearance.Models[tRandomAppearance.strModel].strPatch
     tRandomAppearance.strColthesStyle = "Random"
 
     return tRandomAppearance
@@ -46,7 +47,7 @@ local function DoInvalid( ply )
 end
 
 function EasyAppearance.SetAppearance( ply )
-    if ply:GetInfo("hg_usecustommodel") == "false" then
+    if not ply:IsBot() and ply:GetInfo("hg_usecustommodel") == "false" then
         EasyAppearance.SendRequest( ply )
 
         if ply.bRandomAppearance then
@@ -78,7 +79,7 @@ function EasyAppearance.SetAppearance( ply )
         EasyAppearance.SendRequest( ply )
     else
         local selectedModel = ply:GetInfo("cl_playermodel") -- Retrieve the model selected by the player
-        local modelToUse = player_manager.TranslatePlayerModel( selectedModel )
+        local modelToUse = (ply:IsBot() and EasyAppearance.GetRandomAppearance().strPath) or player_manager.TranslatePlayerModel(selectedModel)
 
         if modelToUse == "models/player/kleiner.mdl" then
             print("Model being utilised is invalid. Most likely set to another model we don't have on the server!")

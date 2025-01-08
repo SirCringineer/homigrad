@@ -21,6 +21,10 @@ For epic gaming, a tickrate of **99-128** is recommended to improve controls whe
 - [ ] Move Homigrad's commands to ULX (i like ulx).
 - [ ] Find and fix existing bugs (there are many to address).
 
+## Known Bugs
+
+- [x] Bots don't have models in Homicide.
+
 ## Frequently Asked Questions
 
 ### What language is this version in?

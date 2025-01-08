@@ -20,6 +20,7 @@ function NeedAutoBalance(addT, addCT)
 	return favorT, count
 end
 
+--[[ NOTE: This function is defined in weapon_cuffs, might delete later if nothing brakes
 function PlayerIsCuffs(ply)
 	if not ply:Alive() then return end
 
@@ -28,6 +29,7 @@ function PlayerIsCuffs(ply)
 
 	return constraint.FindConstraint(ent, "Rope")
 end
+--]]
 
 function AutoBalanceTwoTeam()
 	for _ in pairs(player.GetAll()) do

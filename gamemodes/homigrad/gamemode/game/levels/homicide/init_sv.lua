@@ -2,7 +2,7 @@
 include("../../playermodelmanager_sv.lua")
 
 local function GetFriends(play)
-    
+
     local huy = ""
 
     for i, ply in pairs(homicide.t) do
@@ -180,7 +180,7 @@ function SpawnPolicePlayers()
     local playsound = true
 
     local prePolicePlayers = PlayersDead(true)
-    
+
     if not prePolicePlayers or table.IsEmpty(prePolicePlayers) then return end
 
     local ply = prePolicePlayers[1]
@@ -206,7 +206,7 @@ function SpawnPolicePlayers()
             else
                 ply:SetPlayerClass("police")
             end
-            
+
             if #homicide.t > 1 then
                 ply:ChatPrint("#chat.rounds.traitorAre")
                 ply:ChatPrint((homicide.t[1]:Name() .. ", " .. GetFriends(homicide.t[1])))
@@ -214,7 +214,7 @@ function SpawnPolicePlayers()
                 ply:ChatPrint("#chat.rounds.traitorIs")
                 ply:ChatPrint(homicide.t[1]:Name())
             end
-            
+
             ply:ChatPrint("<clr:red>WARNING: <clr:white>Killing friendlies will result in a punishment determined by staff.")
         end)
     end)
@@ -257,7 +257,7 @@ function homicide.StartRoundSV()
     local countCT = 0
 
     local aviable = homicide.Spawns()
-    
+
     tdm.SpawnCommand(PlayersInGame(),aviable,function(ply)
         ply.roleT = false
         ply.roleCT = false
@@ -371,20 +371,21 @@ end
 
 local empty = {}
 
-function homicide.PlayerSpawn2(ply,teamID)
+function homicide.PlayerSpawn2(ply, teamID)
     local teamTbl = homicide[homicide.teamEncoder[teamID]]
     local color = teamID == 1 and Color(math.random(55,165),math.random(55,165),math.random(55,165)) or teamTbl[2]
 
 	-- Set the player's model to the custom model if available, otherwise use a random team model
-    local customModel = GetPlayerModelBySteamID(ply:SteamID())
+	local customModel = (not ply:IsBot() and GetPlayerModelBySteamID(ply:SteamID())) or false
 
-    if customModel then
-        ply:SetSubMaterial()
-        ply:SetModel(customModel)
-    else
-        EasyAppearance.SetAppearance( ply )
-    end
-    
+	if customModel then
+		ply:SetModel(customModel)
+		ply:SetPlayerColor(color:ToVector())
+	else
+		EasyAppearance.SetAppearance(ply)
+		-- ply:SetModel(teamTbl.models[math.random(#teamTbl.models)])
+	end
+
     ply:SetPlayerColor(color:ToVector())
 
 	ply:Give("weapon_hands")
@@ -426,7 +427,7 @@ function homicide.PlayerDeath(ply,inf,att)
             if ply.roleT then table.insert(role[1],ply) end
             if ply.roleCT then table.insert(role[2],ply) end
         end
-    
+
         net.Start("homicide_roleget")
         net.WriteTable(role)
         net.Send(ply)

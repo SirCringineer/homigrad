@@ -144,7 +144,7 @@ function StartRound()
 		end
 	end
 
-	if not NAXYIRTV then
+	if not HG_DISABLERTV then
 		RTV_CountRound = RTV_CountRound + 1
 
 		local diff = RTV_CountRoundDefault - RTV_CountRound
@@ -362,13 +362,13 @@ local function donaterVoteLevel(t, argv, calling_ply, args)
 
 	if winner == 1 then
 		net.Start("hg_sendchat_format")
-			net.WriteTable({"hg.rounds.vote.next.success", tostring(args[1])})
+			net.WriteTable({"#hg.rounds.vote.next.success", tostring(args[1])})
 		net.Broadcast()
 
 		SetActiveNextRound(args[1])
 	elseif winner == 2 then
 		net.Start("hg_sendchat")
-			net.WriteTable({"hg.rounds.vote.next.fail"})
+			net.WriteTable({"#hg.rounds.vote.next.fail"})
 		net.Broadcast()
 	else
 		net.Start("hg_sendchat")
@@ -402,7 +402,7 @@ COMMANDS.levelnext = {
 
 COMMANDS.levels = {
 	function(ply, args)
-		local text = "Available gamemodes:\n" .. table.concat(LevelList, "\n")
+		local text = "Available gamemodes:\n- " .. table.concat(LevelList, "\n- ")
 		ply:ChatPrint(text)
 	end,
 	0

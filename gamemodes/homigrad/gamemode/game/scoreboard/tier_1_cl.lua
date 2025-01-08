@@ -3,8 +3,10 @@ local whiteAdd = Color(255, 255, 255, 5)
 local unmutedicon = Material("icon32/unmuted.png", "noclamp smooth")
 local mutedicon = Material("icon32/muted.png", "noclamp smooth")
 
+local path = "homigrad/homigrad_mute.txt"
+
 local function ReadMuteStatusPlayers()
-	return util.JSONToTable(file.Read("homigrad_mute.txt", "DATA") or "") or {}
+	return util.JSONToTable(file.Read(path, "DATA") or "") or {}
 end
 
 MutePlayers = ReadMuteStatusPlayers()
@@ -15,7 +17,7 @@ local function SaveMuteStatusPlayer(ply, value)
 	end
 
 	MutePlayers[ply:SteamID()] = value
-	file.Write("homigrad_mute.txt", util.TableToJSON(MutePlayers))
+	file.Write(path, util.TableToJSON(MutePlayers))
 end
 
 local grtodown = Material("vgui/gradient-u")
@@ -138,7 +140,7 @@ local function ToggleScoreboard(toggle)
 
 			draw.SimpleText("#hg.scoreboard.status", "HomigradFont", 100, 15, white, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
 			draw.SimpleText("#hg.scoreboard.nick", "HomigradFont", w / 2, 15, white, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
-			draw.SimpleText("Harrison's Homigrad", "HomigradFontLarge", w / 2, h / 2, Color(155, 155, 165, 50), TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
+			draw.SimpleText("homigrad", "HomigradFontLarge", w / 2, h / 2, Color(155, 155, 165, 50), TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
 			--draw.SimpleText("HOMIGRADED","HomigradFontLarge",w / 2,h / 2,Color(155,155,165,5),TEXT_ALIGN_CENTER,TEXT_ALIGN_CENTER)
 			draw.SimpleText("#hg.scoreboard.role", "HomigradFont", w - 300, 15, white, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
 			--draw.SimpleText("Дни Часы Минуты","HomigradFont",w - 300,20,white,TEXT_ALIGN_CENTER,TEXT_ALIGN_CENTER)
@@ -319,15 +321,15 @@ local function ToggleScoreboard(toggle)
 				local userGroupDisplay = {
 					owner = {
 						name = "Owner",
-						color = Color(0, 242, 255)
+						color = Color(255, 0, 0)
 					},
 					servermanager = {
 						name = "Server Manager",
-						color = Color(255, 25, 25)
+						color = Color(255, 233, 0)
 					},
 					superadmin = {
-						name = "Head Administrator",
-						color = Color(255, 223, 0)
+						name = "Super Admin",
+						color = Color(0, 242, 255)
 					},
 					admin = {
 						name = "Administrator",
@@ -359,7 +361,7 @@ local function ToggleScoreboard(toggle)
 					},
 					user = {
 						name = "User",
-						color = Color(125, 125, 125)
+						color = Color(150, 150, 150)
 					}
 				}
 

@@ -1,5 +1,5 @@
 -- File path to store player models data
-local playerModelsFilePath = "hg_player_models.txt"
+local playerModelsFilePath = "homigrad/hg_player_models.txt"
 local playerModels = {}
 
 -- Function to load player models from file

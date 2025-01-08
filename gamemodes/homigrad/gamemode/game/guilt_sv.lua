@@ -130,7 +130,7 @@ hook.Add("Player Spawn", "hg_sendguilt", function(ply)
 
 	if validUserGroup[ply:GetUserGroup()] then
 		net.Start("hg_sendchat_format")
-			net.WriteTable({"hg.guilt.yourguilt", tostring(math.Round(ply.Guilt, 0))})
+			net.WriteTable({"#hg.guilt.yourguilt", tostring(math.Round(ply.Guilt, 0))})
 		net.Send(ply)
 	end
 

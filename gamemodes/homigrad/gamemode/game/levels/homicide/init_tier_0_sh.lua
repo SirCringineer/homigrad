@@ -201,7 +201,7 @@ function homicide.HUDPaint_RoundLeft(white2)
 
 		color.a = 255 * (1 - dis / 1024)
 
-		draw.SimpleText("Buddy: " .. ply:Nick(), "HomigradFontBig", pos.x, pos.y, color, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
+		draw.SimpleText(((ply.roleT and "Traitor: ") or "Innocent w/ gun: ") .. ply:Nick(), "HomigradFontBig", pos.x, pos.y, color, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
 	end
 end
 

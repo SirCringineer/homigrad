@@ -8,8 +8,9 @@ GM.TeamBased = true
 
 include("loader.lua")
 
-local start = SysTime()
 print("Loading Homigrad.")
+
+local start = SysTime()
 
 GM.includeDir("homigrad/gamemode/game/")
 

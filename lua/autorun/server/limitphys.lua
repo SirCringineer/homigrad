@@ -1,4 +1,4 @@
---[[]
+--[[
 hook.Add("InitPostEntity","RemoveShittyHooks",function()
 	local phys_settings = physenv.GetPerformanceSettings()
 
@@ -12,4 +12,4 @@ hook.Add("InitPostEntity","RemoveShittyHooks",function()
 	phys_settings.MinFrictionMass = 100 -- 10
 
 	physenv.SetPerformanceSettings(phys_settings)
-end)]]
+end)--]]

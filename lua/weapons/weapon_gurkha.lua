@@ -5,7 +5,7 @@ SWEP.BounceWeaponIcon = false
 end
 
 SWEP.PrintName = "Gurkha"
-SWEP.Instructions = "Harrison doesn't know what this is."
+SWEP.Instructions = "Harrison doesn't know what this is. lmao"
 SWEP.Category = "Melee"
 
 SWEP.Spawnable= true
@@ -203,7 +203,7 @@ function SWEP:PrimaryAttack()
 				end
 			end
 			tr.Entity:TakeDamageInfo( dmginfo )
-			
+
 
 		end
 	end

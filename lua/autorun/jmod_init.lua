@@ -1,5 +1,7 @@
 ﻿AddCSLuaFile()
+
 JMod = JMod or {}
+
 -- EZ radio stations
 JMod.EZ_RADIO_STATIONS = {}
 JMod.EZ_STATION_STATE_READY = 2
@@ -83,7 +85,8 @@ for k, v in pairs(JMod.EZ_RESOURCE_TYPES) do
 end
 
 JMod.EZ_RESOURCE_ENTITIES = {
-	/*[JMod.EZ_RESOURCE_TYPES.WATER] = "ent_jack_gmod_ezwater",
+	--[[
+	[JMod.EZ_RESOURCE_TYPES.WATER] = "ent_jack_gmod_ezwater",
 	[JMod.EZ_RESOURCE_TYPES.WOOD] = "ent_jack_gmod_ezwood",
 	[JMod.EZ_RESOURCE_TYPES.ORGANICS] = "ent_jack_gmod_ezorganics",
 	[JMod.EZ_RESOURCE_TYPES.OIL] = "ent_jack_gmod_ezoil",
@@ -130,11 +133,11 @@ JMod.EZ_RESOURCE_ENTITIES = {
 	[JMod.EZ_RESOURCE_TYPES.PRECISIONPARTS] = "ent_jack_gmod_ezprecparts",
 	[JMod.EZ_RESOURCE_TYPES.ADVANCEDTEXTILES] = "ent_jack_gmod_ezadvtextiles",
 	[JMod.EZ_RESOURCE_TYPES.ADVANCEDPARTS] = "ent_jack_gmod_ezadvparts",
-	[JMod.EZ_RESOURCE_TYPES.FISSILEMATERIAL] = "ent_jack_gmod_ezfissilematerial",*/
+	[JMod.EZ_RESOURCE_TYPES.FISSILEMATERIAL] = "ent_jack_gmod_ezfissilematerial",--]]
 	[JMod.EZ_RESOURCE_TYPES.ANTIMATTER] = "ent_jack_gmod_ezantimatter"
 }
 
-for k, v in pairs({
+for _, v in pairs({
 	"models/squad/sf_tris/sf_tri8x8.mdl",
 	"models/squad/sf_tris/sf_tri7x7.mdl",
 	"models/squad/sf_tris/sf_tri6x6.mdl",
@@ -142,7 +145,7 @@ for k, v in pairs({
 	"models/squad/sf_tris/sf_tri4x4.mdl",
 	"models/squad/sf_tris/sf_tri3x3.mdl",
 	"models/squad/sf_tris/sf_tri2x2.mdl",
-	"models/squad/sf_tris/sf_tri1x1.mdl",
+	"models/squad/sf_tris/sf_tri1x1.mdl"
 }) do
 	util.PrecacheModel(v)
 end

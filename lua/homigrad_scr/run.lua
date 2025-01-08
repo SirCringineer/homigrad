@@ -1,10 +1,11 @@
-if engine.ActiveGamemode() ~= "homigrad" then return end
 AddCSLuaFile()
 
-print("	homigrad start.")
+print("Loading homigrad_scr.")
 
 local start = SysTime()
-hg.includeDir("homigrad_scr/")--cring
 
-print("	homigrad structure end " .. math.Round(SysTime() - start,3) .. "s")
+hg.includeDir("homigrad_scr/")
+
+print("homigrad_scr loaded! Time taken: " .. math.Round(SysTime() - start, 4) .. "s")
+
 hook.Run("HomigradRun")

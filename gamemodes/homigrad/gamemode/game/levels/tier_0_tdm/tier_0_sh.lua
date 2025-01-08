@@ -1,7 +1,7 @@
 table.insert(LevelList, "tdm")
 
 tdm = {}
-tdm.Name = "Team Deathmatch"
+tdm.Name = "hg.tdm.name"
 
 local models = {}
 
@@ -16,14 +16,14 @@ end
 tdm.models = models
 
 tdm.red = {
-	"Red", Color(255, 75, 75), weapons = {"weapon_binokle", "weapon_radio", "weapon_gurkha", "weapon_hands", "med_band_big", "med_band_small", "medkit", "painkiller"},
+	"hg.tdm.team1", Color(255, 75, 75), weapons = {"weapon_binokle", "weapon_radio", "weapon_gurkha", "weapon_hands", "med_band_big", "med_band_small", "medkit", "painkiller"},
 	main_weapon = {"weapon_ak74u", "weapon_akm", "weapon_remington870", "weapon_galil", "weapon_rpk", "weapon_asval", "weapon_p90", "weapon_scout", "weapon_barret"},
 	secondary_weapon = {"weapon_p220", "weapon_mateba", "weapon_glock"},
 	models = models
 }
 
 tdm.blue = {
-	"Blue", Color(75, 75, 255), weapons = {"weapon_binokle", "weapon_radio", "weapon_hands", "weapon_kabar", "med_band_big", "med_band_small", "medkit", "painkiller", "weapon_handcuffs", "weapon_taser"},
+	"hg.tdm.team1", Color(75, 75, 255), weapons = {"weapon_binokle", "weapon_radio", "weapon_hands", "weapon_kabar", "med_band_big", "med_band_small", "medkit", "painkiller", "weapon_handcuffs", "weapon_taser"},
 	main_weapon = {"weapon_hk416", "weapon_m4a1", "weapon_m3super", "weapon_mp7", "weapon_xm1014", "weapon_fal", "weapon_asval", "weapon_m249", "weapon_p90", "weapon_scout", "weapon_barret"},
 	secondary_weapon = {"weapon_beretta", "weapon_p99", "weapon_hk_usp"},
 	models = models

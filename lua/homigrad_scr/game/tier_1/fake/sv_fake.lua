@@ -216,22 +216,25 @@ function FakeBullseyeTrigger(rag,owner)
 	end--]]
 end
 
-hook.Add("OnEntityCreated","hg-bullseye",function(ent)
+hook.Add("OnEntityCreated","hg_entitycreated",function(ent)
 	ent:SetShouldPlayPickupSound(false)
+
 	if ent:IsNPC() then
-		for i,rag in pairs(ents.FindByClass("prop_ragdoll"))do
+		for i,rag in pairs(ents.FindByClass("prop_ragdoll")) do
 			if IsValid(rag.bull) then
 				ent:AddEntityRelationship(rag.bull,D_HT,0)
 			end
 		end
 	end
+
 	timer.Simple(0,function()
 		if not IsValid(ent) then return end
 
 		local pos,ang = ent:GetPos(),ent:GetAngles()
 		local exchangeEnt = changeClass[ent:GetClass()]
+
 		if exchangeEnt then
-			local entr = type(exchangeEnt) == "table" and table.Random(exchangeEnt) or exchangeEnt
+			local entr = type(exchangeEnt) == "table" and exchangeEnt[math.random(#exchangeEnt)] or exchangeEnt
 			local ent2 = ents.Create(entr)
 
 			if not IsValid(ent2) then return end
@@ -245,40 +248,20 @@ hook.Add("OnEntityCreated","hg-bullseye",function(ent)
 	end)
 end)
 
-hook.Add("Think","FakedShoot",function() --функция стрельбы лежа
+hook.Add("Think","FakedShoot",function() -- функция стрельбы лежа
 
 end)
 
-hook.Add("PlayerSay","huyasds",function(ply,text)
-	if ply:IsAdmin() and string.lower(text)=="1" then
+hook.Add("PlayerSay", "hg_adminentname", function(ply, text)
+	if ply:IsAdmin() and string.lower(text) == "entname" then
 		local ent = ply:GetEyeTrace().Entity
+
 		if ent:IsPlayer() then
-			ply:ChatPrint(ent:Nick(),ent:EntIndex())
-			--[[PrintMessage(HUD_PRINTTALK,tostring(ply:Name()).." связал "..tostring(ent:Name()))
-			ent:StripWeapons()
-			ent:Give("weapon_hands")
-			Faking(ent)
-			timer.Simple(0,function()
-				local enta = ent:GetNWEntity("Ragdoll")
-				enta:GetPhysicsObjectNum(5):SetPos(enta:GetPhysicsObjectNum(7):GetPos())
-				for i=1,3 do
-					constraint.Rope(enta,enta,5,7,Vector(0,0,0),Vector(0,0,0),-2,2,0,4,"cable/rope.vmt",false,Color(255,255,255))
-				end
-			end)
-			--ent.Hostage = true--]]
+			ply:ChatPrint(ent:Nick(), ent:EntIndex())
 		elseif ent:IsRagdoll() then
 			ply:ChatPrint(IsValid(RagdollOwner(ent)) and RagdollOwner(ent):Name())
-			--[[--ent:StripWeapons()
-			--ent:Give("weapon_hands")
-			--Faking(ent)
-			timer.Simple(0,function()
-				local enta = ent
-				enta:GetPhysicsObjectNum(5):SetPos(enta:GetPhysicsObjectNum(7):GetPos())
-				for i=1,3 do
-					constraint.Rope(enta,enta,5,7,Vector(0,0,0),Vector(0,0,0),-2,2,0,4,"cable/rope.vmt",false,Color(255,255,255))
-				end
-			end)--]]
 		end
+
 		return ""
 	end
 end)
