@@ -142,23 +142,12 @@ function ctp.PlayerSpawn2(ply, teamID)
 	tdm.GiveSwep(ply, teamTbl.main_weapon)
 	tdm.GiveSwep(ply, teamTbl.secondary_weapon)
 
-	if math.random(1, 4) == 4 then
-		ply:Give("adrenaline")
-	end
-
-	if math.random(1, 4) == 4 then
-		ply:Give("morphine")
-	end
-
-	if math.random(1, 2) == 2 then
-		ply:Give("megamedkit")
-	end
-
+	if math.random(1, 4) == 4 then ply:Give("adrenaline") end
+	if math.random(1, 4) == 4 then ply:Give("morphine") end
+	if math.random(1, 2) == 2 then ply:Give("megamedkit") end
+	if math.random(1, 3) == 3 then ply:Give("weapon_hg_f1") end
 	-- local r = math.random(1, 3)
 	-- ply:Give(r == 1 and "food_fishcan" or r == 2 and "food_spongebob_home" or r == 3 and "food_lays")
-	if math.random(1, 3) == 3 then
-		ply:Give("weapon_hg_f1")
-	end
 
 	local r = math.random(1, 2)
 	JMod.EZ_Equip_Armor(ply, "Medium-Helmet", color)
@@ -221,14 +210,10 @@ function ctp.RoundEndCheck()
 	tdm.Center()
 
 	for i = 1, 2 do
-		if ctp.WinPoints[i] >= 1000 then
-			EndRound(i)
-		end
+		if ctp.WinPoints[i] >= 1000 then return EndRound(i) end
 	end
 
-	if roundTimeStart + roundTime < CurTime() then
-		EndRound()
-	end
+	if roundTimeStart + roundTime < CurTime() then return EndRound() end
 end
 
 function ctp.EndRound(winner)

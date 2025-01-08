@@ -16,7 +16,7 @@ function dm.StartRoundSV()
 
 	local players = PlayersInGame()
 
-	for i, ply in pairs(players) do
+	for _, ply in pairs(players) do
 		ply:SetTeam(1)
 	end
 
@@ -28,6 +28,7 @@ function dm.StartRoundSV()
 	end)
 
 	freezing = true
+
 	RTV_CountRound = RTV_CountRound - 1
 	roundTimeRespawn = CurTime() + 15
 	roundDmType = math.random(1, 4)
@@ -36,54 +37,51 @@ function dm.StartRoundSV()
 end
 
 function dm.RoundEndCheck()
-	local Alive = 0
+	local alive = 0
 
 	for _, ply in pairs(team.GetPlayers(1)) do
 		if ply:Alive() then
-			Alive = Alive + 1
+			alive = alive + 1
 		end
 	end
 
 	if freezing and roundTimeStart + dm.LoadScreenTime < CurTime() then
 		freezing = nil
 
-		for i, ply in pairs(team.GetPlayers(1)) do
+		for _, ply in pairs(team.GetPlayers(1)) do
 			ply:Freeze(false)
 		end
 	end
 
-	if Alive <= 1 then
-		EndRound()
+	if alive <= 1 then
+		for _, ply in pairs(player.GetAll()) do
+			if ply:Alive() then
+				winner = ply
+			end
+		end
 
-		return
+		return EndRound(winner)
 	end
 
-	if roundTimeStart + roundTime - CurTime() <= 0 then
-		EndRound()
-	end
+	if roundTimeStart + roundTime - CurTime() <= 0 then return EndRound() end
 end
 
 function dm.EndRound(winner)
-	for _, ply in ipairs(player.GetAll()) do
-		if ply:Alive() then
-			PrintMessage(3, ply:GetName() .. " remains. They are victorious!")
-		end
-	end
-
-	PrintMessage(3, "Deathmatch Over! GG WP!")
+	net.Start("hg_sendchat_format")
+		net.WriteTable({
+			"#hg.modes.plrwin",
+			winner:GetName()
+		})
+	net.Broadcast()
 end
 
 --[[
 local function GetTeamSpawns(ply)
 	local spawnsT, spawnsCT = bahmut.SpawnsTwoCommand()
 
-	if ply:Team() == 1 then
-		return spawnsT
-	elseif ply:Team() == 2 then
-		return spawnsCT
-	else
-		return false
-	end
+	if ply:Team() == 1 then return spawnsT
+	elseif ply:Team() == 2 then return spawnsCT
+	else return false end
 end
 
 function dm.Think()
@@ -126,10 +124,9 @@ function dm.PlayerSpawn2(ply, teamID)
 
 	ply:Give("weapon_hands")
 
+	-- This is... something
 	if roundDmType == 1 then
 		local r = math.random(1, 8)
-		-- WHO THE FUCK WAS MAKING THIS SHIT
-		-- true
 		local wep1 = ply:Give((r == 1 and "weapon_mp7") or (r == 2 and "weapon_ak74u") or (r == 3 and "weapon_akm") or (r == 4 and "weapon_scout" and "weapon_uzi") or (r == 5 and "weapon_m4a1") or (r == 6 and "weapon_hk416") or (r == 7 and "weapon_m4a1") or (r == 8 and "weapon_galil"))
 
 		ply:Give("weapon_kabar")
@@ -140,8 +137,6 @@ function dm.PlayerSpawn2(ply, teamID)
 	elseif roundDmType == 2 then
 		local r = math.random(1, 4)
 		local p = math.random(1, 4)
-		-- I FUCKING HATE YOU WHOEVER YOU ARE
-		-- true
 		local wep1 = ply:Give((r == 1 and "weapon_spas12") or (r == 2 and "weapon_xm1014") or (r == 3 and "weapon_remington870") or (r == 4 and "weapon_m590"))
 		local wep2 = ply:Give((p == 1 and "weapon_uzi") or p == 2 and "weapon_p99" or p == 3 and "weapon_glock" or p == 4 and "weapon_fiveseven")
 
@@ -163,10 +158,12 @@ function dm.PlayerSpawn2(ply, teamID)
 	elseif roundDmType == 4 then
 		local r = math.random(1, 3)
 		local wep1 = ply:Give((r == 1 and "weapon_hk_usp") or (r == 2 and "weapon_p99") or (r == 3 and "weapon_beretta"))
+
 		ply:Give("weapon_kabar")
 		ply:Give("med_band_big")
 		ply:Give("weapon_hg_rgd5")
 		ply:Give("weapon_hidebomb")
+
 		ply:GiveAmmo(wep1:GetMaxClip1() * 3, wep1:GetPrimaryAmmoType())
 	else
 		local r = math.random(1, 3)
@@ -189,7 +186,7 @@ function dm.PlayerInitialSpawn(ply)
 end
 
 function dm.PlayerCanJoinTeam(ply, teamID)
-	if teamID == 2 or teamID == 3 then ply:ChatPrint("Pashol fuck") return false end
+	if teamID == 2 or teamID == 3 then return false end
 
 	return true
 end

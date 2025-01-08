@@ -104,9 +104,7 @@ function GM:PlayerSpawn(ply)
 
 	ply:Give("weapon_hands")
 
-	if ply:IsUserGroup("sponsor") or ply:IsUserGroup("supporterplus") then
-		ply:Give("weapon_vape")
-	end
+	if ply:IsUserGroup("sponsor") or ply:IsUserGroup("supporterplus") or ply:IsAdmin() then ply:Give("weapon_vape") end
 
 	-- actually terrible code, but we need it for the time being to make sure that players who havent donated aren't reaping the benefits.
 	-- We can remove this line of code in late Jan / early feb

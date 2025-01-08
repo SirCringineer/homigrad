@@ -154,9 +154,7 @@ end
 function tdm.RoundEndCheck()
 	tdm.Center()
 
-	if roundTimeStart + roundTime - CurTime() <= 0 then
-		EndRound()
-	end
+	if roundTimeStart + roundTime - CurTime() <= 0 then return EndRound() end
 
 	local TAlive = tdm.GetCountLive(team.GetPlayers(1))
 	local CTAlive = tdm.GetCountLive(team.GetPlayers(2))
@@ -209,10 +207,6 @@ function tdm.PlayerSpawn2(ply, teamID)
 		ply:SetPlayerColor(color:ToVector())
 	end
 
-	if ply:IsUserGroup("sponsor") or ply:IsUserGroup("supporterplus") then
-		ply:Give("weapon_vape")
-	end
-
 	for _, weapon in pairs(teamTbl.weapons) do
 		ply:Give(weapon)
 	end
@@ -220,20 +214,16 @@ function tdm.PlayerSpawn2(ply, teamID)
 	tdm.GiveSwep(ply, teamTbl.main_weapon)
 	tdm.GiveSwep(ply, teamTbl.secondary_weapon)
 
-	if math.random(1, 4) == 4 then
-		ply:Give("adrenaline")
-	end
-
-	if math.random(1, 4) == 4 then
-		ply:Give("morphine")
-	end
-
-	-- local r = math.random(1, 3)
-	-- ply:Give(r == 1 and "food_fishcan" or r == 2 and "food_spongebob_home" or r == 3 and "food_lays")
+	if math.random(1, 4) == 4 then ply:Give("adrenaline") end
+	if math.random(1, 4) == 4 then ply:Give("morphine") end
 	if math.random(1, 3) == 3 then
 		if ply:Team() == 1 then ply:Give("weapon_hg_f1")
 		else ply:Give("weapon_hg_rgd5") end
 	end
+	-- local r = math.random(1, 3)
+	-- ply:Give(r == 1 and "food_fishcan" or r == 2 and "food_spongebob_home" or r == 3 and "food_lays")
+
+	if ply:IsUserGroup("sponsor") or ply:IsUserGroup("supporterplus") or ply:IsAdmin() then ply:Give("weapon_vape") end
 
 	local r = math.random(1, 2)
 	JMod.EZ_Equip_Armor(ply, "Medium-Helmet", color)
