@@ -1,5 +1,5 @@
 --[[
-    TO-DO:
+    TODO:
     - Easyly to add some appearances: ✔
     - GetModelSex: ✔
 ]]
@@ -137,7 +137,7 @@ end
 function EasyAppearance.AddAppearances( intSex, strMame, strTexturePatch )
 
     if not intSex or not strName or not strTexturePatch then print( "invalid vars" ) return false end
-    
+
     local strSex = sex[ math.Clamp( intSex, 1, 2 ) ]
 
     EasyAppearance.Appearances[ strSex ][ strName ] = strTexturePatch
@@ -188,9 +188,9 @@ local AddAttach = EasyAppearance.AddAttachmet
     /_|_\____\
 --]]
 
-AddAttach( 
+AddAttach(
     "Gray Cap", // uniName
-    "models/modified/hat07.mdl", nil, // modelPath and materialPath 
+    "models/modified/hat07.mdl", nil, // modelPath and materialPath
     "ValveBiped.Bip01_Head1", // Bone
     false, // ShoulDraw in localPlayer
     Vector(5,0,0), Vector(4,0.1,0), // PosMale PosFemale
@@ -199,9 +199,9 @@ AddAttach(
     "00000" // Ermmm Bodygroups
 )
 
-AddAttach( 
+AddAttach(
     "Red Headphones", // uniName
-    "models/modified/headphones.mdl", nil, // modelPath and materialPath 
+    "models/modified/headphones.mdl", nil, // modelPath and materialPath
     "ValveBiped.Bip01_Head1", // Bone
     false, // ShoulDraw in localPlayer
     Vector(2.8,-.2,0), Vector(1.3,-1,0), // PosMale PosFemale
@@ -210,9 +210,9 @@ AddAttach(
     "00000" // Ermmm Bodygroups
 )
 
-AddAttach( 
+AddAttach(
     "Pinkman Hat", // uniName
-    "models/modified/hat03.mdl", nil, // modelPath and materialPath 
+    "models/modified/hat03.mdl", nil, // modelPath and materialPath
     "ValveBiped.Bip01_Head1", // Bone
     false, // ShoulDraw in localPlayer
     Vector(5,0,0), Vector(4,0.1,0), // PosMale PosFemale
@@ -221,9 +221,9 @@ AddAttach(
     "00000" // Ermmm Bodygroups
 )
 
-AddAttach( 
+AddAttach(
     "Gray Hat", // uniName
-    "models/modified/hat01_fix.mdl", nil, // modelPath and materialPath 
+    "models/modified/hat01_fix.mdl", nil, // modelPath and materialPath
     "ValveBiped.Bip01_Head1", // Bone
     false, // ShoulDraw in localPlayer
     Vector(5,0,0), Vector(4,0.1,0), // PosMale PosFemale
@@ -232,9 +232,9 @@ AddAttach(
     "00000" // Ermmm Bodygroups
 )
 
-AddAttach( 
+AddAttach(
     "Bandana", // uniName
-    "models/modified/bandana.mdl", nil, // modelPath and materialPath 
+    "models/modified/bandana.mdl", nil, // modelPath and materialPath
     "ValveBiped.Bip01_Head1", // Bone
     false, // ShoulDraw in localPlayer
     Vector(-1,-1,0), Vector(-2,-.9,0), // PosMale PosFemale
@@ -243,9 +243,9 @@ AddAttach(
     "00000" // Ermmm Bodygroups
 )
 
-AddAttach( 
+AddAttach(
     "Small Backpack", // uniName
-    "models/modified/backpack_3.mdl", nil, // modelPath and materialPath 
+    "models/modified/backpack_3.mdl", nil, // modelPath and materialPath
     "ValveBiped.Bip01_Spine4", // Bone
     false, // ShoulDraw in localPlayer
     Vector(-7.5,4,0), Vector(-9,3,0), // PosMale PosFemale
@@ -254,9 +254,9 @@ AddAttach(
     "00000" // Ermmm Bodygroups
 )
 
-AddAttach( 
+AddAttach(
     "Big Backpack", // uniName
-    "models/modified/backpack_1.mdl", nil, // modelPath and materialPath 
+    "models/modified/backpack_1.mdl", nil, // modelPath and materialPath
     "ValveBiped.Bip01_Spine2", // Bone
     false, // ShoulDraw in localPlayer
     Vector(0.4,3.6,0), Vector(-1.5,3.6,0), // PosMale PosFemale

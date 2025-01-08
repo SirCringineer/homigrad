@@ -1,27 +1,46 @@
-> [!CAUTION]
-> This Repository & Addon was made for Harrison's Homigrad Servers, which therefore contains commands and things that would only make sense from Harrison's Homigrad Servers. We strongly recommend not using this addon on your server as-is.
-# What is Homigirad?
-Homigrad is a TTT/Murder-like gamemode that uses 'realistic' health and movement systems. There are several sub-modes that can be played, such as TDM, Deathmatch, and Hide and Seek.   
+# Homigrad
 
-# Server/Client Installation
-Simply download the repository as a .zip file, and drag and drop the homigrad-main folder into your addons folder. If using a server, make sure that `homigrad` is the gamemode selected.
+> [!NOTE]
+> This is a fork of [Harrison's Homigrad Servers version](https://github.com/harrisoniam/homigrad).
+> It's tailored for personal use by me and my friends. Please don’t expect features or updates that cater to everyone.
 
-Once you've loaded the addon onto your server, please look into the wiki (Coming very very verys oon) for further information.
-# TODO List
-In no particular order;
-* Remove ULX needed to be used for Homigrad.
-* Debloat the Content Packs as seen in [this collection.](https://steamcommunity.com/sharedfiles/filedetails/?id=3400069738)
-* Bug fixes. Looots and loooots of bug fixes.
-* Get a wiki sorted out (Will do ASAP)
-# FAQ
-### What language is Homigrad in?
-It is currently in English.
-### Can I use this in Sandbox/TTT/etc?
-The Homigrad Movement System & Weapons are not available for their own gamemodes. If you're smart enough, we implore that you work on them via our [movement-addon branch.](https://github.com/harrisoniam/homigrad/tree/movement-addon)
-### How can I customise this for my server?
-Unlike other developed gamemodes, everything is customised to Harrisons Homigrad (See warning above), and therefore makes everything
-### Can I make my own gamemode using this codebase?
-Under the MIT License, you are free to do whatever you want with this code. We simply ask that if you have an improvement, that you make a pull request.
+## What is Homigrad?
 
-# Credits
-* Sadsalat, Useless, Mr. Point - For Originally Making Homigrad, & open-sourcing it originally at [this repository.](https://github.com/sadsalat/Orignal-Homigrad)
+Homigrad is a game mode inspired by Trouble in Terrorist Town (TTT) and Murder. It features a "realistic" health and movement system and offers several sub-modes, including Team Deathmatch (TDM), Deathmatch, and Hide and Seek.
+
+## Installation
+
+1. [Download the repository](https://github.com/JonnyBro/homigrad/archive/refs/heads/main.zip).
+2. Extract the `homigrad-main` folder and place it in your server’s `addons` directory.
+3. Ensure the game mode is set to `Homigrad` (use `+gamemode homigrad` for servers).
+
+For epic gaming, a tickrate of **99-128** is recommended to improve controls when faking.
+
+## TODO
+
+- [ ] Move Homigrad's commands to ULX (i like ulx).
+- [ ] Find and fix existing bugs (there are many to address).
+
+## Frequently Asked Questions
+
+### What language is this version in?
+
+The game currently includes a mix of English and localized content. Full localization is planned for English, Russian, and Ukrainian.
+
+### Can I use Homigrad's movement/weapons in other game modes (Sandbox, TTT, etc)?
+
+The movement system and weapons from Homigrad are not directly compatible with other game modes. However, if you're proficient, you might explore Harrison’s [movement-addon branch](https://github.com/harrisoniam/homigrad/tree/movement-addon).
+
+### How can I customize this for my server?
+
+You’re free to modify the files, adjust values, and tweak the code to suit your server’s needs.
+
+### Can I create my own game mode using this codebase?
+
+Yes! This project is under the MIT License, so you’re welcome to use it as a base. Contributions are also encouraged—feel free to submit pull requests here or on [Harrison's repository](https://github.com/harrisoniam/homigrad).
+
+## Credits
+
+- **Sadsalat, Useless, Mr. Point**: For creating the original Homigrad and making it open source. The original repository is available [here](https://github.com/sadsalat/Orignal-Homigrad).
+- **Harrison's Servers**: For open-sourcing their version (I wasted 2 weeks of my NY holidays to fix workshop version (╯‵□′)╯︵┻━┻).
+- **ChatGPT**: Rewriting my crappy attempt at READMEs.

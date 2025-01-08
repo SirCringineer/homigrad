@@ -547,8 +547,8 @@ local huyprecahche = {
 ]]
 local CaliberEffects = {
 	[".44 Remington Magnum"] = "pcf_jack_mf_mshotgun",
-	["5.7×28 mm"] = "pcf_jack_mf_msmg",
-	["4.6×30 mm"] = "pcf_jack_mf_msmg",
+	["5.7x28 mm"] = "pcf_jack_mf_msmg",
+	["4.6x30 mm"] = "pcf_jack_mf_msmg",
 	[".45 Rubber"] = "pcf_jack_mf_spistol",
 	["12/70 beanbag"] = "pcf_jack_mf_mshotgun",
 	["12/70 gauge"] = "pcf_jack_mf_mshotgun",

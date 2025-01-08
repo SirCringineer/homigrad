@@ -19,7 +19,7 @@ end
 function hl2dm.RoundEndCheck()
 
 	if roundTimeStart + roundTime - CurTime() <= 0 then EndRound() end
-	
+
 	local TAlive = tdm.GetCountLive(team.GetPlayers(1))
 	local CTAlive = tdm.GetCountLive(team.GetPlayers(2))
 
@@ -40,7 +40,7 @@ function hl2dm.PlayerSpawn2(ply,teamID)
 	local color = teamTbl[2]
 	ply:SetModel(teamTbl.models[math.random(#teamTbl.models)])
 
-    ply:SetPlayerColor(color:ToVector())
+	ply:SetPlayerColor(color:ToVector())
 
 	if ply:IsUserGroup("sponsor") or ply:IsUserGroup("supporterplus") then
 		ply:Give("weapon_vape")
@@ -50,7 +50,7 @@ function hl2dm.PlayerSpawn2(ply,teamID)
 
 	tdm.GiveSwep(ply,teamTbl.main_weapon)
 	tdm.GiveSwep(ply,teamTbl.secondary_weapon)
-	
+
 	if teamID == 2 then
 		ply:SetPlayerClass("combine")
 		if math.random(1,2) == 2 then ply:Give("weapon_hg_hl2") end

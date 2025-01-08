@@ -66,7 +66,7 @@ else
 
 					surface.SetDrawColor(Color(255, 255, 255, 255 * Size))
 					surface.DrawTexturedRect(Tr.HitPos:ToScreen().x - 30, Tr.HitPos:ToScreen().y - 30, 128 * Size, 128 * Size)
-					
+
 					local col
 					if Tr.Entity:IsPlayer() then
 						col = Tr.Entity:GetPlayerColor():ToColor()
@@ -105,7 +105,7 @@ else
 			--local Tr = util.QuickTrace(ply:GetAttachment(ply:LookupAttachment("eyes")).Pos, self:GetOwner():GetAimVector() * self.ReachDistance, {self:GetOwner()})
 
 			if Tr.Hit then
-			
+
 				local Size = math.max(1 - Tr.Fraction,0.25)
 				surface.SetDrawColor(Color(200, 200, 200, 200))
 				draw.NoTexture()
@@ -318,9 +318,9 @@ function SWEP:ApplyForce()
 						self:GetOwner():ChatPrint("There is no pulse, but CPR can be performed to attempt to save them.")
 					else
 						local uncon = (ply.unconscious and " They are unconscious." or "")
-						self:GetOwner():ChatPrint(((ply.nextPulse < 0.9 and "This person is in great condition.") or 
-						(ply.nextPulse <= 1.5 and "This person seems to be a little roughed up.") or 
-						(ply.nextPulse < 2 and "This person seems to be in a bad physical state.") or 
+						self:GetOwner():ChatPrint(((ply.nextPulse < 0.9 and "This person is in great condition.") or
+						(ply.nextPulse <= 1.5 and "This person seems to be a little roughed up.") or
+						(ply.nextPulse < 2 and "This person seems to be in a bad physical state.") or
 						(ply.nextPulse >= 2 and "This person is barely holding onto their life."))..uncon)
 					end
 				end
@@ -332,21 +332,21 @@ function SWEP:ApplyForce()
 			local ply = RagdollOwner(self.CarryEnt)
 			if self:GetOwner():KeyDown(IN_ATTACK) and self.CarryEnt:GetBoneName(self.CarryEnt:TranslatePhysBoneToBone(self.CarryBone)) == "ValveBiped.Bip01_Spine2" then
 				if ply then
-					if self.firstTimePrint then 
-						self:GetOwner():ChatPrint("You start to perform CPR (Hold Left Mouse down to keep the target alive)") 
+					if self.firstTimePrint then
+						self:GetOwner():ChatPrint("You start to perform CPR (Hold Left Mouse down to keep the target alive)")
 					end
 
 					self.firstTimePrint = false
-		
+
 					if (self.CPRThink or 0) < CurTime() then
 						self.CPRThink = CurTime() + (60 / 120)
 						ply.CPR = math.max(ply.CPR + 50, 0)
-						
+
 						ply.o2 = math.min(ply.o2 + 0.5, 1)
-						ply.Blood = math.min(ply.Blood + 8, 5000) --; Stupid shit 
-						
-						ply.pain = math.max(ply.pain - 3, 0) 
-						
+						ply.Blood = math.min(ply.Blood + 8, 5000) --; Stupid shit
+
+						ply.pain = math.max(ply.pain - 3, 0)
+
 						--self:GetOwner():ChatPrint(ply.pain)
 						--self:GetOwner():ChatPrint(ply.Blood)
 						--self:GetOwner():ChatPrint(ply.o2)
@@ -356,8 +356,8 @@ function SWEP:ApplyForce()
 					end
 				else
 					if not ply and self.CarryEnt:GetClass() == "prop_ragdoll" then
-						if self.firstTimePrint then 
-							self:GetOwner():ChatPrint("This person can't be saved. CPR is pointless.") 
+						if self.firstTimePrint then
+							self:GetOwner():ChatPrint("This person can't be saved. CPR is pointless.")
 						end
 						self.firstTimePrint = false
 					end
@@ -516,13 +516,13 @@ function SWEP:PrimaryAttack()
 	end
 
 	if self:GetOwner():KeyDown(IN_ATTACK2) then return end
-	
+
 	self:SetNextDown(CurTime() + 7)
 
 	if not self:GetFists() then
 		self:SetFists(true)
 		self:DoBFSAnimation("fists_draw")
-		self:SetNextPrimaryFire(CurTime() + .35)
+		self:SetNextPrimaryFire(CurTime() + .5)
 
 		return
 	end
@@ -554,8 +554,8 @@ function SWEP:PrimaryAttack()
 		end)
 	end
 
-	self:SetNextPrimaryFire(CurTime() + .35)
-	self:SetNextSecondaryFire(CurTime() + .35)
+	self:SetNextPrimaryFire(CurTime() + .5)
+	self:SetNextSecondaryFire(CurTime() + .5)
 end
 
 function SWEP:AttackFront()
@@ -566,7 +566,7 @@ function SWEP:AttackFront()
 
 	if IsValid(Ent) or (Ent and Ent.IsWorld and Ent:IsWorld()) then
 		local SelfForce, Mul = -150, 1
-		
+
 		if self:IsEntSoft(Ent) then
 			SelfForce = 25
 
@@ -658,7 +658,7 @@ if SERVER then
 			if pos then
 				TargetPos = ent:LocalToWorld(pos)
 			end
-			
+
 			local vec = target - TargetPos
 			local len, mul = vec:Length(), ent:GetPhysicsObject():GetMass()
 			vec:Normalize()

@@ -1,7 +1,7 @@
 --[[
-    TO-DO: 
+    TODO:
     - Appearance menu like hmcd
-    - Networking :/    
+    - Networking :/
 ]]
 
 EasyAppearance = EasyAppearance or {}
@@ -69,12 +69,12 @@ function EasyAppearance.Menu( ply )
     local ModelView = MainPanel.ModelView
     ModelView:Dock(LEFT)
     ModelView:SetSize(256,512)
-    
+
     local tModel = EasyAppearance.Models[ Appearance.strModel ]
     local sex = "Male"
     ModelView:SetModel( tModel and tModel.strPatch or table.Random( table.GetKeys(Models) ) )
 
-    function ModelView:LayoutEntity(ent) 
+    function ModelView:LayoutEntity(ent)
         ent:SetSubMaterial()
 
         sex = EasyAppearance.Sex[ ent:GetModelSex() ]
@@ -82,7 +82,7 @@ function EasyAppearance.Menu( ply )
         ent:SetupBones()
         ent:SetSubMaterial( Models[ ent:GetModel() ][2], Appearance.strColthesStyle and EasyAppearance.Appearances[ sex ][ Appearance.strColthesStyle ] or "" )
         --EasyAppearance.DrawAttachment(ent,Appearance.strAttachmets)
-        return 
+        return
     end
 
     ModelView:SetFOV(37.5)
@@ -230,7 +230,7 @@ function EasyAppearance.DrawAttachment( eEnt, strAtt, ply )
 
     local matrix = eEnt:GetBoneMatrix( iBone )
     if not matrix then return end
-    
+
     if eEnt:GetManipulateBoneScale( iBone ):IsZero() then return end
 
     local pos = matrix:GetTranslation()
@@ -253,13 +253,13 @@ function EasyAppearance.DrawAttachment( eEnt, strAtt, ply )
         end
 
         eEnt.AttachModel:AddEffects( EF_BONEMERGE )
-        --eEnt.AttachModel:AddEffects( EF_FOLLOWBONE )  
+        --eEnt.AttachModel:AddEffects( EF_FOLLOWBONE )
     elseif IsValid(eEnt.AttachModel) then
         --if not IsValid(eEnt.AttachModel) then eEnt.AttachModel = nil return end
         if IsValid(eEnt.AttachModel) and eEnt.AttachModel:GetModel() ~= att.strModel then
             eEnt.AttachModel:SetModel(att.strModel)
         end
-        
+
         if att.bDrawOnLocal or GetViewEntity() != ply then
             local lPos,lAng = LocalToWorld( modelSex > 1 and att.vFPos or att.vPos, modelSex > 1 and att.aFAng or att.aAng, pos, ang)
             --eEnt.AttachModel:SetPos( lPos )
@@ -269,13 +269,13 @@ function EasyAppearance.DrawAttachment( eEnt, strAtt, ply )
             eEnt.AttachModel:SetRenderAngles( lAng )
             eEnt.AttachModel:SetupBones()
             eEnt.AttachModel:DrawModel()
-            
+
         end
-    end 
+    end
 
 end
 
-hook.Add( "HG_PostPlayerDraw", "EA_AttachmentsRender", function( ent, ply ) 
+hook.Add( "HG_PostPlayerDraw", "EA_AttachmentsRender", function( ent, ply )
     local lply = LocalPlayer()
     local firstPerson = DRAWMODEL
 

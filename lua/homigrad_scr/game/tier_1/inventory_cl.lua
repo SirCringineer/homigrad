@@ -54,8 +54,6 @@ end
 
 local panel
 net.Receive("inventory",function()
-	local lply = LocalPlayer()
-
 	if IsValid(panel) then panel.override = true panel:Remove() end
 
 	local lootEnt = net.ReadEntity()
@@ -63,7 +61,7 @@ net.Receive("inventory",function()
 	local nickname = lootEnt:IsPlayer() and lootEnt:Name() or lootEnt:GetNWString("Nickname") or ""
 
 	if not success or not lootEnt then return end
-	
+
 	if IsValid(lootEnt:GetNWEntity("ActiveWeapon")) and items[lootEnt:GetNWEntity("ActiveWeapon"):GetClass()] then items[lootEnt:GetNWEntity("ActiveWeapon"):GetClass()] = nil end
 
 	local items_ammo = net.ReadTable()
@@ -83,7 +81,7 @@ net.Receive("inventory",function()
 	function panel:OnKeyCodePressed(key)
 		if key == KEY_W or key == KEY_S or key == KEY_A or key == KEY_D then self:Remove() end
 	end
-	
+
 	function panel:OnRemove()
 		if self.override then return end
 
@@ -99,7 +97,7 @@ net.Receive("inventory",function()
 		surface.SetDrawColor(255,255,255,128)
 		surface.DrawOutlinedRect(1,1,w - 2,h - 2)
 
-		draw.SimpleText(nickname.."'s Inventory","DefaultFixedDropShadow",6,6,white)
+		draw.SimpleText(nickname .. "'s Inventory","DefaultFixedDropShadow",6,6,white)
 	end
 
 	local x,y = 40,40
@@ -119,12 +117,8 @@ net.Receive("inventory",function()
 
 		button:SetText("")
 
-		local wepTbl = wep
-
-		local text = type(wepTbl) == "table" and wepTbl.PrintName or wep
-		text = getText(text,button:GetWide() - corner * 2)
-
-		local cameraPos = Vector(20,20,20)
+		local text = weapon.PrintName or wep
+		text = getText(text, button:GetWide() - corner * 2)
 
 		button.Paint = function(self,w,h)
 			draw.RoundedBox(0,0,0,w,h,self:IsHovered() and black2 or black)
@@ -136,7 +130,7 @@ net.Receive("inventory",function()
 			end
 
 			local x,y = self:LocalToScreen(0,0)
-			DrawWeaponSelectionEX(wepTbl,x,y,w,h)
+			DrawWeaponSelectionEX(weapon,x,y,w,h)
 		end
 
 		function button:OnRemove() if IsValid(model) then model:Remove() end end

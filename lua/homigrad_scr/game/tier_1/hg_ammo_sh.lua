@@ -2,7 +2,7 @@ if engine.ActiveGamemode() != "homigrad" then return end
 local ammotypes = {
     ["556x45mm"] = {
         name = "5.56x45 mm",
-        dmgtype = DMG_BULLET, 
+        dmgtype = DMG_BULLET,
         tracer = TRACER_LINE,
         plydmg = 0,
         npcdmg = 0,
@@ -14,7 +14,7 @@ local ammotypes = {
 
     ["762x39mm"] = {
         name = "7.62x39 mm",
-        dmgtype = DMG_BULLET, 
+        dmgtype = DMG_BULLET,
         tracer = TRACER_LINE,
         plydmg = 0,
         npcdmg = 0,
@@ -26,7 +26,7 @@ local ammotypes = {
 
     ["545x39mm"] = {
         name = "5.45x39 mm",
-        dmgtype = DMG_BULLET, 
+        dmgtype = DMG_BULLET,
         tracer = TRACER_LINE,
         plydmg = 0,
         npcdmg = 0,
@@ -38,7 +38,7 @@ local ammotypes = {
 
     ["12/70gauge"] = {
         name = "12/70 gauge",
-        dmgtype = DMG_BUCKSHOT, 
+        dmgtype = DMG_BUCKSHOT,
         tracer = TRACER_LINE,
         plydmg = 0,
         npcdmg = 0,
@@ -50,7 +50,7 @@ local ammotypes = {
 
     ["12/70beanbag"] = {
         name = "12/70 beanbag",
-        dmgtype = DMG_BUCKSHOT, 
+        dmgtype = DMG_BUCKSHOT,
         tracer = TRACER_LINE,
         plydmg = 0,
         npcdmg = 0,
@@ -62,7 +62,7 @@ local ammotypes = {
 
     ["9х19mm"] = {
         name = "9х19 mm Parabellum",
-        dmgtype = DMG_BULLET, 
+        dmgtype = DMG_BULLET,
         tracer = TRACER_LINE,
         plydmg = 0,
         npcdmg = 0,
@@ -74,7 +74,7 @@ local ammotypes = {
 
     [".45rubber"] = {
         name = ".45 Rubber",
-        dmgtype = DMG_BULLET, 
+        dmgtype = DMG_BULLET,
         tracer = TRACER_LINE,
         plydmg = 0,
         npcdmg = 0,
@@ -86,7 +86,7 @@ local ammotypes = {
 
     ["46x30mm"] = {
         name = "4.6x30 mm",
-        dmgtype = DMG_BULLET, 
+        dmgtype = DMG_BULLET,
         tracer = TRACER_LINE,
         plydmg = 0,
         npcdmg = 0,
@@ -95,10 +95,10 @@ local ammotypes = {
         minsplash = 10,
         maxsplash = 5
     },
-    
+
     ["57x28mm"] = {
         name = "5.7x28 mm",
-        dmgtype = DMG_BULLET, 
+        dmgtype = DMG_BULLET,
         tracer = TRACER_LINE,
         plydmg = 0,
         npcdmg = 0,
@@ -110,7 +110,7 @@ local ammotypes = {
 
     [".44magnum"] = {
         name = ".44 Remington Magnum",
-        dmgtype = DMG_BULLET, 
+        dmgtype = DMG_BULLET,
         tracer = TRACER_LINE,
         plydmg = 0,
         npcdmg = 0,
@@ -122,7 +122,7 @@ local ammotypes = {
 
     ["9x39mm"] = {
         name = "9x39 mm",
-        dmgtype = DMG_BULLET, 
+        dmgtype = DMG_BULLET,
         tracer = TRACER_LINE,
         plydmg = 0,
         npcdmg = 0,
@@ -187,7 +187,7 @@ local ammoents = {
         Scale = 0.9,
         Color = Color(125,155,95)
     },
-    
+
     ["57x28mm"] = {
         Material = "models/hmcd_ammobox_22",
         Scale = 1.2,
@@ -203,7 +203,7 @@ for k,v in pairs(ammotypes) do
         language.Add(v.name.."_ammo", v.name)
     end
     timer.Simple(1,function()
-    local ammoent = {} 
+    local ammoent = {}
     ammoent.Base = "ammo_base"
     ammoent.PrintName = v.name
     ammoent.Category = "Патроны"
@@ -230,7 +230,7 @@ if CLIENT then
         local Frame = vgui.Create( "DFrame" )
         Frame:SetTitle( "Ammo Inventory" )
         Frame:SetSize( 200,300 )
-        Frame:Center()			
+        Frame:Center()
         Frame:MakePopup()
         Frame.Paint = function( self, w, h ) -- 'function Frame:Paint( w, h )' works too
             draw.RoundedBox( 5, 0, 0, w, h, Color( 115, 115, 115 ) )
@@ -260,31 +260,31 @@ if CLIENT then
 
 
         local DermaNumSlider = vgui.Create( "DNumSlider", Frame )
-        DermaNumSlider:SetPos( 10, 245 )				
-        DermaNumSlider:SetSize( 210, 25 )			
-        DermaNumSlider:SetText( "Quantity:" )	
-        DermaNumSlider:SetMin( 0 )				 	
-        DermaNumSlider:SetMax( 60 )				
-        DermaNumSlider:SetDecimals( 0 )				
+        DermaNumSlider:SetPos( 10, 245 )
+        DermaNumSlider:SetSize( 210, 25 )
+        DermaNumSlider:SetText( "Quantity:" )
+        DermaNumSlider:SetMin( 0 )
+        DermaNumSlider:SetMax( 60 )
+        DermaNumSlider:SetDecimals( 0 )
 
         -- If not using convars, you can use this hook + Panel.SetValue()
         DermaNumSlider.OnValueChanged = function( self, value )
             ammodrop = math.Round(value)
-        end 
+        end
 
         local ammos = LocalPlayer():GetAmmo()
         for k,v in pairs(ammos) do
-            local DermaButton = vgui.Create( "DButton", DPanel ) 
-            DermaButton:SetText( game.GetAmmoName( k )..": "..v )					
-            DermaButton:SetPos( 0, 0 )	
+            local DermaButton = vgui.Create( "DButton", DPanel )
+            DermaButton:SetText( game.GetAmmoName( k )..": "..v )
+            DermaButton:SetPos( 0, 0 )
             DermaButton:Dock( TOP )
-            DermaButton:DockMargin( 5, 5, 5, 0 )				
-            DermaButton:SetSize( 120, 20 )	
+            DermaButton:DockMargin( 5, 5, 5, 0 )
+            DermaButton:SetSize( 120, 20 )
             DermaButton.Paint = function( self, w, h ) -- 'function Frame:Paint( w, h )' works too
                 draw.RoundedBox( 0, 0, 0, w, h, Color( 225, 225, 225 ) )
-            end				
+            end
             DermaButton.DoClick = function()
-                --print( math.min(ammodrop,v),game.GetAmmoName( k ))				
+                --print( math.min(ammodrop,v),game.GetAmmoName( k ))
                 net.Start( "drop_ammo" )
                     net.WriteFloat( k )
                     net.WriteFloat( math.min(ammodrop,v) )
@@ -297,7 +297,7 @@ if CLIENT then
                     net.WriteFloat( k )
                     net.WriteFloat( math.min(v,v) )
                 net.SendToServer()
-                Frame:Close()	
+                Frame:Close()
             end
         end
         local DLabel = vgui.Create( "DLabel", Frame )

@@ -24,7 +24,7 @@ local spawnsT,spawnsCT = tdm.SpawnsTwoCommand()
     tdm.SpawnCommand(team.GetPlayers(1),spawnsT)
 
     for i,ply in pairs(players) do ply:SetTeam(1) end
-    return {roundTimeStart,roundTime}   
+    return {roundTimeStart,roundTime}
 end
 
 function construct.Think()
@@ -32,27 +32,27 @@ function construct.Think()
 
     if CurTime() >= construct.LastWave then
         SetGlobalInt("construct_respawntime", CurTime())
-    
+
         for _, v in player.Iterator() do
 
             local players = {}
             if !v:Alive() and v:Team() != 1002 then
                 v:Spawn()
                 local teamspawn = GetTeamSpawns(v)
-    
+
                 local point,key = table.Random(teamspawn)
                 point = ReadPoint(point)
                 if not point then continue end
-    
+
                 v:SetPos(point[1])
                 players[v:Team()] = players[v:Team()] or {}
                 players[v:Team()][v] = true
             end
         end
-    
+
         for ent in pairs(construct.ragdolls) do
             if IsValid(ent) then ent:Remove() end
-    
+
             construct.ragdolls[ent] = nil
         end
 
@@ -79,12 +79,16 @@ end
 --]]
 local red = Color(255,0,0)
 
-function construct.PlayerSpawn2(ply,teamID)
+function construct.PlayerSpawn2(ply, teamID)
 	ply:SetModel(tdm.models[math.random(#tdm.models)])
-    ply:SetPlayerColor(Vector(0,0,0.6))
-    ply:Give("weapon_physgun")
-    ply:Give("weapon_hands")
-    if ply.allowGrab then ply.allowGrab = false end -- FIXME: This doesn't seem to work.
+	ply:SetPlayerColor(Vector(0, 0, 0.6))
+	ply:Give("weapon_physgun")
+	ply:Give("weapon_hands")
+
+	-- FIXME: This doesn't seem to work.
+	if ply.allowGrab then
+		ply.allowGrab = false
+	end
 end
 
 function construct.PlayerInitialSpawn(ply)

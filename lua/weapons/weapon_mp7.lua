@@ -1,5 +1,5 @@
 if engine.ActiveGamemode() == "homigrad" then
-SWEP.Base = 'salat_base' -- base 
+SWEP.Base = 'salat_base' -- base
 
 SWEP.PrintName 				= "MP7"
 SWEP.Instructions			= "Eco-rounds best buy"
@@ -13,7 +13,7 @@ SWEP.AdminOnly 				= false
 SWEP.Primary.ClipSize		= 40
 SWEP.Primary.DefaultClip	= 40
 SWEP.Primary.Automatic		= true
-SWEP.Primary.Ammo			= "4.6×30 mm"
+SWEP.Primary.Ammo = "4.6x30 mm"
 SWEP.Primary.Cone = 0
 SWEP.Primary.Damage = 30
 SWEP.Primary.Spread = 0
@@ -25,7 +25,7 @@ SWEP.ShootWait = 0.06
 SWEP.ReloadSound = "weapons/ar2/ar2_reload.wav"
 SWEP.TwoHands = true
 
-							
+
 SWEP.Secondary.ClipSize		= -1
 SWEP.Secondary.DefaultClip	= -1
 SWEP.Secondary.Automatic	= false

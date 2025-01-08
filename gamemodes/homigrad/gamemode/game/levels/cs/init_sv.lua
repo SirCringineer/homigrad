@@ -73,7 +73,7 @@ changeClass = {
 	["weapon_frag"]="weapon_hg_f1",
 	["weapon_slam"]="weapon_hg_molotov",
 
-	["weapon_rpg"]="ent_ammo_46×30mm",
+	["weapon_rpg"]="ent_ammo_46x30mm",
 	["item_ammo_ar2_altfire"]="ent_ammo_762x39mm",
 	["item_ammo_357"]="ent_ammo_.44magnum",
 	["item_ammo_357_large"]="ent_ammo_.44magnum",
@@ -81,13 +81,13 @@ changeClass = {
 	["item_ammo_pistol_large"]="ent_ammo_9х19mm",
 	["item_ammo_ar2"]="ent_ammo_556x45mm",
 	["item_ammo_ar2_large"]="ent_ammo_556x45mm",
-	["item_ammo_ar2_smg1"]="ent_ammo_545×39mm",
+	["item_ammo_ar2_smg1"]="ent_ammo_545x39mm",
 	["item_ammo_ar2_large"]="ent_ammo_556x45mm",
-	["item_ammo_smg1"]="ent_ammo_545×39mm",
+	["item_ammo_smg1"]="ent_ammo_545x39mm",
 	["item_ammo_smg1_large"]="ent_ammo_762x39mm",
 	["item_box_buckshot"]="ent_ammo_12/70gauge",
 	["item_box_buckshot_large"]="ent_ammo_12/70gauge",
-	["item_rpg_round"]="ent_ammo_57×28mm",
+	["item_rpg_round"]="ent_ammo_57x28mm",
 	["item_ammo_crate"]="ent_ammo_9x39mm",
 
 	["item_healthvial"]="med_band_small",
@@ -148,7 +148,7 @@ function css.Think()
                 players[v:Team()] = players[v:Team()] or {}
                 players[v:Team()][v] = true
             end
-    
+
             for i,list in pairs(players) do
                 bahmut.SelectRandomPlayers(list[1],6,bahmut.GiveAidPhone)
                 bahmut.SelectRandomPlayers(list[2],6,bahmut.GiveAidPhone)
@@ -301,7 +301,7 @@ function css.PlayerSpawn2(ply,teamID)
 	if math.random(1,4) == 4 then ply:Give("adrenaline") end
 	if math.random(1,4) == 4 then ply:Give("morphine") end
 	if math.random(1,3) == 3 then if ply:Team() == 1 then ply:Give("weapon_hg_f1") else ply:Give("weapon_hg_rgd5") end end
-	
+
 	JMod.EZ_Equip_Armor(ply,"Medium-Helmet",color)
 	local r = math.random(1,2)
 	JMod.EZ_Equip_Armor(ply,(r == 1 and "Medium-Vest") or (r == 2 and "Light-Vest"),color)

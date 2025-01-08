@@ -61,10 +61,11 @@ COMMANDS.noguilt = {
 	function(ply, args)
 		if not ply:IsAdmin() then return end
 		local value = (tonumber(args[2]) == 1 and true) or false
+		local plrs = player.GetListByName(args[1]) or {ply}
 
-		for _, ply in pairs(player.GetListByName(args[1]) or {ply}) do
+		for _, ply in pairs(plrs) do
 			ply.noguilt = value
-			ply:ChatPrint("NoGuilt is currently: " .. tostring(value))
+			ply:ChatPrint("NoGuilt for " .. table.concat(plrs, ", ") .. " currently: " .. tostring(value))
 		end
 	end,
 	1

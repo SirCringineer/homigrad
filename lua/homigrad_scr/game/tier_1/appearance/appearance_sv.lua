@@ -1,5 +1,5 @@
 --[[
-    TO-DO: 
+    TODO:
     - Networking of saved data on client
     - Applying appearance
 ]]
@@ -9,7 +9,7 @@ util.AddNetworkString("EasyAppearance_SendReqData")
 
 EasyAppearance = EasyAppearance or {}
 
-net.Receive( "EasyAppearance_SendData", function( len, ply ) 
+net.Receive( "EasyAppearance_SendData", function( len, ply )
 
     ply.bRandomAppearance = net.ReadBool()
     ply.tAppearance = net.ReadTable()
@@ -29,7 +29,7 @@ function EasyAppearance.GetRandomAppearance()
 
     tRandomAppearance.strModel = table.Random( table.GetKeys( EasyAppearance.Models ) )
     tRandomAppearance.strColthesStyle = "Random"
-    
+
     return tRandomAppearance
 end
 
@@ -39,7 +39,7 @@ function EasyAppearance.SendRequest( ply )
 end
 
 local function DoInvalid( ply )
-    ply:ChatPrint( "Your appearance not valid. Check Appearance menu or data/homigrad/appearancedata.json\nYour appearance set as random" ) 
+    ply:ChatPrint( "Your appearance not valid. Check Appearance menu or data/homigrad/appearancedata.json\nYour appearance set as random" )
     ply.tAppearance = EasyAppearance.GetRandomAppearance()
 
     return ply.tAppearance
@@ -55,7 +55,7 @@ function EasyAppearance.SetAppearance( ply )
         local tAppearance = ply.tAppearance
         if not tAppearance then
             ply.tAppearance = EasyAppearance.GetRandomAppearance()
-            tAppearance = ply.tAppearance  
+            tAppearance = ply.tAppearance
         end
         --PrintTable(tAppearance)
         if not EasyAppearance.Models[tAppearance.strModel] then
@@ -65,10 +65,10 @@ function EasyAppearance.SetAppearance( ply )
         local tModelParms = EasyAppearance.Models[tAppearance.strModel]
         --PrintTable(tAppearance)
         ply:SetModel( tModelParms.strPatch )
-        
+
         local sex = EasyAppearance.Sex[ ply:GetModelSex() ]
 
-    
+
         if not EasyAppearance.Appearances[sex][tAppearance.strColthesStyle] or tAppearance.strColthesStyle == "Random" then
             tAppearance.strColthesStyle = table.Random( table.GetKeys( EasyAppearance.Appearances[sex] ) )
         end
@@ -79,10 +79,10 @@ function EasyAppearance.SetAppearance( ply )
     else
         local selectedModel = ply:GetInfo("cl_playermodel") -- Retrieve the model selected by the player
         local modelToUse = player_manager.TranslatePlayerModel( selectedModel )
-        
-        if modelToUse == "models/player/kleiner.mdl" then 
+
+        if modelToUse == "models/player/kleiner.mdl" then
             print("Model being utilised is invalid. Most likely set to another model we don't have on the server!")
-            return 
+            return
         end
 
         ply:SetSubMaterial()

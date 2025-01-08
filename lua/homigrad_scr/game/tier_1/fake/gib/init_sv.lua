@@ -208,7 +208,7 @@ function Gib_Input(rag, bone, dmgInfo)
 		BloodParticleHeadshoot(rag:GetPhysicsObjectNum(phys_bone):GetPos(),dmgInfo:GetDamageForce() * 1)
 	end
 
-	-- FIXME: 	if dmgInfo:GetDamage() >= 50 and dmgInfo:IsDamageType(DMG_BLAST) and not gibRemove[phys_bone] then
+	-- FIXME: if dmgInfo:GetDamage() >= 50 and dmgInfo:IsDamageType(DMG_BLAST) and not gibRemove[phys_bone] then
 	if dmgInfo:IsDamageType(DMG_BLAST) then
 		for bonename in pairs(validBone) do
 			local access = false
@@ -285,7 +285,7 @@ hook.Add("EntityTakeDamage","Gib",function(ent,dmgInfo)
 	hook.Run("HomigradGib", ent, dmgInfo)
 end)
 
-hook.Add("HomigradGib","Gib",function(ent, dmgInfo, phys_bone)
+hook.Add("HomigradGib", "Gib", function(ent, dmgInfo, phys_bone)
 	if not ent:IsRagdoll() then
 		if not ent.onecallonly then
 			ent.onecallonly = true

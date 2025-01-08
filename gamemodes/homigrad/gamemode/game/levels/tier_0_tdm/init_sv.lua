@@ -67,7 +67,7 @@ changeClass = {
 	["weapon_frag"]="weapon_hg_f1",
 	["weapon_slam"]="weapon_hg_molotov",
 
-	["weapon_rpg"]="ent_ammo_46×30mm",
+	["weapon_rpg"]="ent_ammo_46x30mm",
 	["item_ammo_ar2_altfire"]="ent_ammo_762x39mm",
 	["item_ammo_357"]="ent_ammo_.44magnum",
 	["item_ammo_357_large"]="ent_ammo_.44magnum",
@@ -75,13 +75,13 @@ changeClass = {
 	["item_ammo_pistol_large"]="ent_ammo_9х19mm",
 	["item_ammo_ar2"]="ent_ammo_556x45mm",
 	["item_ammo_ar2_large"]="ent_ammo_556x45mm",
-	["item_ammo_ar2_smg1"]="ent_ammo_545×39mm",
+	["item_ammo_ar2_smg1"]="ent_ammo_545x39mm",
 	["item_ammo_ar2_large"]="ent_ammo_556x45mm",
-	["item_ammo_smg1"]="ent_ammo_545×39mm",
+	["item_ammo_smg1"]="ent_ammo_545x39mm",
 	["item_ammo_smg1_large"]="ent_ammo_762x39mm",
 	["item_box_buckshot"]="ent_ammo_12/70gauge",
 	["item_box_buckshot_large"]="ent_ammo_12/70gauge",
-	["item_rpg_round"]="ent_ammo_57×28mm",
+	["item_rpg_round"]="ent_ammo_57x28mm",
 	["item_ammo_crate"]="ent_ammo_9x39mm",
 
 	["item_healthvial"]="med_band_small",
@@ -159,17 +159,16 @@ function tdm.EndRound(winner) tdm.EndRoundMessage(winner) end
 
 --
 
-function tdm.GiveSwep(ply,list,mulClip1)
+function tdm.GiveSwep(ply, list, mulClip1)
 	if not list then return end
 
 	local wep = ply:Give(type(list) == "table" and list[math.random(#list)] or list)
-
 	mulClip1 = mulClip1 or 3
 
-    if IsValid(wep) then
-        wep:SetClip1(wep:GetMaxClip1())
-	    ply:GiveAmmo(wep:GetMaxClip1() * mulClip1,wep:GetPrimaryAmmoType())
-    end
+	if IsValid(wep) then
+		wep:SetClip1(wep:GetMaxClip1())
+		ply:GiveAmmo(wep:GetMaxClip1() * mulClip1, wep:GetPrimaryAmmoType())
+	end
 end
 
 function tdm.PlayerSpawn2(ply,teamID)
