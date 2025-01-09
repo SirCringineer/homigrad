@@ -61,11 +61,11 @@ COMMANDS.noguilt = {
 	function(ply, args)
 		if not ply:IsAdmin() then return end
 		local value = (tonumber(args[2]) == 1 and true) or false
-		local plrs = player.GetListByName(args[1]) or {ply}
+		local plrs = player.GetListByName(args[1], ply)
 
-		for _, ply in pairs(plrs) do
-			ply.noguilt = value
-			ply:ChatPrint("NoGuilt for " .. table.concat(plrs, ", ") .. " currently: " .. tostring(value))
+		for _, plr in pairs(plrs) do
+			plr.noguilt = value
+			plr:ChatPrint("NoGuilt for " .. table.concat(plrs, ", ") .. " currently: " .. tostring(value))
 		end
 	end,
 	1
@@ -75,8 +75,8 @@ COMMANDS.fake = {
 	function(ply, args)
 		if not ply:IsAdmin() then return end
 
-		for _, ply in pairs(player.GetListByName(args[1]) or {ply}) do
-			Faking(ply)
+		for _, plr in pairs(player.GetListByName(args[1], ply)) do
+			Faking(plr)
 		end
 	end,
 	1
@@ -194,6 +194,5 @@ concommand.Add("hg_getguilt", function(ply)
 		text = text .. ply:Name() .. ": " .. ply.Guilt .. "\n"
 	end
 
-	ply:ConsolePrint(text)
 	ply:ChatPrint(text)
 end)

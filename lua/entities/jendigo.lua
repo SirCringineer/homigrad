@@ -1,4 +1,5 @@
-﻿AddCSLuaFile()
+﻿--[[
+AddCSLuaFile()
 ENT.Type = "anim"
 ENT.PrintName = "The Ancient Wendigo"
 ENT.Author = "Jackarunda"
@@ -8,7 +9,6 @@ ENT.Spawnable = false
 -- that would ruin the secret
 
 if (SERVER) then
-
 	function ENT:Initialize()
 		self:SetModel("models/ancient jendigo/ancient jendigo.mdl")
 		self:PhysicsInit(SOLID_NONE)
@@ -43,7 +43,7 @@ elseif (CLIENT) then
 			local Right = ViewAng:Right()
 
 			local CheckPos = ViewPos + ViewVec * math.random(1000, 3000) + Vector(0, 0, 1000) + Right * math.random(-500, 500)
-			
+
 			local Tr = util.QuickTrace(CheckPos, Vector(0, 0, -2000))
 
 			if ((Tr.Hit) and (Tr.HitWorld)) then
@@ -61,15 +61,12 @@ elseif (CLIENT) then
 				self:ManipulateBoneAngles(33, Angle(0, 0, 30))
 				self:ManipulateBoneAngles(34, Angle(0, 40, 10))
 				self:DrawModel()
-				--[[
-					for i = 0, 100 do
-						print(i, self:GetBoneName(i))
-					end
-				--]]
+				-- for i = 0, 100 do
+				-- 	print(i, self:GetBoneName(i))
+				-- end
 			end
 
 			ANCIENT_WENDIGO_DRAW_FRAMES = math.Clamp(ANCIENT_WENDIGO_DRAW_FRAMES - 1, 0, 10)
 		end
 	end
-
-end
+end --]]

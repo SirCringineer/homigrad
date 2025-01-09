@@ -1,4 +1,3 @@
--- cl_traitor_markers.lua
 -- Client-side code to receive traitor positions and draw markers
 
 net.Receive("SendTraitorPositions", function()

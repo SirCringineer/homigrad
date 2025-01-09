@@ -1,3 +1,4 @@
+--[[ Literally game's code. What are we optimizing exactly?
 local meta = FindMetaTable("Entity")
 local GetOwner = meta.GetOwner
 local val, tab
@@ -42,4 +43,4 @@ function meta:__index(key)
 	-- Legacy: sometimes use self:GetOwner() to get the owner.. so lets carry on supporting that stupidness
 	-- This needs to be retired, just like self.Entity was.
 	if key == "Owner" then return GetOwner(self) end
-end
+end --]]

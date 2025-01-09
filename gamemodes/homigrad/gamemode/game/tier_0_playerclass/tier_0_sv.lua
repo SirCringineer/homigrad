@@ -44,9 +44,9 @@ end)
 
 COMMANDS.playerclass = {
 	function(ply, args)
-		for _, ply2 in pairs(player.GetListByName(args[1]) or {ply}) do
-			ply2:SetPlayerClass(args[2])
-			ply:ChatPrint(ply2:Name())
+		for _, plr in pairs(player.GetListByName(args[1], ply)) do
+			plr:SetPlayerClass(args[2])
+			ply:ChatPrint(plr:Name() .. " = " .. args[2])
 		end
 	end
 }

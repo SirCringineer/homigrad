@@ -2,7 +2,7 @@
 AddCSLuaFile()
 ENT.Base = "ent_jack_gmod_ezgrenade"
 ENT.Author = "Jackarunda, TheOnly8Z"
-ENT.PrintName = "EZHG HL2 Granade"
+ENT.PrintName = "EZHG HL2 Grenade"
 ENT.Category = "JModHomigrad"
 ENT.Spawnable = true
 ENT.JModPreferredCarryAngles = Angle(0, -140, 0)
@@ -15,7 +15,7 @@ if SERVER then
 		self:SetState(JMod.EZ_STATE_ARMED)
 		self:SpoonEffect()
 
-		
+
 		local time = 3
 		timer.Simple(time - 1,function()
 			player.EventPoint(self:GetPos(),"fragnade pre detonate",1024,self)
@@ -58,7 +58,7 @@ elseif CLIENT then
 
 	function ENT:Think()
 		local State = self:GetState()
-		if(State==JMod.EZ_STATE_ARMED)then 
+		if(State==JMod.EZ_STATE_ARMED)then
 		self.nextpip = self.nextpip or CurTime() + 0.6
 		self.delay = self.delay or 0
 			if self.nextpip <= CurTime() then

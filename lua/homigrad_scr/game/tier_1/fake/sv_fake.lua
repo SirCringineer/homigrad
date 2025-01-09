@@ -158,9 +158,9 @@ function Faking(ply,force)
 			local eyepos = ply:EyeAngles()
 			local health = ply:Health()
 
-			JMod.Иди_Нахуй = true
+			JMod.hgFaking = true
 			ply:Spawn()
-			JMod.Иди_Нахуй = nil
+			JMod.hgFaking = nil
 
 			ply:DrawShadow(true)
 			ply:SetRenderMode(RENDERMODE_NORMAL)

@@ -1,9 +1,7 @@
 if engine.ActiveGamemode() ~= "homigrad" then return end
 
 AddCSLuaFile("shared.lua")
-AddCSLuaFile("cl_init.lua")
 include("shared.lua")
-include("cl_init.lua")
 
 SWEP.Dealy = 0.25
 
@@ -76,13 +74,13 @@ function SWEP:Heal(ent)
 
         return true
     end
-    
+
     -- FIXME: If there is a bug here, probably just remove.
     if ent.LeftLeg < 1 or ent.RightLeg < 1 then
         ent.LeftLeg = 1
         ent.RightLeg = 1
         sound.Play(healsound,ent:GetPos(),75,100,0.5)
-        
+
         return true
     end
 

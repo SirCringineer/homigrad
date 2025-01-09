@@ -171,7 +171,7 @@ function css.GetCountLive(list,func)
 
 		result = func and func(ply)
 		if result == true then count = count + 1 continue elseif result == false then continue end
-		if not PlayerIsCuffs(ply) and ply:Alive() then count = count + 1 end
+		if not IsCuffed(ply) and ply:Alive() then count = count + 1 end
 	end
 
 	return count

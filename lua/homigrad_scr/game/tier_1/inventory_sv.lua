@@ -5,9 +5,9 @@ util.AddNetworkString("ply_take_ammo")
 local function send(ply,lootEnt,remove)
 	if ply then
 		net.Start("inventory")
-		net.WriteEntity(not remove and lootEnt or nil)
-		net.WriteTable(lootEnt.Info.Weapons)
-		net.WriteTable(lootEnt.Info.Ammo)
+			net.WriteEntity(not remove and lootEnt or nil)
+			net.WriteTable(lootEnt.Info.Weapons)
+			net.WriteTable(lootEnt.Info.Ammo)
 		net.Send(ply)
 	else
 		if lootEnt.UsersInventory and istable(lootEnt.UsersInventory) then
@@ -72,7 +72,7 @@ local prekol = {
 	gmod_tool = true
 }
 
-hook.Add("DoPlayerDeath","huyhuy",function(ply)
+hook.Add("DoPlayerDeath", "huyhuy",function(ply)
 	local info = SavePlyInfo(ply)
 
 	ply.weps = {}

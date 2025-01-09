@@ -6,7 +6,7 @@ function CLASS.Off(self)
 	if CLIENT then return end
 
 	self.isCombine = nil
-	self.cantUsePer4ik = nil
+	self.cantUsePepper = nil
 end
 
 function CLASS.On(self)
@@ -23,7 +23,7 @@ function CLASS.On(self)
 	self:Give("weapon_hg_hl2")
 
 	self.isCombine = true
-	self.cantUsePer4ik = true
+	self.cantUsePepper = true
 
 	self:EmitSound("radio/go.wav")
 end

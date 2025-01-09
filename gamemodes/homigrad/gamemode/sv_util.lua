@@ -21,7 +21,7 @@ function NeedAutoBalance(addT, addCT)
 end
 
 --[[ NOTE: This function is defined in weapon_cuffs, might delete later if nothing brakes
-function PlayerIsCuffs(ply)
+function IsCuffed(ply)
 	if not ply:Alive() then return end
 
 	local ent = ply:GetNWEntity("DeathRagdoll")

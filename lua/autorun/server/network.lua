@@ -9,7 +9,11 @@
 
 if game.SinglePlayer() then return end
 
+local hook = hook
 local ents_FindByClass = ents.FindByClass
+local EFL_NO_THINK_FUNCTION = EFL_NO_THINK_FUNCTION
+local ipairs = ipairs
+local IsValid = IsValid
 local table_insert = table.insert
 
 module("seats_network_optimizer")

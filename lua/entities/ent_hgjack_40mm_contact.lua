@@ -1,5 +1,6 @@
 -- Jackarunda 2021
 AddCSLuaFile()
+
 ENT.Base = "ent_jack_gmod_ezgrenade"
 ENT.Author = "Jackarunda, TheOnly8Z, Niik"
 ENT.PrintName = "Контактный Заряд для Гранатомёта"
@@ -37,7 +38,7 @@ if SERVER then
 		local SelfPos = self:LocalToWorld(self:OBBCenter())
 		JMod.Sploom(self:GetOwner(), self:GetPos(), 175) --math.random(150, 250))
 		--JMod.Sploom(self:GetOwner(), self:GetPos(), 0)
-		self:EmitSound("dwr/explosions/indoors/distant/"..math.random(3,8)..".wav", 90, 100)
+		self:EmitSound("dwr/explosions/indoors/distant/" .. math.random(3,8) .. ".wav", 90, 100)
 
 		--ParticleEffect("pcf_jack_groundsplode_small",SelfPos,vector_up:Angle())
 		--util.ScreenShake(SelfPos, 20, 20, 1, 1000)
@@ -57,10 +58,8 @@ if SERVER then
 
 		self:Remove()
 	end
-
 elseif CLIENT then
-	local GlowSprite = Material("sprites/mat_jack_circle")
 	function ENT:Draw()
-		self:DrawModel()	
+		self:DrawModel()
 	end
 end

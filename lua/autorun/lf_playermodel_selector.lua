@@ -1,7 +1,7 @@
 -- Enhanced PlayerModel Selector
 -- Upgraded code by LibertyForce http://steamcommunity.com/id/libertyforce
 -- Based on: https://github.com/garrynewman/garrysmod/blob/1a2c317eeeef691e923453018236cf9f66ee74b4/garrysmod/gamemodes/sandbox/gamemode/editor_player.lua
--- From: https://github.com/harrisoniam/homigrad
+-- From: https://github.com/harrisoniam/homigrad/blob/main/lua/autorun/lf_playermodel_selector.lua
 
 local flag = {FCVAR_REPLICATED}
 if SERVER then
@@ -177,7 +177,7 @@ if SERVER then
 					end
 
 					file.Write("lf_playermodel_selector/sv_voxlist.txt", util.TableToJSON(VOXlist, true))
-					--TFAVOX_Models = { }
+					-- TFAVOX_Models = { }
 					tfa_reload()
 				end
 			end
@@ -239,7 +239,8 @@ if SERVER then
 			if GetConVar("sv_playermodel_selector_flexes"):GetBool() and tobool(ply:GetInfoNum("cl_playermodel_selector_unlockflexes", 0)) then
 				local flexes = ply:GetInfo("cl_playerflexes")
 				if (flexes == nil) or (flexes == "0") then return end
-				local flexes = string.Explode(" ", flexes)
+
+				flexes = string.Explode(" ", flexes)
 
 				for k = 0, ply:GetFlexNum() - 1 do
 					ply:SetFlexWeight(k, tonumber(flexes[k + 1]) or 0)

@@ -23,7 +23,7 @@ hook.Add("PlayerSpawn","Damage",function(ply)
 	ply.msgRightArm = 0
 	ply.msgLeftLeg = 0
 	ply.msgRightLeg = 0
-	
+
 	ply.LastDMGInfo = nil
 	ply.LastHitPhysicsBone = nil
 	ply.LastHitBoneName = nil
@@ -102,19 +102,17 @@ DamageBoneMul = {
 	[HITGROUP_HEAD] = 2.5,
 }
 
-local NULLENTITY = Entity(-1)
-
 hook.Add("EntityTakeDamage","ragdamage",function(ent,dmginfo) --урон по разным костям регдолла
 	if ent.nohook then return end
-	
+
 	if dmginfo:IsDamageType(DMG_CRUSH) and not ent.dodamage then ent.dodamage = nil return end
-	
+
 	if ent:GetClass() == "npc_bullseye" then
 		local rag = ent.rag
 		rag:TakeDamageInfo(dmginfo)
 		return false
 	end
-	
+
 	if ent:IsPlayer() and IsValid(ent.FakeRagdoll) then return end
 	if ent.overridedmg then return end
 	if IsValid(ent:GetPhysicsObject()) and dmginfo:IsDamageType(DMG_BULLET+DMG_BUCKSHOT+DMG_CLUB+DMG_GENERIC+DMG_BLAST) then ent:GetPhysicsObject():ApplyForceOffset(dmginfo:GetDamageForce():GetNormalized() * math.min(dmginfo:GetDamage() * 10,3000),dmginfo:GetDamagePosition()) end
@@ -137,13 +135,13 @@ hook.Add("EntityTakeDamage","ragdamage",function(ent,dmginfo) --урон по р
 		effdata:SetScale(1)
 		util.Effect("BloodImpact",effdata,nil,true)
 	end
-	
+
 	if not ply or not ply:IsPlayer() or not ply:Alive() or ply:HasGodMode() then
 		return
 	end
 
 	local rag = ply:IsPlayer() and IsValid(ply.FakeRagdoll) and ply.FakeRagdoll
-	
+
 	if rag and dmginfo:IsDamageType(DMG_CRUSH) and att and att:IsRagdoll() then
 		dmginfo:SetDamage(0)
 
@@ -178,7 +176,7 @@ hook.Add("EntityTakeDamage","ragdamage",function(ent,dmginfo) --урон по р
 	sharikLoh:SetDamageType(dmginfo:GetDamageType())
 	sharikLoh:SetDamagePosition(dmginfo:GetDamagePosition())
 	sharikLoh:SetDamageForce(dmginfo:GetDamageForce())
-	
+
 	ply.LastDMGInfo = sharikLoh
 
 	if rag and mul then dmginfo:ScaleDamage(mul) end
@@ -204,7 +202,7 @@ hook.Add("EntityTakeDamage","ragdamage",function(ent,dmginfo) --урон по р
 	dmginfo:ScaleDamage(100)
 	local armorMul,armorDur = 1,0
 	local haveHelmet
-	
+
 	for armorInfo,armorData in pairs(armors) do
 		local dur = armorData.dur / armorInfo.dur
 
@@ -229,7 +227,7 @@ hook.Add("EntityTakeDamage","ragdamage",function(ent,dmginfo) --урон по р
 				sound.Emit(ent,"player/kevlar" .. math.random(1,6) .. ".wav",90)
 			end
 		end
-		
+
 		if dur >= 0.25 then
 			armorDur = (armorData.dur / 100) * dur
 			--dur = math.max(dur - 0.5,0)
@@ -239,7 +237,7 @@ hook.Add("EntityTakeDamage","ragdamage",function(ent,dmginfo) --урон по р
 			break
 		end
 	end
-	
+
 	dmginfo:SetDamage(dmginfo:GetDamage() * armorMul)
 
 	local att = IsValid(dmginfo:GetAttacker()) and dmginfo:GetAttacker()
@@ -247,11 +245,11 @@ hook.Add("EntityTakeDamage","ragdamage",function(ent,dmginfo) --урон по р
 	if att and not att:IsNPC() then dmginfo:ScaleDamage(0.5) end
 	hook.Run("HomigradDamage",ply,hitgroup,dmginfo,rag,armorMul,armorDur,haveHelmet)
 	if att and not att:IsNPC() then dmginfo:ScaleDamage(0.5) end
-	
+
 	if dmginfo:IsDamageType(DMG_BLAST) then
 		dmginfo:ScaleDamage(2)
 	end
-	
+
 	if rag then
 		if dmginfo:GetDamageType() == DMG_CRUSH then
 			dmginfo:ScaleDamage(1 / 40 / 15)
@@ -299,38 +297,47 @@ hook.Add("Ragdoll Collide", "organismhuy", function(ragdoll, data)
 	if data.DeltaTime < 0.25 then return end
 	if not ragdoll:IsRagdoll() then return end
 	if data.HitEntity:IsPlayerHolding() then return end
-	
+
 	velocityDamage(ragdoll,data)
 end)
 
 local bonenames = {
-    ['ValveBiped.Bip01_Head1']="Head",
-    ['ValveBiped.Bip01_Spine']="Spine",
-    ['ValveBiped.Bip01_R_Hand']="Right Hand",
-    ['ValveBiped.Bip01_R_Forearm']="Right Forearm",
-    ['ValveBiped.Bip01_R_Foot']="Right Foot",
-    ['ValveBiped.Bip01_R_Thigh']='Right Thigh',
-    ['ValveBiped.Bip01_R_Calf']='Right Calf',
-    ['ValveBiped.Bip01_R_Shoulder']='Right Shoulder',
-    ['ValveBiped.Bip01_R_Elbow']='Right Elbow',
-	['ValveBiped.Bip01_L_Hand']='Left Hand',
-    ['ValveBiped.Bip01_L_Forearm']='Left Forearm',
-    ['ValveBiped.Bip01_L_Foot']='Left Foot',
-    ['ValveBiped.Bip01_L_Thigh']='Left Thigh',
-    ['ValveBiped.Bip01_L_Calf']='Left Calf',
-    ['ValveBiped.Bip01_L_Shoulder']='Left Shoulder',
-    ['ValveBiped.Bip01_L_Elbow']='Left Elbow'
+	["ValveBiped.Bip01_Head1"] = "#hg.bones.head",
+	["ValveBiped.Bip01_Spine"] = "#hg.bones.spine",
+	["ValveBiped.Bip01_Spine2"] = "#hg.bones.spine",
+	["ValveBiped.Bip01_Pelvis"] = "#hg.bones.pelvis",
+
+	["ValveBiped.Bip01_R_Hand"] = "#hg.bones.rhand",
+	["ValveBiped.Bip01_R_Forearm"] = "#hg.bones.rforearm",
+	["ValveBiped.Bip01_R_Shoulder"] = "#hg.bones.rshoulder",
+	["ValveBiped.Bip01_R_UpperArm"] = "#hg.bones.rshoulder",
+	["ValveBiped.Bip01_R_Elbow"] = "#hg.bones.relbow",
+
+	["ValveBiped.Bip01_R_Foot"] = "#hg.bones.rfoot",
+	["ValveBiped.Bip01_R_Thigh"] = "#hg.bones.rthigh",
+	["ValveBiped.Bip01_R_Calf"] = "#hg.bones.rcalf",
+
+	["ValveBiped.Bip01_L_Hand"] = "#hg.bones.lhand",
+	["ValveBiped.Bip01_L_Forearm"] = "#hg.bones.lforearm",
+	["ValveBiped.Bip01_L_Shoulder"] = "#hg.bones.lshoulder",
+	["ValveBiped.Bip01_L_UpperArm"] = "#hg.bones.lshoulder",
+	["ValveBiped.Bip01_L_Elbow"] = "#hg.bones.lelbow",
+
+	["ValveBiped.Bip01_L_Foot"] = "#hg.bones.lfoot",
+	["ValveBiped.Bip01_L_Thigh"] = "#hg.bones.lthigh",
+	["ValveBiped.Bip01_L_Calf"] = "#hg.bones.lcalf"
 }
 
-local reasons = {
-	["blood"] = "You died from server blood loss.",
-	["pain"] = "You died from extreme & severe pain.",
-	["painlosing"] = "You died from an overdose.",
-	["adrenaline"] = "You died from an overdose.",
-	["killyourself"] = "You killed yourself.",
-	["hungry"] = "You died of hunger.",
-	["virus"] = "You died from the Zombie Virus.",
-	["poison"] = "You died from poison entering your system.",
+local deathreasons = {
+	["unknown"] = "#hg.deathreasons.unknown",
+	["blood"] = "#hg.deathreasons.blood",
+	["pain"] = "#hg.deathreasons.pain",
+	["painlosing"] = "#hg.deathreasons.painlosing",
+	["adrenaline"] = "#hg.deathreasons.adrenaline",
+	["killyourself"] = "#hg.deathreasons.killyourself",
+	["hungry"] = "#hg.deathreasons.hungry",
+	["virus"] = "#hg.deathreasons.virus",
+	["poison"] = "#hg.deathreasons.poison",
 	["guilt"] = "You were slayed for exceeding your guilt maximum."
 }
 
@@ -346,19 +353,19 @@ hook.Add("Player Death","plymessage",function(ply,hitgroup,dmginfo)
 	if ply == att then
 		ply:ChatPrint("You killed yourself.") -- FIXME: ply:ChatPrint("You killed yourself." .. add)
 	elseif reason then
-		ply:ChatPrint(reasons[reason] or "You died under mysterious circumstances.")
+		ply:ChatPrint(deathreasons[reason] or "You died under mysterious circumstances.")
 	elseif att then
 		local dmgtype = "wounded"
-	
-		dmgtype = dmgInfo:IsDamageType(DMG_BULLET+DMG_BUCKSHOT) and (dmgInfo:IsDamageType(DMG_BUCKSHOT) and "from a gunshot wound" or "from a gunshot wound") or 
-			dmgInfo:IsExplosionDamage() and "from an explosive" or 
-			dmgInfo:IsDamageType(DMG_SLASH) and "from a knife wound" or 
-			dmgInfo:IsDamageType(DMG_CLUB+DMG_GENERIC) and "from blunt-force trauma" or 
+
+		dmgtype = dmgInfo:IsDamageType(DMG_BULLET+DMG_BUCKSHOT) and (dmgInfo:IsDamageType(DMG_BUCKSHOT) and "from a gunshot wound" or "from a gunshot wound") or
+			dmgInfo:IsExplosionDamage() and "from an explosive" or
+			dmgInfo:IsDamageType(DMG_SLASH) and "from a knife wound" or
+			dmgInfo:IsDamageType(DMG_CLUB+DMG_GENERIC) and "from blunt-force trauma" or
 			dmgtype
-		
+
 		ply:ChatPrint("You died " .. dmgtype) -- FIXME: Add ' .. add' at the end of string.
 		ply:ChatPrint("You were killed by: " .. att:Name())
-	
+
 		player.EventPoint(att:GetPos(),"hitgroup killed",512,att,ply)
 	else
 		ply:ChatPrint("You died under mysterious circumstances.")

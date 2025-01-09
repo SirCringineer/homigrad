@@ -44,7 +44,7 @@ function tdm.GetListMul(list, mul, func, max)
 	mul = math.Round(#list * mul)
 	mul = (max and math.max(mul, max)) or mul
 
-	for i = 1, mul do
+	for _ = 1, mul do
 		local ply, key = list[math.random(#list)]
 		list[key] = nil
 
@@ -143,7 +143,7 @@ function tdm.GetCountLive(list, func)
 			continue
 		end
 
-		if not PlayerIsCuffs(ply) and ply:Alive() then
+		if not IsCuffed(ply) and ply:Alive() then
 			count = count + 1
 		end
 	end

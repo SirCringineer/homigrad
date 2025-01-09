@@ -143,8 +143,8 @@ COMMANDS.russian_roulette = {
 	function(ply, args)
 		if not ply:IsAdmin() then return end
 
-		for _, p in pairs(player.GetListByName(args[1]) or {ply}) do
-			local wep = p:Give("weapon_mateba", true)
+		for _, plr in pairs(player.GetListByName(args[1], ply)) do
+			local wep = plr:Give("weapon_mateba", true)
 			wep:SetClip1(1)
 			wep:RollDrum()
 		end
@@ -364,14 +364,14 @@ function homicide.RoundEndCheck()
 	tdm.Center()
 
 	local TAlive = tdm.GetCountLive(homicide.t)
-
-	local Alive = tdm.GetCountLive(team.GetPlayers(1), function(ply)
-		if ply.roleT or ply.isContr then return false end
-	end)
+	local Alive = tdm.GetCountLive(team.GetPlayers(1), function(ply) if ply.roleT or ply.isContr then return false end end)
 
 	if roundTimeStart + roundTime < CurTime() then
 		if not homicide.police then SpawnPolicePlayers() end
-	elseif (roundTimeStart + 180) + roundTime < CurTime() then return EndRound() end
+	elseif roundTimeStart + 180 + roundTime < CurTime() then
+		return EndRound()
+	end
+
 	if TAlive == 0 and Alive == 0 then return EndRound(1) end
 	if TAlive == 0 then return EndRound(2) end
 	if Alive == 0 then return EndRound(1) end
@@ -392,6 +392,8 @@ COMMANDS.forcepolice = {
 }
 
 function homicide.EndRound(winner)
+	local tbl = TableRound()
+
 	net.Start("hg_sendchat_format")
 		net.WriteTable({
 			"#hg.modes.teamwin",

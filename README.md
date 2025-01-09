@@ -20,6 +20,7 @@ For epic gaming, a tickrate of **99-128** is recommended to improve controls whe
 
 - [ ] Move Homigrad's commands to ULX (i like ulx).
 - [ ] Find and fix existing bugs (there are many to address).
+- [ ] Replace `Sound()` with just strings (`Sound()` just returns the given string because `util.PrecacheSound()` is disabled/broken on purpose by the devs).
 
 ## Known Bugs
 

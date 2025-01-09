@@ -1,9 +1,11 @@
-SWEP.Base = "weapon_hg_granade_base"
+SWEP.Base = "weapon_hg_grenade_base"
 
-SWEP.PrintName = "F1"
-SWEP.Author = "Homigrad"
-SWEP.Instructions = "If you're reading this, idk what this actually is."
-SWEP.Category = "Grenades"
+if CLIENT then
+	SWEP.PrintName = "#hg.f1.name"
+	SWEP.Author = "Homigrad"
+	SWEP.Instructions = "#hg.f1.inst"
+	SWEP.Category = "#hg.category.grenades"
+end
 
 SWEP.Slot = 4
 SWEP.SlotPos = 2
@@ -12,4 +14,4 @@ SWEP.Spawnable = true
 SWEP.ViewModel = "models/pwb/weapons/w_f1.mdl"
 SWEP.WorldModel = "models/pwb/weapons/w_f1.mdl"
 
-SWEP.Granade = "ent_hgjack_f1nade"
+SWEP.Grenade = "ent_hgjack_f1nade"

@@ -200,7 +200,7 @@ function LevelRandom()
 		randoms[k] = v
 	end
 
-	for i = 1, #randoms do
+	for _ = 1, #randoms do
 		local name, key = table.Random(randoms)
 		randoms[key] = nil
 
@@ -217,6 +217,7 @@ local roundThink = 0
 
 function RoundEndCheck()
 	if SolidMapVote.isOpen or roundThink > CurTime() or #player.GetAll() < 2 then return end
+
 	roundThink = roundThink + 1
 
 	if not roundActive then return end
@@ -449,10 +450,8 @@ hook.Add("PlayerCanPickupWeapon", "PlayerManualPickup", function(ply, wep)
 		local vec = ply:EyeAngles():Forward()
 		local vec2 = (wep:GetPos() - ply:EyePos()):Angle():Forward()
 
-		if vec:Dot(vec2) > 0.8 and not ply:HasWeapon(wep:GetClass()) then
-			if ply:KeyDown(IN_USE) then
-				allow = true
-			end
+		if vec:Dot(vec2) > 0.8 and not ply:HasWeapon(wep:GetClass()) and ply:KeyDown(IN_USE) then
+			allow = true
 		end
 	else
 		allow = true
@@ -469,8 +468,8 @@ hook.Add("PlayerCanPickupItem", "PlayerManualPickup", function(ply, wep)
 	local vec = ply:EyeAngles():Forward()
 	local vec2 = (wep:GetPos() - ply:EyePos()):Angle():Forward()
 
-	if vec:Dot(vec2) > 0.8 and not ply:HasWeapon(wep:GetClass()) then
-		if ply:KeyPressed(IN_USE) then return true end
+	if vec:Dot(vec2) > 0.8 and not ply:HasWeapon(wep:GetClass()) and ply:KeyPressed(IN_USE) then
+		return true
 	end
 
 	return false

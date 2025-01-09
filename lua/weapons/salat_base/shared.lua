@@ -72,18 +72,6 @@ end
 hg.lerpFrameTime2 = lerpFrameTime2
 hg.lerpFrameTime = lerpFrameTime
 
-function LerpFT(lerp, source, set)
-	return Lerp(lerpFrameTime2(lerp), source, set)
-end
-
-function LerpVectorFT(lerp, source, set)
-	return LerpVector(lerpFrameTime2(lerp), source, set)
-end
-
-function LerpAngleFT(lerp, source, set)
-	return LerpAngle(lerpFrameTime2(lerp), source, set)
-end
-
 SWEP.Secondary.ClipSize		= -1
 SWEP.Secondary.DefaultClip	= -1
 SWEP.Secondary.Automatic	= false
@@ -143,8 +131,8 @@ function SWEP:DrawHUD()
 	self:DrawHUDAdd()
 	show = math.Clamp(self.AmmoChek or 0,0,1)
 	self.AmmoChek = Lerp(2*FrameTime(),self.AmmoChek or 0,0)
-	color_gray = Color(225,215,125,190*show)
-	color_gray1 = Color(225,215,125,255*show)
+	local color_gray = Color(225,215,125,190 * show)
+	local color_gray1 = Color(225,215,125,255 * show)
 	if show > 0 then
 	local ply = LocalPlayer()
 	local ammo,ammobag = self:GetMaxClip1(), self:Clip1()
@@ -205,8 +193,6 @@ function SWEP:DrawWorldModel()
 	if not hg_skins:GetBool() then return end
 
     if (IsValid(self:GetOwner()) and self:GetOwner():IsPlayer() and skins[self:GetOwner():GetUserGroup()]) then
-        --self:SetSubMaterial( 0, self:GetNWString( "skin" ) )
-		--для лохов
         self:DrawModel()
     end
 end
@@ -859,25 +845,26 @@ function SWEP:ApplyAnim(ply)
 		hand:Set(angZero)
 		if not self.isClose and not self:IsSprinting() then
 			if not ply:GetNWBool("Suiciding") then
-				self:SetWeaponHoldType(self.HoldType)
+				self:SetHoldType(self.HoldType)
 				hand:Set(angZero)
 				forearm:Set(self:IsPistolHoldType() and pistol_hold or rifle_hold)
 			elseif not self.TwoHands and ply:GetNWBool("Suiciding") then
-				self:SetWeaponHoldType("normal")
+				self:SetHoldType("normal")
 				forearm:Set(angSuicide2)
 				hand:Set(angSuicide3)
 			elseif ply:GetNWBool("Suiciding") then
-				self:SetWeaponHoldType("normal")
+				self:SetHoldType("normal")
 				hand:Set(angSuicide)
 			end
 		end
 	else
 		self.isClose = true
-		--[[if not self.TwoHands then
+		--[[
+		if not self.TwoHands then
 			self:SetWeaponHoldType("normal")
 		else
 			self:SetWeaponHoldType("passive")
-		end--]]
+		end --]]
 	end
 	self.lerpClose = LerpFT(0.1,self.lerpClose,(self.isClose and 1) or 0)
 

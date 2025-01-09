@@ -193,11 +193,7 @@ if CLIENT then
 						-- v might have changed using autorefresh so grab it again
 						local newv = list.Get("DesktopWindows")[k]
 
-						if v.onewindow and IsValid(icon.Window) then
-							icon.Window:Center()
-
-							return
-						end
+						if v.onewindow and IsValid(icon.Window) then return icon.Window:Center() end
 
 						-- Make the window
 						icon.Window = g_ContextMenu:Add("DFrame")
@@ -274,9 +270,7 @@ if CLIENT then
 						label:SetExpensiveShadow(1, Color(0, 0, 0, 200))
 
 						icon.DoClick = function()
-							--
 							-- v might have changed using autorefresh so grab it again
-							--
 							local newv = list.Get("DesktopWindows")[k]
 
 							if v.onewindow and IsValid(icon.Window) then

@@ -2,7 +2,7 @@
 AddCSLuaFile()
 ENT.Base = "ent_jack_gmod_ezgrenade"
 ENT.Author = "Jackarunda, TheOnly8Z"
-ENT.PrintName = "EZHG RGD5 Granade"
+ENT.PrintName = "EZHG RGD5 Grenade"
 ENT.Category = "JModHomigrad"
 ENT.Spawnable = true
 ENT.JModPreferredCarryAngles = Angle(0, -140, 0)
@@ -15,7 +15,7 @@ if SERVER then
 		self:SetState(JMod.EZ_STATE_ARMED)
 		self:SpoonEffect()
 
-		
+
 		local time = math.random(3.2,4.2)
 		timer.Simple(time - 1,function()
 			player.EventPoint(self:GetPos(),"fragnade pre detonate",1024,self)
@@ -54,14 +54,14 @@ elseif CLIENT then
 	function ENT:Draw()
 		self:DrawModel()
 		-- sprites for calibrating the lethality/casualty radius
-		
+
 		--[[local State,Vary=self:GetState(),math.sin(CurTime()*50)/2+.5
 		if(State==JMod.EZ_STATE_ARMED)then
 			render.SetMaterial(GlowSprite)
 			render.DrawSprite(self:GetPos()+Vector(0,0,4),15*52*2,15*52*2,Color(255,0,0,128))
 			render.DrawSprite(self:GetPos()+Vector(0,0,4),5*52*2,5*52*2,Color(255,255,255,128))
 		end]]--
-		
+
 	end
 
 	--language.Add("ent_jack_gmod_ezfragnade", "EZ Frag Grenade")

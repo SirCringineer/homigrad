@@ -66,7 +66,7 @@ function hg.includeDir(path, includes)
 		v = _files[i]
 		tier = nil
 
-		for i, sum in pairs(string_split(v, "_")) do
+		for _, sum in pairs(string_split(v, "_")) do
 			if tier then
 				sum = string.gsub(sum, ".lua", "")
 				tier = tonumber(sum)
@@ -97,7 +97,7 @@ function hg.includeDir(path, includes)
 		v = _dirs[i]
 		tier = nil
 
-		for i, sum in pairs(string_split(v, "_")) do
+		for _, sum in pairs(string_split(v, "_")) do
 			if tier then
 				tier = tonumber(sum)
 				break
@@ -155,7 +155,6 @@ end
 
 hg_includeDir = hg.includeDir
 
-local string_sub, string_split, string_gsub, string_find = string.sub, string.Split, string.gsub, string.find
 local trace
 
 function hg.GetPath(levelUp)

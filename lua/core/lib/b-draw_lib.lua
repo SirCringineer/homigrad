@@ -11,9 +11,6 @@ file.CreateDir("downloaded_assets")
 local exists = file.Exists
 local write = file.Write
 local fetch = http.Fetch
-local white = Color(255, 255, 255)
-local surface = surface
-local crc = util.CRC
 local _error = Material("error")
 local mats = {}
 local fetchedavatars = {}
@@ -21,7 +18,8 @@ local fetchedavatars = {}
 local function fetch_asset(url)
 	if not url then return _error end
 	if mats[url] then return mats[url] end
-	local crc = crc(url)
+
+	local crc = util.CRC(url)
 
 	if exists("downloaded_assets/" .. crc .. ".png", "DATA") then
 		mats[url] = Material("data/downloaded_assets/" .. crc .. ".png")
@@ -54,7 +52,7 @@ local function fetchAvatarAsset(id64, size)
 end
 
 function draw.WebImage(url, x, y, width, height, color, angle, cornerorigin)
-	color = color or white
+	color = color or color_white
 	surface.SetDrawColor(color.r, color.g, color.b, color.a)
 	surface.SetMaterial(fetch_asset(url))
 

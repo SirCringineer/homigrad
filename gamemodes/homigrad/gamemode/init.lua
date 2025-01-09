@@ -252,8 +252,8 @@ COMMANDS.teamforce = {
 	function(ply, args)
 		local teamID = tonumber(args[2])
 
-		for _, ply in pairs(player.GetListByName(args[1]) or {ply}) do
-			ply:SetTeam(teamID)
+		for _, plr in pairs(player.GetListByName(args[1], ply)) do
+			plr:SetTeam(teamID)
 		end
 	end
 }

@@ -1,3 +1,4 @@
+--[[
 AddCSLuaFile()
 
 SWEP.Base                   = "weapon_base"
@@ -59,4 +60,4 @@ function SWEP:DrawHUD()
     draw.SimpleText("Сидя в машине нужно просто говорить","DebugFixedSmall",ScrW() / 2 ,ScrH() - 125,white,TEXT_ALIGN_CENTER)
 
     draw.SimpleText("Убрать подсказки hg_hint 0","DebugFixedSmall",ScrW() / 2,ScrH() - 100,white,TEXT_ALIGN_CENTER)
-end
+end --]]

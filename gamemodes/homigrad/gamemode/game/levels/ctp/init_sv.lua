@@ -219,6 +219,8 @@ end
 function ctp.EndRound(winner)
 	print("End round, '" .. tostring(winner) .. "' won")
 
+	local tbl = TableRound()
+
 	net.Start("hg_sendchat_format")
 		net.WriteTable({
 			"#hg.modes.teamwin",

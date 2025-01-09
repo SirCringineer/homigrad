@@ -92,7 +92,7 @@ hook.Add("HUDPaint", "homigrad-roundstate", function()
 				draw.SimpleText(language.GetPhrase("hg.levels.ends"):format(tostring(math.Round(roundTimeStart + roundTime - CurTime()))), "HomigradFont", ScrW() - 15, ScrH() - 60, showRoundInfoColor, TEXT_ALIGN_RIGHT)
 			end
 		else
-			draw.SimpleText("Time Passed: ", "HomigradFont", ScrW() - 15, ScrH() - 60, showRoundInfoColor, TEXT_ALIGN_RIGHT)
+			draw.SimpleText(language.GetPhrase("hg.levels.ended"), "HomigradFont", ScrW() - 15, ScrH() - 60, showRoundInfoColor, TEXT_ALIGN_RIGHT)
 		end
 
 		draw.SimpleText(language.GetPhrase("hg.levels.next"):format(language.GetPhrase(nextName)), "HomigradFont", ScrW() - 15, ScrH() - 20, name ~= nextName and yellow or showRoundInfoColor, TEXT_ALIGN_RIGHT)

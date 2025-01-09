@@ -1,6 +1,5 @@
+--[[
 include("shared.lua")
-
-homigrad_weapons = homigrad_weapons or {}
 
 function SWEP:Initialize()
     self:SetHoldType("normal")
@@ -84,4 +83,4 @@ hook.Add("Player Can Lisen","radio",function(output,input,isChat)
 
         return true,false
     end
-end)
+end) --]]

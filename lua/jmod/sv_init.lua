@@ -1,11 +1,12 @@
-﻿local force_workshop = CreateConVar("jmod_forceworkshop", 1, {FCVAR_ARCHIVE}, "Force clients to download JMod+its content? (requires a restart upon change)")
-
+﻿--[[
+local force_workshop = CreateConVar("jmod_forceworkshop", 1, {FCVAR_ARCHIVE}, "Force clients to download JMod+its content? (requires a restart upon change)")
 if force_workshop:GetBool() then
-	--resource.AddWorkshop("1919689921") -- у нас контент гейммода алло
-end
+	resource.AddWorkshop("1919689921")
+end --]]
 
 local function JackaSpawnHook(ply)
-	if JMod.Иди_Нахуй then return end
+	if JMod.hgFaking then return end
+
 	ply.JModSpawnTime = CurTime()
 	ply.JModFriends = ply.JModFriends or {}
 

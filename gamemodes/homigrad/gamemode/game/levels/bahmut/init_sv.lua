@@ -153,7 +153,7 @@ function bahmut.GetCountLive(list, func)
 			continue
 		end
 
-		if not PlayerIsCuffs(ply) and ply:Alive() then
+		if not IsCuffed(ply) and ply:Alive() then
 			count = count + 1
 		end
 	end

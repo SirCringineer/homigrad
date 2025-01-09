@@ -1,42 +1,40 @@
-SWEP.Base                   = "weapon_base"
+SWEP.Base = "weapon_base"
 
-SWEP.PrintName 				= "Hammer"
-SWEP.Author 				= "Homigrad"
-SWEP.Instructions			= "Used to quickly weld & barricade."
-SWEP.Category 				= "Miscellaneous"
+if CLIENT then
+	SWEP.PrintName = "#hg.hammer.name"
+	SWEP.Author = "Homigrad"
+	SWEP.Instructions = "#hg.hammer.inst"
+	SWEP.Category = "#hg.category.tools"
+end
 
-SWEP.Spawnable 				= true
-SWEP.AdminOnly 				= false
+SWEP.Spawnable = true
+SWEP.AdminOnly = false
 
-SWEP.Primary.ClipSize		= -1
-SWEP.Primary.DefaultClip	= -1
-SWEP.Primary.Automatic		= false
-SWEP.Primary.Ammo			= "none"
-
-SWEP.Primary.Damage = 12
-SWEP.Primary.Ammo = "none"
+SWEP.Primary.ClipSize = -1
 SWEP.Primary.DefaultClip = -1
-SWEP.Primary.Automatic = true
+SWEP.Primary.Automatic = false
+SWEP.Primary.Ammo = "none"
+SWEP.Primary.Damage = 12
 SWEP.Primary.Recoil = 0.5
 SWEP.Primary.Delay = 1.1
 SWEP.Primary.Force = 180
 
-SWEP.Secondary.ClipSize		= 3
-SWEP.Secondary.DefaultClip	= 3
-SWEP.Secondary.Automatic	= false
-SWEP.Secondary.Ammo			= "ammo_crossbow"
+SWEP.Secondary.ClipSize = 6
+SWEP.Secondary.DefaultClip = 6
+SWEP.Secondary.Automatic = false
+SWEP.Secondary.Ammo = "ammo_crossbow"
 
-SWEP.Weight					= 5
-SWEP.AutoSwitchTo			= false
-SWEP.AutoSwitchFrom			= false
+SWEP.Weight = 5
+SWEP.AutoSwitchTo = false
+SWEP.AutoSwitchFrom = false
 
-SWEP.Slot					= 1
-SWEP.SlotPos				= 3
-SWEP.DrawAmmo				= true
-SWEP.DrawCrosshair			= false
+SWEP.Slot = 1
+SWEP.SlotPos = 3
+SWEP.DrawAmmo = true
+SWEP.DrawCrosshair = false
 
-SWEP.ViewModel				= "models/weapons/w_jjife_t.mdl"
-SWEP.WorldModel				= "models/weapons/w_jjife_t.mdl"
+SWEP.ViewModel = "models/weapons/w_jjife_t.mdl"
+SWEP.WorldModel = "models/weapons/w_jjife_t.mdl"
 
 SWEP.ViewBack = true
 SWEP.ForceSlot1 = true
@@ -44,13 +42,13 @@ SWEP.ForceSlot1 = true
 SWEP.DrawWeaponSelection = DrawWeaponSelection
 SWEP.OverridePaintIcon = OverridePaintIcon
 
-SWEP.dwsPos = Vector(15,15,15)
-SWEP.dwsItemPos = Vector(-2,0,3)
-SWEP.dwsItemAng = Angle(-32,0,0)
+SWEP.dwsPos = Vector(15, 15, 15)
+SWEP.dwsItemPos = Vector(-2, 0, 3)
+SWEP.dwsItemAng = Angle(-32, 0, 0)
 
 SWEP.vbw = true
 SWEP.vbwPistol = true
-SWEP.vbwPos = Vector(-7,2,0)
+SWEP.vbwPos = Vector(-7, 2, 0)
 
 SWEP.dwr_reverbDisable = true
 
@@ -70,280 +68,308 @@ SWEP.HoldTypeWep = "melee2"
 SWEP.DamageType = DMG_CLUB
 
 function SWEP:Deploy()
-    if not IsFirstTimePredicted() then return end
-    self:SetNextPrimaryFire( CurTime() + 1)
-    self:SetNextSecondaryFire( CurTime() + 1)
-    self:SetHoldType("melee")
+	if not IsFirstTimePredicted() then return end
+
+	self:SetNextPrimaryFire(CurTime() + 1)
+	self:SetNextSecondaryFire(CurTime() + 1)
+
+	self:SetHoldType("melee")
 end
 
 local function TwoTrace(ply)
-    local owner = ply
-    local tr = {}
-    tr.start = owner:GetAttachment(owner:LookupAttachment("eyes")).Pos
-    local dir = Vector(1,0,0)
-    dir:Rotate(owner:EyeAngles())
-    tr.endpos = tr.start + dir * 75
-    tr.filter = {owner}
+	local owner = ply
+	local tr = {}
+	tr.start = owner:GetAttachment(owner:LookupAttachment("eyes")).Pos
 
-    local tRes1 = util.TraceLine(tr)
-    if not IsValid(tRes1.Entity) then return end
+	local dir = Vector(1, 0, 0)
+	dir:Rotate(owner:EyeAngles())
 
-    tr.start = tRes1.HitPos + tRes1.Normal
-    tr.endpos = tRes1.HitPos + dir * 25
+	tr.endpos = tr.start + dir * 75
+	tr.filter = {owner}
 
-    tr.filter[2] = tRes1.Entity
-    if SERVER then
-        for i,info in pairs(constraint.GetTable(tRes1.Entity)) do
-            if info.Ent1 ~= game.GetWorld() then table.insert(tr.filter,info.Ent1) end
-            if info.Ent2 ~= game.GetWorld() then table.insert(tr.filter,info.Ent2) end
-        end
-    end
-    local tRes2 = util.TraceLine(tr)
-    if not tRes2.Hit then return end
+	local tRes1 = util.TraceLine(tr)
+	if not IsValid(tRes1.Entity) then return end
 
-    return tRes1,tRes2
+	tr.start = tRes1.HitPos + tRes1.Normal
+	tr.endpos = tRes1.HitPos + dir * 25
+	tr.filter[2] = tRes1.Entity
+
+	if SERVER then
+		for _, info in pairs(constraint.GetTable(tRes1.Entity)) do
+			if info.Ent1 ~= game.GetWorld() then table.insert(tr.filter, info.Ent1) end
+			if info.Ent2 ~= game.GetWorld() then table.insert(tr.filter, info.Ent2) end
+		end
+	end
+
+	local tRes2 = util.TraceLine(tr)
+	if not tRes2.Hit then return end
+
+	return tRes1, tRes2
 end
 
 function SWEP:PrimaryAttack()
-    self:GetOwner():SetAnimation( PLAYER_ATTACK1 )
+	self:GetOwner():SetAnimation(PLAYER_ATTACK1)
 
-    if SERVER then
-        self:SetNextPrimaryFire( CurTime() + 1 / (self:GetOwner().stamina / 100) )
-        self:SetNextSecondaryFire(CurTime() + 2)
-        self:GetOwner():EmitSound( "weapons/slam/throw.wav",60 )
-        self:GetOwner().stamina = math.max(self:GetOwner().stamina - 1,0)
-    end
-    self:GetOwner():LagCompensation( true )
-    local ply = self:GetOwner()
+	if SERVER then
+		self:SetNextPrimaryFire(CurTime() + 1 / (self:GetOwner().stamina / 100))
+		self:SetNextSecondaryFire(CurTime() + 2)
 
-    local tra = {}
-    tra.start = ply:GetAttachment(ply:LookupAttachment("eyes")).Pos
-    tra.endpos = tra.start + ply:GetAngles():Forward() * 80
-    tra.filter = self:GetOwner()
-    local Tr = util.TraceLine(tra)
-    local t = {}
-    local pos1, pos2
-    local tr
-    if not Tr.Hit then
-        t.start = ply:GetAttachment(ply:LookupAttachment("eyes")).Pos
-        t.endpos = t.start + ply:GetAngles():Forward() * 80
-        t.filter = function(ent) return ent ~= self:GetOwner() and (ent:IsPlayer() or ent:IsRagdoll()) end
-        t.mins = -Vector(10,10,10)
-        t.maxs = Vector(10,10,10)
-        tr = util.TraceHull(t)
-    else
-        tr = util.TraceLine(tra)
-    end
+		self:GetOwner():EmitSound("weapons/slam/throw.wav", 60)
 
-    pos1 = tr.HitPos + tr.HitNormal
-    pos2 = tr.HitPos - tr.HitNormal
-    if true then
-        if SERVER and tr.HitWorld then
-            self:GetOwner():EmitSound(  self.HitSound,60  )
-        end
+		self:GetOwner().stamina = math.max(self:GetOwner().stamina - 1, 0)
+	end
 
-        if IsValid( tr.Entity ) and SERVER then
-            local dmginfo = DamageInfo()
-            dmginfo:SetDamageType( self.DamageType )
-            dmginfo:SetAttacker( self:GetOwner() )
-            dmginfo:SetInflictor( self )
-            dmginfo:SetDamagePosition( tr.HitPos )
-            dmginfo:SetDamageForce( self:GetOwner():GetForward() * self.Primary.Force )
-            local angle = self:GetOwner():GetAngles().y - tr.Entity:GetAngles().y
-            if angle < -180 then angle = 360 + angle end
+	self:GetOwner():LagCompensation(true)
 
-            if angle <= 90 and angle >= -90 then
-                dmginfo:SetDamage( self.Primary.Damage * 1.5 )
-            else
-                dmginfo:SetDamage( self.Primary.Damage / 1.5 )
-            end
+	local ply = self:GetOwner()
+	local tra = {}
+	tra.start = ply:GetAttachment(ply:LookupAttachment("eyes")).Pos
+	tra.endpos = tra.start + ply:GetAngles():Forward() * 80
+	tra.filter = self:GetOwner()
+	local Tr = util.TraceLine(tra)
 
-            if tr.Entity:IsNPC() or tr.Entity:IsPlayer() then
-                self:GetOwner():EmitSound( self.FlashHitSound,60 )
-            else
-                if IsValid( tr.Entity:GetPhysicsObject() ) then
-                    local dmginfo = DamageInfo()
-                    dmginfo:SetDamageType( self.DamageType )
-                    dmginfo:SetAttacker( self:GetOwner() )
-                    dmginfo:SetInflictor( self )
-                    dmginfo:SetDamagePosition( tr.HitPos )
-                    dmginfo:SetDamageForce( self:GetOwner():GetForward() * self.Primary.Force*7 )
-                    dmginfo:SetDamage( self.Primary.Damage )
-                    tr.Entity:TakeDamageInfo(dmginfo)
-                    if tr.Entity:GetClass() == "prop_ragdoll" then
-                        self:GetOwner():EmitSound(  self.FlashHitSound,60  )
-                    else
-                        self:GetOwner():EmitSound(  self.HitSound,60  )
-                    end
-                end
-            end
-            tr.Entity:TakeDamageInfo( dmginfo )
-        end
-        --self:GetOwner():EmitSound( Sound( self.HitSound ),60 )
-    end
-    if SERVER and Tr.Hit and self.ShouldDecal then
-        if IsValid(Tr.Entity) and Tr.Entity:GetClass()=="prop_ragdoll" then
-            util.Decal("Impact.Flesh",pos1,pos2)
-        else
-            util.Decal("ManhackCut",pos1,pos2)
-        end
-    end
+	local t = {}
+	local pos1, pos2
+	local tr
+	if not Tr.Hit then
+		t.start = ply:GetAttachment(ply:LookupAttachment("eyes")).Pos
+		t.endpos = t.start + ply:GetAngles():Forward() * 80
+		t.filter = function(ent) return ent ~= self:GetOwner() and (ent:IsPlayer() or ent:IsRagdoll()) end
+		t.mins = -Vector(10, 10, 10)
+		t.maxs = Vector(10, 10, 10)
+		tr = util.TraceHull(t)
+	else
+		tr = util.TraceLine(tra)
+	end
 
-    self:GetOwner():LagCompensation( false )
+	pos1 = tr.HitPos + tr.HitNormal
+	pos2 = tr.HitPos - tr.HitNormal
+
+	if true then
+		if SERVER and tr.HitWorld then self:GetOwner():EmitSound(self.HitSound, 60) end
+
+		if IsValid(tr.Entity) and SERVER then
+			local dmginfo = DamageInfo()
+			dmginfo:SetDamageType(self.DamageType)
+			dmginfo:SetAttacker(self:GetOwner())
+			dmginfo:SetInflictor(self)
+			dmginfo:SetDamagePosition(tr.HitPos)
+			dmginfo:SetDamageForce(self:GetOwner():GetForward() * self.Primary.Force)
+
+			local angle = self:GetOwner():GetAngles().y - tr.Entity:GetAngles().y
+			if angle < -180 then angle = 360 + angle end
+
+			if angle <= 90 and angle >= -90 then
+				dmginfo:SetDamage(self.Primary.Damage * 1.5)
+			else
+				dmginfo:SetDamage(self.Primary.Damage / 1.5)
+			end
+
+			if tr.Entity:IsNPC() or tr.Entity:IsPlayer() then
+				self:GetOwner():EmitSound(self.FlashHitSound, 60)
+			else
+				if IsValid(tr.Entity:GetPhysicsObject()) then
+					local dmginfo2 = DamageInfo()
+						dmginfo2:SetDamageType(self.DamageType)
+						dmginfo2:SetAttacker(self:GetOwner())
+						dmginfo2:SetInflictor(self)
+						dmginfo2:SetDamagePosition(tr.HitPos)
+						dmginfo2:SetDamageForce(self:GetOwner():GetForward() * self.Primary.Force * 7)
+						dmginfo2:SetDamage(self.Primary.Damage)
+					tr.Entity:TakeDamageInfo(dmginfo2)
+
+					if tr.Entity:GetClass() == "prop_ragdoll" then
+						self:GetOwner():EmitSound(self.FlashHitSound, 60)
+					else
+						self:GetOwner():EmitSound(self.HitSound, 60)
+					end
+				end
+			end
+
+			tr.Entity:TakeDamageInfo(dmginfo)
+		end
+		-- self:GetOwner():EmitSound(self.HitSound, 60)
+	end
+
+	if SERVER and Tr.Hit and self.ShouldDecal then
+		if IsValid(Tr.Entity) and Tr.Entity:GetClass() == "prop_ragdoll" then
+			util.Decal("Impact.Flesh", pos1, pos2)
+		else
+			util.Decal("ManhackCut", pos1, pos2)
+		end
+	end
+
+	self:GetOwner():LagCompensation(false)
 end
 
 function SWEP:SecondaryAttack()
-    if not self.mode then
-        local att = self:GetOwner()
+	if not self.mode then
+		local att = self:GetOwner()
+		local tRes1, tRes2 = TwoTrace(att)
+		if not tRes1 then return end
 
-        local tRes1,tRes2 = TwoTrace(att)
-        if not tRes1 then return end
-        if self:Clip2() == 0 then return end
-        if SERVER then
-            self:SetClip2(self:Clip2() - 1)
-            local ent1,ent2 = tRes1.Entity,tRes2.Entity
+		if self:Clip2() == 0 then return end
 
-            ent1.IsWeld = (ent1.IsWeld or 0) + 1
-            ent2.IsWeld = (ent2.IsWeld or 0) + 1
+		if SERVER then
+			self:SetClip2(self:Clip2() - 1)
 
-            local ply = RagdollOwner(ent1) or RagdollOwner(ent2) or false
-            if ply then
-                local dmg = DamageInfo()
-                dmg:SetDamage(10)
-                dmg:SetAttacker(self)
-                dmg:SetDamageType(DMG_SLASH)
+			local ent1, ent2 = tRes1.Entity, tRes2.Entity
+			ent1.IsWeld = (ent1.IsWeld or 0) + 1
+			ent2.IsWeld = (ent2.IsWeld or 0) + 1
 
-                ply:TakeDamageInfo(dmg)
-                ply.Bloodlosing = ply.Bloodlosing + 10
+			local ply = RagdollOwner(ent1) or RagdollOwner(ent2) or false
+			if ply then
+				local dmg = DamageInfo()
+					dmg:SetDamage(10)
+					dmg:SetAttacker(self)
+					dmg:SetDamageType(DMG_SLASH)
+				ply:TakeDamageInfo(dmg)
 
-                if GuiltLogic(att,ply,dmg) then
-                    GuiltCheck(att)
-                end
-            end
+				ply.Bloodlosing = ply.Bloodlosing + 10
 
-            if not IsValid(ent1:GetPhysicsObject()) or not IsValid(ent2:GetPhysicsObject()) then return end
+				if GuiltLogic(att, ply, dmg) then GuiltCheck(att) end
+			end
 
-            local weldEntity = constraint.Weld(ent1,ent2,tRes1.PhysicsBone or 0,tRes2.PhysicsBone or 0,0,false,false)
-            ent1.weld = ent1.weld or {}
-            ent2.weld = ent2.weld or {}
-            ent1.weld[weldEntity] = ent2
-            ent2.weld[weldEntity] = ent1
+			if not IsValid(ent1:GetPhysicsObject()) or not IsValid(ent2:GetPhysicsObject()) then return end
 
-            self:GetOwner():EmitSound("snd_jack_hmcd_hammerhit.wav",65)
-        end
-        self:SetNextSecondaryFire(CurTime() + 1)
-        self:GetOwner():SetAnimation(PLAYER_ATTACK1)
-    else
-        local att = self:GetOwner()
-        local tRes1,tRes2 = TwoTrace(att)
-        if not tRes1 then return end
-        local ent1,ent2 = tRes1.Entity,tRes2.Entity
+			local weldEntity = constraint.Weld(ent1, ent2, tRes1.PhysicsBone or 0, tRes2.PhysicsBone or 0, 0, false, false)
+			ent1.weld = ent1.weld or {}
+			ent2.weld = ent2.weld or {}
+			ent1.weld[weldEntity] = ent2
+			ent2.weld[weldEntity] = ent1
 
-        local ply = RagdollOwner(ent1) or RagdollOwner(ent2)
-        if ent1.weld then
-            for weldEntity,ent2 in pairs(ent1.weld) do
-                ent1.IsWeld = math.max((ent1.IsWeld or 0) - 1,0)
-                ent2.IsWeld = math.max((ent2.IsWeld or 0) - 1,0)
-                if ent1.IsWeld == 0 and ent2.IsWeld == 0 then
-                    ent2.weld[weldEntity] = nil
-                    ent1.weld[weldEntity] = nil
+			self:GetOwner():EmitSound("snd_jack_hmcd_hammerhit.wav", 65)
+		end
 
-                    weldEntity:Remove()
-                end
-                self:SetClip2(self:Clip2() + 1)
+		self:SetNextSecondaryFire(CurTime() + 1)
+		self:GetOwner():SetAnimation(PLAYER_ATTACK1)
+	else
+		local att = self:GetOwner()
+		local tRes1, tRes2 = TwoTrace(att)
+		if not tRes1 then return end
 
-                ent1:EmitSound("snd_jack_hmcd_hammerhit.wav",65)
-               
-            end
+		local ent1, ent2 = tRes1.Entity, tRes2.Entity
+		local ply = RagdollOwner(ent1) or RagdollOwner(ent2)
 
-            if ply then
-                local dmg = DamageInfo()
-                dmg:SetDamage(10)
-                dmg:SetAttacker(self)
-                dmg:SetDamageType(DMG_SLASH)
+		if ent1.weld then
+			for weldEntity, ent in pairs(ent1.weld) do
+				ent1.IsWeld = math.max((ent1.IsWeld or 0) - 1, 0)
+				ent.IsWeld = math.max((ent.IsWeld or 0) - 1, 0)
 
-                ply.Bloodlosing = ply.Bloodlosing + 10
-            end
-        end
+				if ent1.IsWeld == 0 and ent.IsWeld == 0 then
+					ent.weld[weldEntity] = nil
+					ent1.weld[weldEntity] = nil
 
-        self:SetNextSecondaryFire(CurTime() + 1)
-    end
+					weldEntity:Remove()
+				end
+
+				self:SetClip2(self:Clip2() + 1)
+
+				ent1:EmitSound("snd_jack_hmcd_hammerhit.wav", 65)
+			end
+
+			if ply then
+				local dmg = DamageInfo()
+					dmg:SetDamage(10)
+					dmg:SetAttacker(self)
+					dmg:SetDamageType(DMG_SLASH)
+				ply:TakeDamageInfo(dmg)
+
+				ply.Bloodlosing = ply.Bloodlosing + 10
+			end
+		end
+
+		self:SetNextSecondaryFire(CurTime() + 1)
+	end
 end
 
 function SWEP:Think()
-    local ply = self:GetOwner()
-    if SERVER then
-        if ply:KeyDown(IN_ATTACK2) then
-            if ply:KeyDown(IN_USE) and not self.modechanged then
-                self.modechanged = true
+	local ply = self:GetOwner()
 
-                self.mode = not (self.mode or false)
-                net.Start("molotok_mode")
-                net.WriteEntity(self)
-                net.WriteBool(self.mode)
-                net.Send(ply)
-                ply:ChatPrint(not self.mode and "Nailing Mode" or "Unnailing Mode")
-            end
-        else
-            self.modechanged = false
-        end
-    end
+	if SERVER then
+		if ply:KeyDown(IN_ATTACK2) then
+			if ply:KeyDown(IN_USE) and not self.modechanged then
+				self.modechanged = true
+
+				self.mode = not (self.mode or false)
+
+				net.Start("hammer_mode")
+					net.WriteEntity(self)
+					net.WriteBool(self.mode)
+				net.Send(ply)
+
+				net.Start("hg_sendchat")
+					net.WriteTable({
+						"#hg.hammer.nailing." .. not self.mode
+					})
+				net.Send(ply)
+			end
+		else
+			self.modechanged = false
+		end
+	end
 end
 
 if SERVER then
-    util.AddNetworkString("molotok_mode")
-    util.AddNetworkString("wtf_huy")
+	util.AddNetworkString("hammer_mode")
 
-    hook.Add("Fake Up","molotok",function(ply,rag)
-        if (rag.IsWeld or 0) > 0 then return false end
-    end)
+	hook.Add("Fake Up", "hg_hammer_weldcheck", function(ply, rag) if (rag.IsWeld or 0) > 0 then return false end end)
 else
-    net.Receive("molotok_mode",function(len)
-        net.ReadEntity().mode = net.ReadBool()
-    end)
+	net.Receive("hammer_mode", function(len)
+		net.ReadEntity().mode = net.ReadBool()
+	end)
 end
 
-local white = Color(255,255,255)
 local bonenames = {
-    ['ValveBiped.Bip01_Head1']="head",
-    ['ValveBiped.Bip01_Spine']="spine",
-    ['ValveBiped.Bip01_Spine2']="spine",
-    ['ValveBiped.Bip01_Pelvis']="stomach",
-    ['ValveBiped.Bip01_R_Hand']="right hand",
-    ['ValveBiped.Bip01_R_Forearm']="right forearm",
-    ['ValveBiped.Bip01_R_UpperArm']="right upperarm",
-    ['ValveBiped.Bip01_R_Foot']="right foot",
-    ['ValveBiped.Bip01_R_Thigh']='right thigh',
-    ['ValveBiped.Bip01_R_Calf']='right calf',
-    ['ValveBiped.Bip01_R_Shoulder']='right shoulder',
-    ['ValveBiped.Bip01_R_Elbow']='right elbow',
-	['ValveBiped.Bip01_L_Hand']='left hand',
-    ['ValveBiped.Bip01_L_Forearm']='left forearm',
-    ['ValveBiped.Bip01_L_UpperArm']="left upperarm",
-    ['ValveBiped.Bip01_L_Foot']='left foot',
-    ['ValveBiped.Bip01_L_Thigh']='left thigh',
-    ['ValveBiped.Bip01_L_Calf']='left calf',
-    ['ValveBiped.Bip01_L_Shoulder']='left shoulder',
-    ['ValveBiped.Bip01_L_Elbow']='left elbow'
+	["ValveBiped.Bip01_Head1"] = "#hg.bones.head",
+	["ValveBiped.Bip01_Spine"] = "#hg.bones.spine",
+	["ValveBiped.Bip01_Spine2"] = "#hg.bones.spine",
+	["ValveBiped.Bip01_Pelvis"] = "#hg.bones.pelvis",
+
+	["ValveBiped.Bip01_R_Hand"] = "#hg.bones.rhand",
+	["ValveBiped.Bip01_R_Forearm"] = "#hg.bones.rforearm",
+	["ValveBiped.Bip01_R_Shoulder"] = "#hg.bones.rshoulder",
+	["ValveBiped.Bip01_R_UpperArm"] = "#hg.bones.rshoulder",
+	["ValveBiped.Bip01_R_Elbow"] = "#hg.bones.relbow",
+
+	["ValveBiped.Bip01_R_Foot"] = "#hg.bones.rfoot",
+	["ValveBiped.Bip01_R_Thigh"] = "#hg.bones.rthigh",
+	["ValveBiped.Bip01_R_Calf"] = "#hg.bones.rcalf",
+
+	["ValveBiped.Bip01_L_Hand"] = "#hg.bones.lhand",
+	["ValveBiped.Bip01_L_Forearm"] = "#hg.bones.lforearm",
+	["ValveBiped.Bip01_L_Shoulder"] = "#hg.bones.lshoulder",
+	["ValveBiped.Bip01_L_UpperArm"] = "#hg.bones.lshoulder",
+	["ValveBiped.Bip01_L_Elbow"] = "#hg.bones.lelbow",
+
+	["ValveBiped.Bip01_L_Foot"] = "#hg.bones.lfoot",
+	["ValveBiped.Bip01_L_Thigh"] = "#hg.bones.lthigh",
+	["ValveBiped.Bip01_L_Calf"] = "#hg.bones.lcalf"
 }
+
 function SWEP:DrawHUD()
-    local owner = self:GetOwner()
-    local tr = {}
-    tr.start = owner:GetAttachment(owner:LookupAttachment("eyes")).Pos
-    local dir = Vector(1,0,0)
-    dir:Rotate(owner:EyeAngles())
-    tr.endpos = tr.start + dir * 75
-    tr.filter = owner
+	local owner = self:GetOwner()
+	local tr = {}
+	tr.start = owner:GetAttachment(owner:LookupAttachment("eyes")).Pos
 
-    local tRes1,tRes2 = TwoTrace(owner)
+	local dir = Vector(1, 0, 0)
+	dir:Rotate(owner:EyeAngles())
 
-    local traceResult = util.TraceLine(tr)
-    local hit = traceResult.Hit and 1 or 0
-    local hitEnt = traceResult.Entity~=Entity(0) and 1 or 0
-    local isRag = traceResult.Entity:IsRagdoll()
-    local frac = traceResult.Fraction
-    surface.SetDrawColor(Color(255 * hitEnt, 255 * hitEnt, 255 * hitEnt, 255 * hit))
-    draw.NoTexture()
-    Circle(traceResult.HitPos:ToScreen().x, traceResult.HitPos:ToScreen().y, 5 / frac, 32)
-    draw.DrawText(not tRes1 and "" or isRag and ("Nail the "..tostring(bonenames[traceResult.Entity:GetBoneName(traceResult.Entity:TranslatePhysBoneToBone(traceResult.PhysicsBone))])) or (tobool(hitEnt) and tobool(hit)) and "Nail a prop" or "","TargetID",traceResult.HitPos:ToScreen().x,traceResult.HitPos:ToScreen().y - 40,color_white,TEXT_ALIGN_CENTER)
+	tr.endpos = tr.start + dir * 75
+	tr.filter = owner
+
+	local tRes1, _ = TwoTrace(owner)
+	local traceResult = util.TraceLine(tr)
+	local hit = traceResult.Hit and 1 or 0
+
+	local hitEnt = traceResult.Entity ~= Entity(0) and 1 or 0
+	local isRag = traceResult.Entity:IsRagdoll()
+	local frac = traceResult.Fraction
+
+	surface.SetDrawColor(Color(255 * hitEnt, 255 * hitEnt, 255 * hitEnt, 255 * hit))
+	draw.NoTexture()
+
+	Circle(traceResult.HitPos:ToScreen().x, traceResult.HitPos:ToScreen().y, 5 / frac, 32)
+
+	draw.DrawText((not tRes1 and "") or isRag and (language.GetPhrase("hg.hammer.nailin"):format(language.GetPhrase(bonenames[traceResult.Entity:GetBoneName(traceResult.Entity:TranslatePhysBoneToBone(traceResult.PhysicsBone))]))) or (tobool(hitEnt) and tobool(hit)) and "#hg.hammer.nailinprop" or "", "TargetID", traceResult.HitPos:ToScreen().x, traceResult.HitPos:ToScreen().y - 40, color_white, TEXT_ALIGN_CENTER)
 end
