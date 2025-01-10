@@ -24,11 +24,13 @@ flag = nil
 
 if SERVER then
 	AddCSLuaFile()
+
 	--util.AddNetworkString("lf_playermodel_client_sync")
 	util.AddNetworkString("lf_playermodel_cvar_change")
 	util.AddNetworkString("lf_playermodel_blacklist")
 	util.AddNetworkString("lf_playermodel_voxlist")
 	util.AddNetworkString("lf_playermodel_update")
+
 	local SetMDL = FindMetaTable("Entity").SetModel
 	local addon_legs = false
 	local debugmode = GetConVar("sv_playermodel_selector_debug"):GetBool() or false
