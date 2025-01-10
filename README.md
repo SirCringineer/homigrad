@@ -11,7 +11,7 @@ Homigrad is a game mode inspired by Trouble in Terrorist Town (TTT) and Murder. 
 ## Installation
 
 1. [Download the repository](https://github.com/JonnyBro/homigrad/archive/refs/heads/main.zip).
-2. Extract the `homigrad-main` folder and place it in your server’s `addons` directory.
+2. Extract the `homigrad-main` folder and place it in your `addons` folder or server’s `addons` directory.
 3. Ensure the game mode is set to `Homigrad` (use `+gamemode homigrad` for servers).
 
 For epic gaming, a tickrate of **99-128** is recommended to improve controls when faking.
@@ -34,7 +34,7 @@ The game currently includes a mix of English and localized content. Full localiz
 
 ### Can I use Homigrad's movement/weapons in other game modes (Sandbox, TTT, etc)?
 
-The movement system and weapons from Homigrad are not directly compatible with other game modes. However, if you're proficient, you might explore Harrison’s [movement-addon branch](https://github.com/harrisoniam/homigrad/tree/movement-addon).
+The movement system and weapons from Homigrad are not directly compatible with other game modes. However, if you're proficient, you might explore [Harrison’s movement-addon branch](https://github.com/harrisoniam/homigrad/tree/movement-addon).
 
 ### How can I customize this for my server?
 
@@ -42,7 +42,7 @@ You’re free to modify the files, adjust values, and tweak the code to suit you
 
 ### Can I create my own game mode using this codebase?
 
-Yes! This project is under the MIT License, so you’re welcome to use it as a base. Contributions are also encouraged—feel free to submit pull requests here or on [Harrison's repository](https://github.com/harrisoniam/homigrad).
+Yes! Just like the original repo, this project is under the MIT License, so you’re welcome to use it as a base. Contributions are also encouraged — feel free to submit pull requests here or on [Harrison's repository](https://github.com/harrisoniam/homigrad).
 
 ## Credits
 
