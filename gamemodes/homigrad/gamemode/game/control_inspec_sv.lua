@@ -65,12 +65,10 @@ hook.Add("Player Think", "ControlPlayersAdmins", function(ply, time)
 		end
 	end
 
-	if ply:KeyDown(IN_ATTACK2) and ply.allowGrab then
-		if IsValid(ply.CarryEnt) then
-			ply.CarryEnt:GetPhysicsObjectNum(ply.CarryEntPhysbone):EnableMotion(false)
+	if ply:KeyDown(IN_ATTACK2) and ply.allowGrab and IsValid(ply.CarryEnt) then
+		ply.CarryEnt:GetPhysicsObjectNum(ply.CarryEntPhysbone):EnableMotion(false)
 
-			ply.CarryEnt.isheld = true
-		end
+		ply.CarryEnt.isheld = true
 	end
 end)
 

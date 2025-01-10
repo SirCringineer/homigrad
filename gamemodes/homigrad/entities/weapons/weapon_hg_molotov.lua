@@ -1,10 +1,10 @@
 SWEP.Base = "weapon_hg_grenade_base"
 
 if CLIENT then
-	SWEP.PrintName = "#hg.molotov.name"
+	SWEP.PrintName = language.GetPhrase("hg.molotov.name")
 	SWEP.Author = "Homigrad"
-	SWEP.Instructions = "#hg.molotov.inst"
-	SWEP.Category = "#hg.category.grenades"
+	SWEP.Instructions = language.GetPhrase("hg.molotov.inst")
+	SWEP.Category = language.GetPhrase("hg.category.grenades")
 end
 
 SWEP.Slot = 4

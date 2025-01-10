@@ -381,30 +381,14 @@ local function ToggleMenu(toggle)
 		if wep:Clip1() > 0 then
 			wepMenu:AddOption("#hg.cmenu.unload", function()
 				net.Start("Unload")
-				net.WriteEntity(wep)
+					net.WriteEntity(wep)
 				net.SendToServer()
 			end)
 		end
 
 		if laserweps[wep:GetClass()] then
 			wepMenu:AddOption("#hg.cmenu.laser", function()
-				if LocalPlayer().Laser then
-					LocalPlayer().Laser = false
-
-					net.Start("lasertgg")
-						net.WriteBool(false)
-					net.SendToServer()
-
-					LocalPlayer():EmitSound("items/nvg_off.wav")
-				else
-					LocalPlayer().Laser = true
-
-					net.Start("lasertgg")
-						net.WriteBool(true)
-					net.SendToServer()
-
-					LocalPlayer():EmitSound("items/nvg_on.wav")
-				end
+				RunConsoleCommand("hg_togglelaser")
 			end)
 		end
 
@@ -439,7 +423,7 @@ local function ToggleMenu(toggle)
 			if LocalPlayer():GetInfo("hg_usecustommodel") == "true" then
 				local plyModelMenu = plyMenu:AddOption("#hg.cmenu.rmodel", function()
 					LocalPlayer():ChatPrint("<clr:green>Success!<clr:white> Your player model has been reverted to a regular citizen model, and will be applied next round.")
-					--RunConsoleCommand("cl_playermodel", "none")
+					-- RunConsoleCommand("cl_playermodel", "none")
 					RunConsoleCommand("hg_usecustommodel", "false")
 					surface.PlaySound("UI/buttonclickrelease.wav")
 				end)
@@ -530,6 +514,21 @@ function meta:HasGodMode()
 	return self:GetNWBool("HasGodMode")
 end
 
+concommand.Add("hg_togglelaser", function()
+	local ply = LocalPlayer()
+	local wep = ply:GetActiveWeapon()
+
+	if IsValid(wep) and laserweps[wep:GetClass()] then
+		ply.Laser = not ply.Laser
+
+		net.Start("lasertgg")
+			net.WriteBool(ply.Laser)
+		net.SendToServer()
+
+		ply:EmitSound("items/nvg_off.wav") -- I prefer `off` sound, `on` is too much
+	end
+end)
+
 concommand.Add("hg_getentity", function()
 	local ent = LocalPlayer():GetEyeTrace().Entity
 	if not IsValid(ent) then return end
@@ -539,10 +538,9 @@ concommand.Add("hg_getentity", function()
 	print(ent:GetClass())
 end)
 
+--[[
 gameevent.Listen("player_spawn")
-
 hook.Add("player_spawn", "gg", function(data)
-	--[[
 	local ply = Player(data.userid)
 
 	if ply.SetHull then
@@ -551,8 +549,8 @@ hook.Add("player_spawn", "gg", function(data)
 	end
 
 	hook.Run("Player Spawn", ply)
-	--]]
-end)
+
+end) --]]
 
 hook.Add("DrawDeathNotice", "no", function() return false end)
 

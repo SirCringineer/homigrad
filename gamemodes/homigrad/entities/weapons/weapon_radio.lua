@@ -1,10 +1,10 @@
 SWEP.Base = "weapon_base"
 
 if CLIENT then
-	SWEP.PrintName = "#hg.radio.name"
+	SWEP.PrintName = language.GetPhrase("hg.radio.name")
 	SWEP.Author = "Homigrad"
-	SWEP.Instructions = "#hg.radio.inst"
-	SWEP.Category = "#hg.category.tools"
+	SWEP.Instructions = language.GetPhrase("hg.radio.inst")
+	SWEP.Category = language.GetPhrase("hg.category.tools")
 end
 
 SWEP.Spawnable = true

@@ -3,10 +3,10 @@ AddCSLuaFile()
 SWEP.Base = "medkit"
 
 if CLIENT then
-	SWEP.PrintName = "#hg.handcuffs.name"
+	SWEP.PrintName = language.GetPhrase("hg.handcuffs.name")
 	SWEP.Author = "Homigrad"
-	SWEP.Instructions = "#hg.handcuffs.inst"
-	SWEP.Category = "#hg.category.tools"
+	SWEP.Instructions = language.GetPhrase("hg.handcuffs.inst")
+	SWEP.Category = language.GetPhrase("hg.category.tools")
 end
 
 SWEP.Slot = 5

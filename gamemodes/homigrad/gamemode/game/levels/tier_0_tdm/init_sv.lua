@@ -16,14 +16,15 @@ function tdm.SpawnCommand(tbl, aviable, func, funcShould)
 
 		ply.allowFlashlights = true
 
-		local point, key = aviable[math.random(#aviable)]
-		point = ReadPoint(point)
-		if not point then continue end
+		if #aviable > 0 then
+			local key = math.random(#aviable)
+			local point = ReadPoint(aviable[key])
 
-		ply:SetPos(point[1])
+			if point then
+				ply:SetPos(point[1])
 
-		if #aviable > 1 then
-			table.remove(aviable, key)
+				table.remove(aviable, key)
+			end
 		end
 	end
 end

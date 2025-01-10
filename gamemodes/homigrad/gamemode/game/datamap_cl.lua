@@ -14,8 +14,8 @@ hook.Add("HUDPaint", "DrawSpawns", function()
 
 	local lply_pos = LocalPlayer():GetPos()
 
-	for name, info in pairs(SpawnPointsList) do
-		for i, point in pairs(info[3]) do
+	for _, info in pairs(SpawnPointsList) do
+		for _, point in pairs(info[3]) do
 			local pos = TypeID(point) == TYPE_TABLE and point[1] or point
 			if pos:Distance(lply_pos) > 1000 then continue end
 
@@ -34,7 +34,7 @@ hook.Add("PostDrawTranslucentRenderables", "DrawSpawns", function()
 
 	render.SetColorMaterial()
 
-	for name, info in pairs(SpawnPointsList) do
+	for _, info in pairs(SpawnPointsList) do
 		local color = info[2]
 		black.r = color.r
 		black.g = color.g

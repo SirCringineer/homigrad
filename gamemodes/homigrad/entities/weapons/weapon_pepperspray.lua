@@ -1,10 +1,10 @@
 SWEP.Base = "weapon_base"
 
 if CLIENT then
-	SWEP.PrintName = "#hg.pepperspray.name"
+	SWEP.PrintName = language.GetPhrase("hg.pepperspray.name")
 	SWEP.Author = "Homigrad"
-	SWEP.Instructions = "#hg.pepperspray.inst"
-	SWEP.Category = "#hg.category.tools"
+	SWEP.Instructions = language.GetPhrase("hg.pepperspray.inst")
+	SWEP.Category = language.GetPhrase("hg.category.tools")
 end
 
 SWEP.Spawnable = true

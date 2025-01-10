@@ -1,10 +1,10 @@
 SWEP.Base = "medkit"
 
 if CLIENT then
-	SWEP.PrintName = "#hg.phone.name"
+	SWEP.PrintName = language.GetPhrase("hg.phone.name")
 	SWEP.Author = "Homigrad"
-	SWEP.Instructions = "#hg.phone.inst"
-	SWEP.Category = "#hg.category.tools"
+	SWEP.Instructions = language.GetPhrase("hg.phone.inst")
+	SWEP.Category = language.GetPhrase("hg.category.tools")
 end
 
 SWEP.Spawnable = true
@@ -24,8 +24,8 @@ SWEP.ForceSlot1 = true
 SWEP.DrawWeaponSelection = DrawWeaponSelection
 SWEP.OverridePaintIcon = OverridePaintIcon
 
-SWEP.dwsPos = Vector(10,10,7)
-SWEP.dwsItemPos = Vector(0,3,0)
+SWEP.dwsPos = Vector(10, 10, 7)
+SWEP.dwsItemPos = Vector(0, 3, 0)
 
 SWEP.dwmARight = 90
 SWEP.dwmForward = 2
@@ -257,7 +257,7 @@ if SERVER then
 
 					local str = ""
 
-					for name, items in pairs(JMod.Config.RadioSpecs.AvailablePackages) do
+					for name, _ in pairs(JMod.Config.RadioSpecs.AvailablePackages) do
 						str = str .. name
 
 						if Num > 0 and Num % 10 == 0 then

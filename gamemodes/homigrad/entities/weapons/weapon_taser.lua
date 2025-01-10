@@ -1,10 +1,10 @@
 SWEP.Base = "medkit"
 
 if CLIENT then
-	SWEP.PrintName = "#hg.taser.name"
+	SWEP.PrintName = language.GetPhrase("hg.taser.name")
 	SWEP.Author = "Homigrad"
-	SWEP.Instructions = "#hg.taser.inst"
-	SWEP.Category = "#hg.category.tools"
+	SWEP.Instructions = language.GetPhrase("hg.taser.inst")
+	SWEP.Category = language.GetPhrase("hg.category.tools")
 end
 
 SWEP.Slot = 2

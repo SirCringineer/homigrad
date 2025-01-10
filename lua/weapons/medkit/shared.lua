@@ -1,14 +1,15 @@
-if engine.ActiveGamemode() ~= "homigrad" then return end
 AddCSLuaFile()
 
 SWEP.Base = "weapon_base"
 
-SWEP.PrintName = "Medkit"
-SWEP.Author = "Homigrad"
-SWEP.Instructions = "The Holy Grail of Medical Supplies.\nReduces Blood Loss, Pain, and fixes broken legs."
+if CLIENT then
+	SWEP.PrintName = language.GetPhrase("hg.medkit.name")
+	SWEP.Author = "Homigrad"
+	SWEP.Instructions = language.GetPhrase("hg.medkit.inst")
+	SWEP.Category = language.GetPhrase("hg.category.medicine")
+end
 
 SWEP.Spawnable = true
-SWEP.Category = "Medical"
 
 SWEP.Slot = 3
 SWEP.SlotPos = 3
@@ -31,30 +32,33 @@ SWEP.DrawCrosshair = false
 SWEP.DrawWeaponSelection = DrawWeaponSelection
 SWEP.OverridePaintIcon = OverridePaintIcon
 
-SWEP.dwsPos = Vector(15,15,15)
+SWEP.dwsPos = Vector(15, 15, 15)
 
 SWEP.vbw = false
-SWEP.vbwPos = Vector(0,-1,-7)
-SWEP.vbwAng = Angle(-90,90,180)
+SWEP.vbwPos = Vector(0, -1, -7)
+SWEP.vbwAng = Angle(-90, 90, 180)
 SWEP.vbwModelScale = 0.8
+
+SWEP.Delay = 0.25
 
 function SWEP:PostInit()
 end
 
 function SWEP:Initialize()
 	self:SetHoldType("slam")
-    self:PostInit()
+	self:PostInit()
 end
 
 if SERVER then return end
 
-function SWEP:GetViewModelPosition(pos,ang)
-    pos = pos - ang:Up() * 10 + ang:Forward() * 30 + ang:Right() * 7
-    ang:RotateAroundAxis(ang:Up(),90)
-    ang:RotateAroundAxis(ang:Right(),-10)
-    ang:RotateAroundAxis(ang:Forward(),-10)
+function SWEP:GetViewModelPosition(pos, ang)
+	pos = pos - ang:Up() * 10 + ang:Forward() * 30 + ang:Right() * 7
 
-    return pos,ang
+	ang:RotateAroundAxis(ang:Up(), 90)
+	ang:RotateAroundAxis(ang:Right(), -10)
+	ang:RotateAroundAxis(ang:Forward(), -10)
+
+	return pos, ang
 end
 
 SWEP.dwmModeScale = 1
@@ -67,36 +71,34 @@ SWEP.dwmARight = 180
 SWEP.dwmAForward = 90
 
 function SWEP:DrawWorldModel()
-    local owner = self:GetOwner()
-    if not IsValid(owner) then
-        self:DrawModel()
-        self:SetRenderOrigin()
-        self:SetRenderAngles()
-        return
-    end
+	local owner = self:GetOwner()
+	if not IsValid(owner) then
+		self:DrawModel()
+		self:SetRenderOrigin()
+		self:SetRenderAngles()
 
-    local Pos,Ang = owner:GetBonePosition(owner:LookupBone("ValveBiped.Bip01_R_Hand"))
-    if not Pos then return end
+		return
+	end
 
-    self:SetModel(self.WorldModel)
-    
-    Pos:Add(Ang:Forward() * self.dwmForward)
-    Pos:Add(Ang:Right() * self.dwmRight)
-    Pos:Add(Ang:Up() * self.dwmUp)
-    
-    Ang:RotateAroundAxis(Ang:Up(),self.dwmAUp)
-    Ang:RotateAroundAxis(Ang:Right(),self.dwmARight)
-    Ang:RotateAroundAxis(Ang:Forward(),self.dwmAForward)
-
-    --self:SetPos(Pos)
-    --self:SetAngles(Ang)
-    self:SetRenderOrigin(Pos)
-    self:SetRenderAngles(Ang)
-    
-    self:SetModelScale(self.dwmModeScale)
-
-    self:DrawModel()
+	local Pos, Ang = owner:GetBonePosition(owner:LookupBone("ValveBiped.Bip01_R_Hand"))
+	if not Pos then return end
+	self:SetModel(self.WorldModel)
+	Pos:Add(Ang:Forward() * self.dwmForward)
+	Pos:Add(Ang:Right() * self.dwmRight)
+	Pos:Add(Ang:Up() * self.dwmUp)
+	Ang:RotateAroundAxis(Ang:Up(), self.dwmAUp)
+	Ang:RotateAroundAxis(Ang:Right(), self.dwmARight)
+	Ang:RotateAroundAxis(Ang:Forward(), self.dwmAForward)
+	--self:SetPos(Pos)
+	--self:SetAngles(Ang)
+	self:SetRenderOrigin(Pos)
+	self:SetRenderAngles(Ang)
+	self:SetModelScale(self.dwmModeScale)
+	self:DrawModel()
 end
 
-function SWEP:PrimaryAttack() end
-function SWEP:SecondaryAttack() end
+function SWEP:PrimaryAttack()
+end
+
+function SWEP:SecondaryAttack()
+end

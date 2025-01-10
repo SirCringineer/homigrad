@@ -3,7 +3,7 @@ att.Icon = Material("entities/acwatt_bipod.png")
 att.Description = "good girls get special kisses"
 att.SortOrder = 10
 
-att.Desc_Pros = {"+ Tripod",}
+att.Desc_Pros = {"+ Tripod"}
 
 att.Desc_Cons = {}
 att.AutoStats = true

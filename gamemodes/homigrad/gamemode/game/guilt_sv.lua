@@ -17,9 +17,10 @@ function GuiltLogic(ply, att, dmgInfo, dontApply)
 
 	if resultGame or resultClass or plyTeam == attTeam then
 		if ply.DontGuiltProtect then
+			--[[
 			if not dontApply then
-				-- att.Guilt = math.max(att.Guilt - dmgInfo:GetDamage(), 0)
-			end
+				att.Guilt = math.max(att.Guilt - dmgInfo:GetDamage(), 0)
+			end --]]
 
 			return false, true
 		end

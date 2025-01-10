@@ -1,10 +1,10 @@
 SWEP.Base = "medkit"
 
 if CLIENT then
-	SWEP.PrintName = "#hg.vxpoison.name"
+	SWEP.PrintName = language.GetPhrase("hg.vxpoison.name")
 	SWEP.Author = "Secret Society"
-	SWEP.Instructions = "#hg.vxpoison.inst"
-	SWEP.Category = "#hg.category.traitor"
+	SWEP.Instructions = language.GetPhrase("hg.vxpoison.inst")
+	SWEP.Category = language.GetPhrase("hg.category.traitor")
 end
 
 SWEP.Spawnable = true

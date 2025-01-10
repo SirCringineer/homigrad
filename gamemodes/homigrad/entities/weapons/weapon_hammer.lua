@@ -1,10 +1,10 @@
 SWEP.Base = "weapon_base"
 
 if CLIENT then
-	SWEP.PrintName = "#hg.hammer.name"
+	SWEP.PrintName = language.GetPhrase("hg.hammer.name")
 	SWEP.Author = "Homigrad"
-	SWEP.Instructions = "#hg.hammer.inst"
-	SWEP.Category = "#hg.category.tools"
+	SWEP.Instructions = language.GetPhrase("hg.hammer.inst")
+	SWEP.Category = language.GetPhrase("hg.category.tools")
 end
 
 SWEP.Spawnable = true

@@ -25,7 +25,7 @@ function hideandseek.StartRoundSV(data)
 
 	local count = math.min(math.floor(#players / 4, 1))
 
-	for i = 1, count do
+	for _ = 1, count do
 		local ply, key = players[math.random(#players)]
 		players[key] = nil
 

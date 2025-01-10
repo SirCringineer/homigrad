@@ -1,6 +1,6 @@
 local CLASS = player.RegClass("contr")
 
-CLASS.weapons = {"weapon_radio", "weapon_police_bat", "med_band_big", "medkit", "painkiller", "adrenaline", "weapon_handcuffs", "weapon_taser",}
+CLASS.weapons = {"weapon_radio", "weapon_police_bat", "med_band_big", "medkit", "painkiller", "adrenaline", "weapon_handcuffs", "weapon_taser"}
 CLASS.main_weapon = {"weapon_ar15", "weapon_m3super"}
 CLASS.secondary_weapon = {"weapon_beretta", "weapon_p99"}
 CLASS.models = {"models/monolithservers/mpd/male_04_2.mdl", "models/monolithservers/mpd/male_06_2.mdl", "models/monolithservers/mpd/male_07_2.mdl", "models/monolithservers/mpd/male_08_2.mdl", "models/monolithservers/mpd/male_09_2.mdl"}
@@ -153,16 +153,14 @@ function CLASS:EventPoint(name, pos, radius, a1, a2)
 		end)
 	end
 
-	if name == "hitgroup killed" and a1 ~= self and a1.isContr then
-		if a2.LastHitGroup == HITGROUP_HEAD then
-			local hp = self:Health()
+	if name == "hitgroup killed" and a1 ~= self and a1.isContr and a2.LastHitGroup == HITGROUP_HEAD then
+		local hp = self:Health()
 
-			timer.Simple(math.Rand(0.75, 1.75), function()
-				if not live(self, hp, self:Health()) then return end
+		timer.Simple(math.Rand(0.75, 1.75), function()
+			if not live(self, hp, self:Health()) then return end
 
-				EmitSound(self, RandomSound("bot/good_shot", 2))
-			end)
-		end
+			EmitSound(self, RandomSound("bot/good_shot", 2))
+		end)
 	end
 end
 

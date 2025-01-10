@@ -150,10 +150,10 @@ SWEP.AutoSwitchTo = false
 SWEP.AutoSwitchFrom = false
 
 if CLIENT then
-	SWEP.PrintName = "#hg.hands.name"
+	SWEP.PrintName = language.GetPhrase("hg.hands.name")
 	SWEP.Author = "Homigrad"
-	SWEP.Instructions = "#hg.hands.inst"
-	SWEP.Category = "#hg.category.grenades"
+	SWEP.Instructions = language.GetPhrase("hg.hands.inst")
+	SWEP.Category = language.GetPhrase("hg.category.grenades")
 	SWEP.WepSelectIcon = surface.GetTextureID("vgui/wep_jack_hmcd_hands")
 end
 

@@ -44,7 +44,7 @@ function bahmut.StartRound()
 	team.SetColor(1, bahmut.red[2])
 	team.SetColor(2, bahmut.blue[2])
 
-	for i, point in pairs(SpawnPointsList.controlpoint[3]) do
+	for i, _ in pairs(SpawnPointsList.controlpoint[3]) do
 		SetGlobalInt(i .. "PointProgress", 0)
 		SetGlobalInt(i .. "PointCapture", 0)
 		bahmut.points[i] = {}

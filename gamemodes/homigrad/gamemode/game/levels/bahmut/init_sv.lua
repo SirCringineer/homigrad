@@ -20,7 +20,7 @@ local function GetTeamSpawns(ply)
 end
 
 function bahmut.SelectRandomPlayers(list, div, func)
-	for i = 1, math.floor(#list / div) do
+	for _ = 1, math.floor(#list / div) do
 		local ply, key = table.Random(list)
 		table.remove(list, key)
 		func(ply)
@@ -37,7 +37,7 @@ end
 
 --ply:Give("weapon_phone")
 function bahmut.SpawnSimfphys(list, name, func)
-	for i, point in pairs(list) do
+	for _, point in pairs(list) do
 		local ent = simfphys.SpawnVehicleSimple(name, point[1], point[2])
 
 		if func then
@@ -64,7 +64,7 @@ function bahmut.SpawnVehicle()
 end
 
 function bahmut.SpawnEnt(list, name, func)
-	for i, point in pairs(list) do
+	for _, point in pairs(list) do
 		local ent = ents.Create(name)
 		ent:SetPos(point[1])
 		ent:SetAngles(point[2])
@@ -121,9 +121,9 @@ function bahmut.Think()
 				players[v:Team()][v] = true
 			end
 			--[[for i,list in pairs(players) do
-                bahmut.SelectRandomPlayers(list[1],6,bahmut.GiveAidPhone)
-                bahmut.SelectRandomPlayers(list[2],6,bahmut.GiveAidPhone)
-            end]]
+				bahmut.SelectRandomPlayers(list[1],6,bahmut.GiveAidPhone)
+				bahmut.SelectRandomPlayers(list[2],6,bahmut.GiveAidPhone)
+			end]]
 		end
 
 		for ent in pairs(bahmut.ragdolls) do
@@ -142,7 +142,7 @@ function bahmut.GetCountLive(list, func)
 	local count = 0
 	local result
 
-	for i, ply in pairs(list) do
+	for _, ply in pairs(list) do
 		if not IsValid(ply) then continue end
 		result = func and func(ply)
 
@@ -294,7 +294,7 @@ function bahmut.PlayerSpawn2(ply, teamID)
 
 	ply:SetPlayerColor(color:ToVector())
 
-	for i, weapon in pairs(teamTbl.weapons) do
+	for _, weapon in pairs(teamTbl.weapons) do
 		ply:Give(weapon)
 	end
 
@@ -320,17 +320,13 @@ function bahmut.PlayerSpawn2(ply, teamID)
 	if roundStarter then
 		ply:Give("weapon_gredmimomet")
 		ply:Give("weapon_gredammo")
-		--ply:Give("weapon_phone")
+		-- ply:Give("weapon_phone")
 		ply.allowFlashlights = true
 	end
 end
 
 function bahmut.PlayerCanJoinTeam(ply, teamID)
-	if teamID == 3 then
-		ply:ChatPrint("Иди нахуй")
-
-		return false
-	end
+	if teamID == 3 then return false end
 end
 
 function bahmut.PlayerDeath(ply, inf, att)

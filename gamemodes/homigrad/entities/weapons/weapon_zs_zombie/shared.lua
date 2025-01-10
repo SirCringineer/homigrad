@@ -1,16 +1,15 @@
-
-SWEP.ZombieOnly = true
-SWEP.IsMelee = true
-
 if CLIENT then
-	SWEP.PrintName = "#hg.zombie.name"
+	SWEP.PrintName = language.GetPhrase("hg.zombie.name")
 	SWEP.Author = "Homigrad"
-	SWEP.Instructions = "#hg.zombie.inst"
-	SWEP.Category = "#hg.category.other"
+	SWEP.Instructions = language.GetPhrase("hg.zombie.inst")
+	SWEP.Category = language.GetPhrase("hg.category.other")
 end
 
 SWEP.ViewModel = Model("models/Weapons/v_zombiearms.mdl")
 SWEP.WorldModel = ""
+
+SWEP.ZombieOnly = true
+SWEP.IsMelee = true
 
 SWEP.MeleeDelay = 0.74
 SWEP.MeleeReach = 48

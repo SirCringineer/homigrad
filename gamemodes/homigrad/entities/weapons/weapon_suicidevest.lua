@@ -1,10 +1,10 @@
 SWEP.Base = "weapon_base"
 
 if CLIENT then
-	SWEP.PrintName = "#hg.hidebomb.name"
+	SWEP.PrintName = language.GetPhrase("hg.hidebomb.name")
 	SWEP.Author = "Secret Society"
-	SWEP.Instructions = "#hg.hidebomb.inst"
-	SWEP.Category = "#hg.category.traitor"
+	SWEP.Instructions = language.GetPhrase("hg.hidebomb.inst")
+	SWEP.Category = language.GetPhrase("hg.category.traitor")
 end
 
 SWEP.Spawnable = true
@@ -63,12 +63,12 @@ if SERVER then
 
 			sound.Play("BaseExplosionEffect.Sound", SelfPos, 120, math.random(90, 110))
 
-			for i = 1, 4 do
+			for _ = 1, 4 do
 				sound.Play("explosions/doi_ty_01_close.wav", SelfPos, 140, math.random(80, 110))
 			end
 
 			timer.Simple(.1, function()
-				for i = 1, 5 do
+				for _ = 1, 5 do
 					local Tr = util.QuickTrace(SelfPos, VectorRand() * 20)
 					if Tr.Hit then util.Decal("Scorch", Tr.HitPos + Tr.HitNormal, Tr.HitPos - Tr.HitNormal) end
 				end

@@ -3,9 +3,9 @@ att.Icon = Material("entities/acwatt_optic_magnus.png")
 att.Description = "eat shit and die commie"
 att.SortOrder = 4.5
 
-att.Desc_Pros = {"+ Precision sight picture", "+ Zoom",}
+att.Desc_Pros = {"+ Precision sight picture", "+ Zoom"}
 
-att.Desc_Cons = {"- Visible scope glint",}
+att.Desc_Cons = {"- Visible scope glint"}
 
 att.AutoStats = true
 att.Slot = "ez_optic"

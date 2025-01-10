@@ -70,7 +70,7 @@ function dm.EndRound(winner)
 	net.Start("hg_sendchat_format")
 		net.WriteTable({
 			"#hg.modes.plrwin",
-			winner:GetName()
+			winner and winner:GetName() or "#hg.modes.draw"
 		})
 	net.Broadcast()
 end

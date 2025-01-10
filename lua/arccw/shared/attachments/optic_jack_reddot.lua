@@ -4,7 +4,7 @@ att.Description = "wew lad"
 att.SortOrder = 0
 att.ModelOffset = Vector(0, 0, -0.2)
 
-att.Desc_Pros = {"+ Precision sight picture",}
+att.Desc_Pros = {"+ Precision sight picture"}
 
 att.Desc_Cons = {}
 att.AutoStats = true

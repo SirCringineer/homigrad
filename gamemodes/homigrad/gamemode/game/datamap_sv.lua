@@ -154,7 +154,7 @@ COMMANDS.pointreset = {
 
 			PrintMessage(3, "Points with name " .. args[1] .. " cleared.")
 		else
-			for name, info in pairs(SpawnPointsList) do
+			for name, _ in pairs(SpawnPointsList) do
 				WriteDataMap(name)
 			end
 

@@ -95,7 +95,7 @@ function GM.includeDir(path, includes)
 		v = _dirs[i]
 		tier = nil
 
-		for i, sum in pairs(string_split(v, "_")) do
+		for _, sum in pairs(string_split(v, "_")) do
 			if tier then
 				tier = tonumber(sum)
 

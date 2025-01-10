@@ -667,7 +667,7 @@ if CLIENT then
 			end)
 		end
 
-		local ModelBlacklist = {"combine", "zombiefast", "charple", "stripped", "kleiner", "combineelite", "combineprison", "police", "policefem", "zombie", "gman", "EC Male_01", "EC Male_02", "EC Male_03", "EC Male_04", "EC Male_05", "EC Male_06", "EC Male_07", "EC Male_08", "EC Male_09", "EC Male_10", "EC Male_11", "EC Female_01", "EC Female_01_b", "EC Female_02", "EC Female_02_b", "EC Female_03", "EC Female_03_b", "EC Female_04", "EC Female_04_b", "EC Female_05", "EC Female_05_b", "EC Female_06", "EC Female_06_b", "EC Female_07", "EC Female_07_b", "Doot Doot Skelly", "JMod_HazMat", "zombine", "skeleton", "Creeper Girl",}
+		local ModelBlacklist = {"combine", "zombiefast", "charple", "stripped", "kleiner", "combineelite", "combineprison", "police", "policefem", "zombie", "gman", "EC Male_01", "EC Male_02", "EC Male_03", "EC Male_04", "EC Male_05", "EC Male_06", "EC Male_07", "EC Male_08", "EC Male_09", "EC Male_10", "EC Male_11", "EC Female_01", "EC Female_01_b", "EC Female_02", "EC Female_02_b", "EC Female_03", "EC Female_03_b", "EC Female_04", "EC Female_04_b", "EC Female_05", "EC Female_05_b", "EC Female_06", "EC Female_06_b", "EC Female_07", "EC Female_07_b", "Doot Doot Skelly", "JMod_HazMat", "zombine", "skeleton", "Creeper Girl"}
 
 		-- Actually the worst code I have ever had to deal with.
 		for i = 1, 41 do

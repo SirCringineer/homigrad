@@ -1,10 +1,10 @@
 SWEP.Base = "weapon_base"
 
 if CLIENT then
-	SWEP.PrintName = "#hg.hidebomb.name"
+	SWEP.PrintName = language.GetPhrase("hg.hidebomb.name")
 	SWEP.Author = "Secret Society"
-	SWEP.Instructions = "#hg.hidebomb.inst"
-	SWEP.Category = "#hg.category.traitor"
+	SWEP.Instructions = language.GetPhrase("hg.hidebomb.inst")
+	SWEP.Category = language.GetPhrase("hg.category.traitor")
 end
 
 SWEP.Spawnable = true

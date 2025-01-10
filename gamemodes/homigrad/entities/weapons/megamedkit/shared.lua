@@ -3,10 +3,10 @@ AddCSLuaFile() -- TODO: Replace code with weapon_medkit
 SWEP.Base = "medkit"
 
 if CLIENT then
-	SWEP.PrintName = "#hg.megamedkit.name"
+	SWEP.PrintName = language.GetPhrase("hg.megamedkit.name")
 	SWEP.Author = "First AID"
-	SWEP.Instructions = "#hg.megamedkit.inst"
-	SWEP.Category = "#hg.category.medicine"
+	SWEP.Instructions = language.GetPhrase("hg.megamedkit.inst")
+	SWEP.Category = language.GetPhrase("hg.category.medicine")
 end
 
 SWEP.Spawnable = true
