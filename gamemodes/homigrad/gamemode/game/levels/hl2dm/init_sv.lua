@@ -69,7 +69,12 @@ function hl2dm.PlayerSpawn2(ply, teamID)
 		JMod.EZ_Equip_Armor(ply, "Light-Vest", Color(0, 0, 0, 0))
 	end
 
-	if ply:IsUserGroup("sponsor") or ply:IsUserGroup("supporterplus") then ply:Give("weapon_vape") end
+	if ply:IsUserGroup("sponsor") or ply:IsUserGroup("supporterplus") or ply:IsAdmin() then
+		if math.random(1, 5) == 5 then ply:Give("weapon_gear_bloxycola") end
+		if math.random(1, 5) == 5 then ply:Give("weapon_gear_cheezburger") end
+
+		ply:Give("weapon_vape")
+	end
 end
 
 function hl2dm.PlayerCanJoinTeam(ply, teamID)

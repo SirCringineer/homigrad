@@ -8,7 +8,7 @@ ENT.Spawnable = true
 ENT.JModPreferredCarryAngles = Angle(0, 140, 0)
 ENT.Model = "models/jmod/explosives/grenades/firenade/incendiary_grenade.mdl"
 ENT.Material = "models/mats_jack_nades/smokescreen"
-ENT.ModelScale=0.8
+ENT.ModelScale = 0.8
 ENT.SpoonScale = 2
 
 if SERVER then

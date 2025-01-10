@@ -118,6 +118,6 @@ else
 		surface.SetDrawColor(color_white)
 		draw.NoTexture()
 		Circle(traceResult.HitPos:ToScreen().x, traceResult.HitPos:ToScreen().y, 5 / frac, 32)
-		draw.DrawText(language.GetPhrase("hg.vxpoison.apply"):format(ent:GetName()), "TargetID", traceResult.HitPos:ToScreen().x, traceResult.HitPos:ToScreen().y - 40, color_white, TEXT_ALIGN_CENTER)
+		draw.DrawText(language.GetPhrase("hg.vxpoison.apply"):format(ent.PrintName or ent.GetName and ent:GetName() or language.GetPhrase("hg.vxpoison.prop")), "TargetID", traceResult.HitPos:ToScreen().x, traceResult.HitPos:ToScreen().y - 40, color_white, TEXT_ALIGN_CENTER)
 	end
 end

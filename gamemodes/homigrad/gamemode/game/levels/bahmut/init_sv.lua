@@ -22,7 +22,9 @@ end
 function bahmut.SelectRandomPlayers(list, div, func)
 	for _ = 1, math.floor(#list / div) do
 		local ply, key = table.Random(list)
+
 		table.remove(list, key)
+
 		func(ply)
 	end
 end

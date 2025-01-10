@@ -300,7 +300,12 @@ function homicide.StartRoundSV()
 			makeCT(ply)
 		end
 
-		if ply:IsUserGroup("sponsor") or ply:IsUserGroup("supporterplus") or ply:IsAdmin() then ply:Give("weapon_vape") end
+		if ply:IsUserGroup("sponsor") or ply:IsUserGroup("supporterplus") or ply:IsAdmin() then
+			if math.random(1, 5) == 5 then ply:Give("weapon_gear_bloxycola") end
+			if math.random(1, 5) == 5 then ply:Give("weapon_gear_cheezburger") end
+
+			ply:Give("weapon_vape")
+		end
 	end)
 
 	local players = PlayersInGame()

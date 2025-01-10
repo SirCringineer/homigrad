@@ -181,7 +181,8 @@ local deathtexts = {
 	"would you look at that",
 	"try again",
 	"cука блять",
-	"поздравляю"
+	"поздравляю",
+	"вмер",
 }
 
 --[[
@@ -353,6 +354,7 @@ function CalcView(ply, vec, ang, fov, znear, zfar)
 			local bodyang = matrix:GetAngles()
 
 			eyeAngs = att.Ang
+
 			att.Pos = eye and bodypos + bodyang:Up() * 0 + bodyang:Forward() * 10 + bodyang:Right() * -8 or lply:EyePos()
 		end
 

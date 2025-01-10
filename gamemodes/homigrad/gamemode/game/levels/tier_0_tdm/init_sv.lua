@@ -46,8 +46,8 @@ function tdm.GetListMul(list, mul, func, max)
 	mul = (max and math.max(mul, max)) or mul
 
 	for _ = 1, mul do
-		local ply, key = list[math.random(#list)]
-		list[key] = nil
+		local ply = list[math.random(#list)]
+		list[ply] = nil
 
 		if func and func(ply) ~= true then continue end
 
@@ -224,7 +224,12 @@ function tdm.PlayerSpawn2(ply, teamID)
 	-- local r = math.random(1, 3)
 	-- ply:Give(r == 1 and "food_fishcan" or r == 2 and "food_spongebob_home" or r == 3 and "food_lays")
 
-	if ply:IsUserGroup("sponsor") or ply:IsUserGroup("supporterplus") or ply:IsAdmin() then ply:Give("weapon_vape") end
+	if ply:IsUserGroup("sponsor") or ply:IsUserGroup("supporterplus") or ply:IsAdmin() then
+		if math.random(1, 5) == 5 then ply:Give("weapon_gear_bloxycola") end
+		if math.random(1, 5) == 5 then ply:Give("weapon_gear_cheezburger") end
+
+		ply:Give("weapon_vape")
+	end
 
 	local r = math.random(1, 2)
 	JMod.EZ_Equip_Armor(ply, "Medium-Helmet", color)

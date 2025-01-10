@@ -68,14 +68,14 @@ if SERVER then
 
 			sound.Play("BaseExplosionEffect.Sound", SelfPos, 120, math.random(90, 110))
 
-			for i = 1, 4 do
+			for _ = 1, 4 do
 				sound.Play("explosions/doi_ty_01_close.wav", SelfPos, 140, math.random(80, 110))
 			end
 
 			if util.GetSurfaceIndex(ent:GetBoneSurfaceProp(0)) == 3 or util.GetSurfaceIndex(ent:GetBoneSurfaceProp(0)) == 66 then JMod.FragSplosion(ent, SelfPos + Vector(0, 0, 20), 1024, 50, 3500, ent.owner or game.GetWorld()) end
 
 			timer.Simple(.1, function()
-				for i = 1, 5 do
+				for _ = 1, 5 do
 					local Tr = util.QuickTrace(SelfPos, VectorRand() * 20)
 					if Tr.Hit then util.Decal("Scorch", Tr.HitPos + Tr.HitNormal, Tr.HitPos - Tr.HitNormal) end
 				end
@@ -85,7 +85,7 @@ if SERVER then
 			JMod.BlastDoors(ent, SelfPos, PowerMult)
 
 			if BigFireModels[Model] then
-				for i = 1, 25 do
+				for _ = 1, 25 do
 					local FireVec = (VectorRand() * .3 + Vector(0, 0, .3)):GetNormalized()
 					FireVec.z = FireVec.z / 2
 
@@ -104,7 +104,7 @@ if SERVER then
 					Flame:Activate()
 				end
 			elseif FireModels[Model] then
-				for i = 1, 7 do
+				for _ = 1, 7 do
 					local FireVec = (VectorRand() * .3 + Vector(0, 0, .3)):GetNormalized()
 					FireVec.z = FireVec.z / 2
 
@@ -186,7 +186,12 @@ if SERVER then
 
 			self:SetNWBool("hasbomb", true)
 		else
-			self:GetOwner():ChatPrint("You cannot deploy the bomb for another " .. math.floor(timePassed) .. " seconds!")
+			net.Start("hg_sendchat_format")
+				net.WriteTable({
+					"#hg.hidebomb.cantuse",
+					tostring(math.floor(timePassed))
+				})
+			net.Send(self:GetOwner())
 		end
 	end
 
@@ -225,7 +230,6 @@ else
 		self.mdl:DrawModel()
 	end
 
-	--[[
 	function SWEP:DrawHUD()
 		local owner = self:GetOwner()
 		local tr = {}
@@ -253,7 +257,7 @@ else
 			surface.SetDrawColor(Color(255, 255, 255, 255))
 			draw.NoTexture()
 			Circle(traceResult.HitPos:ToScreen().x, traceResult.HitPos:ToScreen().y, 5 / frac, 32)
-			draw.DrawText("Hide Bomb In Prop", "TargetID", traceResult.HitPos:ToScreen().x, traceResult.HitPos:ToScreen().y - 40, color_white, TEXT_ALIGN_CENTER)
+			draw.DrawText(language.GetPhrase("hg.hidebomb.placein"):format(ent.PrintName or ent.GetName and ent:GetName() or language.GetPhrase("hg.vxpoison.prop")), "TargetID", traceResult.HitPos:ToScreen().x, traceResult.HitPos:ToScreen().y - 40, color_white, TEXT_ALIGN_CENTER)
 		end
-	end --]]
+	end
 end

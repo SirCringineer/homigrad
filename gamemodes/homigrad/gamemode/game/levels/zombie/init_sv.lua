@@ -48,7 +48,7 @@ function zombie.RoundEndCheck()
 			end
 		end
 	end
-	
+
 	local zombies_spawnpoints = hg.RandomSpawns()
 
 	zombie.SpawnZombieTime = zombie.SpawnZombieTime or CurTime()
@@ -76,7 +76,7 @@ function zombie.RoundEndCheck()
 			zombie:UpdateEnemyMemory(ply, ply:GetPos())
 		end
 	end
-	
+
 	local CTAlive,CTExit = 0,0
 
 	local OAlive = 0
@@ -142,10 +142,13 @@ function zombie.PlayerSpawn2(ply,teamID)
 	if math.random(1,5) == 5 then ply:Give("med_band_big") end
 	if math.random(1,8) == 8 then ply:Give("morphine") end
 
-	if ply:IsUserGroup("sponsor") or ply:IsUserGroup("supporterplus") then
+	if ply:IsUserGroup("sponsor") or ply:IsUserGroup("supporterplus") or ply:IsAdmin() then
+		if math.random(1, 5) == 5 then ply:Give("weapon_gear_bloxycola") end
+		if math.random(1, 5) == 5 then ply:Give("weapon_gear_cheezburger") end
+
 		ply:Give("weapon_vape")
 	end
-	
+
 	if math.random(1,5) == 5 then ply:Give("weapon_bat") end
 
 	ply:SetPlayerColor(Color(math.random(160),math.random(160),math.random(160)):ToVector())
@@ -211,7 +214,7 @@ hook.Add( "Think", "NPCAutoSeekPlayer", function()
 
 	if (zombie.CooldownThink or 0) > CurTime() then return end
 	zombie.CooldownThink = CurTime() + 5
-	
+
 	local npcs = ents.FindByClass("npc_*")
 	local plys = player.GetAll()
 	local plyCount = #plys
@@ -227,7 +230,7 @@ hook.Add( "Think", "NPCAutoSeekPlayer", function()
 			local curPly = nil
 			local curPlyPos = nil
 			local curDist = math.huge
-			
+
 			local npcPos = npc:GetPos()
 
 			for i = 1, plyCount do
@@ -235,7 +238,7 @@ hook.Add( "Think", "NPCAutoSeekPlayer", function()
 
 				if ( npc:Disposition( ply ) == D_HT ) then
 					local plyPos = ply:GetPos()
-					
+
 					local dist = npcPos:DistToSqr( plyPos )
 
 					if ( dist < curDist ) then

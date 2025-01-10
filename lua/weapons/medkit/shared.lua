@@ -72,6 +72,7 @@ SWEP.dwmAForward = 90
 
 function SWEP:DrawWorldModel()
 	local owner = self:GetOwner()
+
 	if not IsValid(owner) then
 		self:DrawModel()
 		self:SetRenderOrigin()
@@ -82,17 +83,23 @@ function SWEP:DrawWorldModel()
 
 	local Pos, Ang = owner:GetBonePosition(owner:LookupBone("ValveBiped.Bip01_R_Hand"))
 	if not Pos then return end
+
 	self:SetModel(self.WorldModel)
+
 	Pos:Add(Ang:Forward() * self.dwmForward)
 	Pos:Add(Ang:Right() * self.dwmRight)
 	Pos:Add(Ang:Up() * self.dwmUp)
+
 	Ang:RotateAroundAxis(Ang:Up(), self.dwmAUp)
 	Ang:RotateAroundAxis(Ang:Right(), self.dwmARight)
 	Ang:RotateAroundAxis(Ang:Forward(), self.dwmAForward)
-	--self:SetPos(Pos)
-	--self:SetAngles(Ang)
+
+	-- self:SetPos(Pos)
+	-- self:SetAngles(Ang)
+
 	self:SetRenderOrigin(Pos)
 	self:SetRenderAngles(Ang)
+
 	self:SetModelScale(self.dwmModeScale)
 	self:DrawModel()
 end

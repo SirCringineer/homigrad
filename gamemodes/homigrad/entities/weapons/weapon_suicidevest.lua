@@ -1,9 +1,9 @@
 SWEP.Base = "weapon_base"
 
 if CLIENT then
-	SWEP.PrintName = language.GetPhrase("hg.hidebomb.name")
+	SWEP.PrintName = language.GetPhrase("hg.suicidevest.name")
 	SWEP.Author = "Secret Society"
-	SWEP.Instructions = language.GetPhrase("hg.hidebomb.inst")
+	SWEP.Instructions = language.GetPhrase("hg.suicidevest.inst")
 	SWEP.Category = language.GetPhrase("hg.category.traitor")
 end
 

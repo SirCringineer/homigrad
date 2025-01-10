@@ -16,8 +16,8 @@ SWEP.ViewModel = "models/weapons/w_models/w_jyringe_proj.mdl"
 SWEP.WorldModel = "models/weapons/w_models/w_jyringe_proj.mdl"
 SWEP.HoldType = "normal"
 
-SWEP.dwsPos = Vector(7,7,7)
-SWEP.dwsItemPos = Vector(2,0,2)
+SWEP.dwsPos = Vector(7, 7, 7)
+SWEP.dwsItemPos = Vector(2, 0, 2)
 
 SWEP.dwmModeScale = 0.5
 SWEP.dwmForward = 3
@@ -28,6 +28,7 @@ SWEP.dwmAUp = 0
 SWEP.dwmARight = 90
 SWEP.dwmAForward = 0
 
+local color_red = Color(255, 0, 0)
 local injectsound = "Underwater.BulletImpact"
 
 local function eyeTrace(ply)
@@ -121,8 +122,6 @@ if SERVER then
 				end
 			end)
 		end)
-
-		self:GetOwner():EmitSound("snd_jack_hmcd_needleprick.wav", 30)
 
 		self:Remove()
 

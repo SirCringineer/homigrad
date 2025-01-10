@@ -26,8 +26,8 @@ function hideandseek.StartRoundSV(data)
 	local count = math.min(math.floor(#players / 4, 1))
 
 	for _ = 1, count do
-		local ply, key = players[math.random(#players)]
-		players[key] = nil
+		local ply = players[math.random(#players)]
+		players[ply] = nil
 
 		ply:SetTeam(1)
 	end
@@ -138,12 +138,12 @@ function hideandseek.EndRound(winner)
 	tdm.EndRoundMessage(winner)
 end
 
-function hideandseek.PlayerSpawn(ply, teamID)
+function hideandseek.PlayerSpawn2(ply, teamID)
 	local teamTbl = hideandseek[hideandseek.teamEncoder[teamID]]
 	local color = teamTbl[2]
 
 	-- Forcing this over anything and everything else
-	EasyAppearance.SetAppearance(ply) -- Force this first
+	EasyAppearance.SetAppearance(ply)
 
 	ply:SetPlayerColor(color:ToVector())
 
@@ -165,7 +165,12 @@ function hideandseek.PlayerSpawn(ply, teamID)
 	-- local r = math.random(1, 3)
 	-- ply:Give(r == 1 and "food_fishcan" or r == 2 and "food_spongebob_home" or r == 3 and "food_lays")
 
-	if ply:IsUserGroup("sponsor") or ply:IsUserGroup("supporterplus") or ply:IsAdmin() then ply:Give("weapon_vape") end
+	if ply:IsUserGroup("sponsor") or ply:IsUserGroup("supporterplus") or ply:IsAdmin() then
+		if math.random(1, 5) == 5 then ply:Give("weapon_gear_bloxycola") end
+		if math.random(1, 5) == 5 then ply:Give("weapon_gear_cheezburger") end
+
+		ply:Give("weapon_vape")
+	end
 
 	if teamID == 1 then
 		JMod.EZ_Equip_Armor(ply, "Medium-Helmet", color)

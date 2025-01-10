@@ -1,90 +1,39 @@
-if engine.ActiveGamemode() == "homigrad" then
-    include("shared.lua")
+include("shared.lua")
 
-    SWEP.Dealy = 0.25
-    local healsound = Sound("snd_jack_bandage.wav")
+local healsound = "snd_jack_bandage.wav"
 
-    function SWEP:PrimaryAttack()
-        self:SetNextPrimaryFire(CurTime() + self.Dealy)
-        self:SetNextSecondaryFire(CurTime() + self.Dealy)
+function SWEP:Heal(ent)
+	if not ent or not ent:IsPlayer() then
+		sound.Play(healsound, ent:GetPos(), 75, 100, 0.5)
 
-        local owner = self:GetOwner()
+		return true
+	end
 
-        
-        sound.Play(healsound,owner:GetPos())
+	if ent.LeftLeg < 1 then
+		ent.LeftLeg = 1
 
-        if self:Heal(owner) then owner:SetAnimation(PLAYER_ATTACK1) self:Remove() self:GetOwner():SelectWeapon("weapon_hands") end
-    end
+		sound.Play(healsound, ent:GetPos(), 75, 100, 0.5)
 
-    function SWEP:SecondaryAttack()
-        self:SetNextPrimaryFire(CurTime() + self.Dealy)
-        self:SetNextSecondaryFire(CurTime() + self.Dealy)
+		return true
+	elseif ent.RightLeg < 1 then
+		ent.RightLeg = 1
 
-        local owner = self:GetOwner()
-        local trace = self:GetEyeTraceDist(150)
-        local ent = trace.Entity
-        ent = (ent:IsPlayer() and ent) or (RagdollOwner(ent)) or (ent:GetClass() == "prop_ragdoll" and ent)
-        if not ent then return end
+		sound.Play(healsound, ent:GetPos(), 75, 100, 0.5)
 
-        if self:Heal(ent) then
-            sound.Play(healsound,ent:GetPos(),75,100,0.5)
-            if ent:IsPlayer() then
-                local dmg = DamageInfo()
-                dmg:SetDamage(-5)
-                dmg:SetAttacker(self)
+		return true
+	elseif ent.RightArm < 1 then
+		ent.RightArm = 1
 
-                local att = self:GetOwner()
+		sound.Play(healsound, ent:GetPos(), 75, 100, 0.5)
 
-                if GuiltLogic(att,ent,dmg,true) then
-                    att.Guilt = math.max(att.Guilt - 10,0)
-                end
-            end
-            owner:SetAnimation(PLAYER_ATTACK1)
-            self:Remove()
-            self:GetOwner():SelectWeapon("weapon_hands")
-        end
-    end
+		return true
+	elseif ent.LeftArm < 1 then
+		ent.LeftArm = 1
 
-    function SWEP:GetEyeTraceDist(dist)
-        local owner = self:GetOwner()
-        if not owner or not owner:IsValid() then return end
+		sound.Play(healsound, ent:GetPos(), 75, 100, 0.5)
 
-        local trace = util.TraceLine({
-            start = owner:EyePos(),
-            endpos = owner:EyePos() + owner:EyeAngles():Forward() * dist,
-            filter = owner
-        })
+		return true
+	end
 
-        return trace
-    end
-
-    local healsound = Sound("snd_jack_bandage.wav")
-
-    function SWEP:Heal(ent)
-        if not ent or not ent:IsPlayer() then sound.Play(healsound,ent:GetPos(),75,100,0.5) return true end
-
-        -- FIXME: If there is a bug here, probably just remove.
-        if ent.LeftLeg < 1 then
-            ent.LeftLeg = 1
-            sound.Play(healsound,ent:GetPos(),75,100,0.5)
-            
-            return true
-        elseif ent.RightLeg < 1 then
-            ent.RightLeg = 1
-            sound.Play(healsound,ent:GetPos(),75,100,0.5)
-            
-            return true
-        elseif ent.LeftArm < 1 then
-            ent.LeftArm = 1
-            sound.Play(healsound,ent:GetPos(),75,100,0.5)
-
-            return true
-        elseif ent.RightArm < 1 then
-            sound.Play(healsound,ent:GetPos(),75,100,0.5)
-
-            return true
-        else
-            return true -- Why?
-        end
-    end
+	return false
 end

@@ -38,7 +38,7 @@ function hideandseek.HUDPaint_RoundLeft(white2, time)
 	end
 
 	if time > 0 then
-		draw.SimpleText(language.GetPhrase("hg.levels.swatarrive"):format(ftime), "HomigradFont", ScrW() / 2 - 200, ScrH() - 25, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
+		draw.SimpleText(language.GetPhrase("hg.levels.swatarrive"):format(ftime), "HomigradFont", ScrW() / 2 / 1.1, ScrH() - 25, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
 		-- draw.SimpleText(ftime, "HomigradFont", ScrW() / 2 + 200, ScrH() - 25, color_white, TEXT_ALIGN_RIGHT, TEXT_ALIGN_CENTER)
 		green.a = 0
 	else
