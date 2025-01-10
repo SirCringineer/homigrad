@@ -163,7 +163,6 @@ function CLASS:EventPoint(name, pos, radius, a1, a2)
 		timer.Simple(2, function()
 			if not live(self, hp, self:Health()) then return end
 		end)
-		-- EmitSound(self, ebal("bot/yesss", 2))
 	end
 
 	if name == "hitgroup killed" and a1 ~= self and a1.isContr then
@@ -173,7 +172,6 @@ function CLASS:EventPoint(name, pos, radius, a1, a2)
 			timer.Simple(math.Rand(0.75, 1.75), function()
 				if not live(self, hp, self:Health()) then return end
 			end)
-			-- EmitSound(self, ebal("bot/good_shot", 2))
 		end
 	end
 end

@@ -4,6 +4,7 @@ AddCSLuaFile("shared.lua")
 include("shared.lua")
 
 util.AddNetworkString("hg_sendchat")
+util.AddNetworkString("hg_sendchat_simple")
 util.AddNetworkString("hg_sendchat_format")
 util.AddNetworkString("lasertgg")
 util.AddNetworkString("remove_jmod_effects")
@@ -294,7 +295,7 @@ COMMANDS.scared = {
 		local value = (tonumber(args[1]) == 1 and true) or false
 
 		ply:SetNWBool("scared", value)
-		ply:ChatPrint("scared: " .. tostring(value))
+		ply:ChatPrint("NoclipScary: " .. tostring(value))
 	end
 }
 

@@ -179,18 +179,6 @@ function CLASS:Event(name, a1)
 			else EmitSound(self, "bot/my_eyes.wav") end
 		end)
 	end
-	--[[ Not used
-	if name == "inventory close" then
-		if a1.roleT then
-			local r = math.random(1, 3)
-			if r == 1 then EmitSound(self, "bot/aah.wav")
-			elseif r == 2 then EmitSound(self, "bot/aw_hell.wav")
-			else EmitSound(self, "bot/aww_man.wav") end
-		else
-			if math.random(1, 2) == 2 then EmitSound(self, ebal("bot/clear", 4))
-			else EmitSound(self, ebal("bot/he_got_away", 2)) end
-		end
-	end --]]
 end
 
 local sounds = {

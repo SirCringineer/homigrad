@@ -214,16 +214,12 @@ function SpawnPolicePlayers()
 
 	timer.Simple(0, function()
 		if homicide.roundType == 1 then
-			net.Start("hg_sendchat")
-				net.WriteTable({
-					"#hg.modes.team.swathere"
-				})
+			net.Start("hg_sendchat_simple")
+				net.WriteString("#hg.modes.team.swathere")
 			net.Broadcast()
 		else
-			net.Start("hg_sendchat")
-				net.WriteTable({
-					"#hg.modes.team.policehere"
-				})
+			net.Start("hg_sendchat_simple")
+				net.WriteString("#hg.modes.team.policehere")
 			net.Broadcast()
 		end
 

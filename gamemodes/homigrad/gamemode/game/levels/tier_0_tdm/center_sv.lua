@@ -17,8 +17,8 @@ function tdm.Center()
 			if not ply.delayKill then
 				ply.delayKill = CurTime() + 10
 
-				net.Start("hg_sendchat")
-					net.WriteTable({"#hg.tdm.returncenter"})
+				net.Start("hg_sendchat_simple")
+					net.WriteTable("#hg.tdm.returncenter")
 				net.Send(ply)
 			elseif ply.delayKill < CurTime() then
 				ply:Kill()

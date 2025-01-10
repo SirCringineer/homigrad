@@ -81,13 +81,22 @@ net.Receive("hg_sendchat", function(len)
 	if not msg then return end
 
 	local tbl = {}
-
 	for _, v in ipairs(msg) do
-		tbl[#tbl + 1] = (string.StartsWith(v, "#") and language.GetPhrase(v)) or v
+		tbl[#tbl + 1] = string.StartsWith(v, "#") and language.GetPhrase(v) or v
 	end
 
 	if IsValid(ply) then
 		ply:ChatPrint(table.concat(tbl))
+	end
+end)
+
+net.Receive("hg_sendchat_simple", function(len)
+	local ply = LocalPlayer()
+	local msg = net.ReadString()
+	if not msg then return end
+
+	if IsValid(ply) then
+		ply:ChatPrint(string.StartsWith(msg, "#") and language.GetPhrase(v) or v)
 	end
 end)
 
@@ -97,17 +106,15 @@ net.Receive("hg_sendchat_format", function(len)
 	if not msg then return end
 
 	local tbl = {}
-
 	for _, v in ipairs(msg) do
-		tbl[#tbl + 1] = (string.StartsWith(v, "#") and language.GetPhrase(v)) or v
+		tbl[#tbl + 1] = string.StartsWith(v, "#") and language.GetPhrase(v) or v
 	end
 
 	local text = tbl[1]
-
 	local args = {unpack(tbl, 2)} -- Extract other args
 
 	if IsValid(ply) then
-		ply:ChatPrint(language.GetPhrase(text):format(unpack(args)))
+		ply:ChatPrint(language.GetPhrase(text):format(unpack(args) or ""))
 	end
 end)
 
@@ -157,11 +164,9 @@ hook.Add("HUDPaint", "spectate", function()
 	local lply = LocalPlayer()
 	local spec = lply:GetNWEntity("HeSpectateOn")
 
-	if lply:Alive() then
-		if IsValid(flashlight) then
-			flashlight:Remove()
-			flashlight = nil
-		end
+	if lply:Alive() and IsValid(flashlight) then
+		flashlight:Remove()
+		flashlight = nil
 	end
 
 	local result = lply:PlayerClassEvent("CanUseSpectateHUD")

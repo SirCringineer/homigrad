@@ -316,18 +316,18 @@ local function donaterVoteLevelEnd(t, argv, calling_ply, args)
 	end
 
 	if winner == 1 then
-		net.Start("hg_sendchat")
-			net.WriteTable({"#hg.rounds.vote.end.success"})
+		net.Start("hg_sendchat_simple")
+			net.WriteString("#hg.rounds.vote.end.success")
 		net.Broadcast()
 
 		EndRound()
 	elseif winner == 2 then
-		net.Start("hg_sendchat")
-			net.WriteTable({"#hg.rounds.vote.end.fail"})
+		net.Start("hg_sendchat_simple")
+			net.WriteString("#hg.rounds.vote.end.fail")
 		net.Broadcast()
 	else
-		net.Start("hg_sendchat")
-			net.WriteTable({"#hg.rounds.vote.end.error"})
+		net.Start("hg_sendchat_simple")
+			net.WriteString("#hg.rounds.vote.end.error")
 		net.Broadcast()
 	end
 
@@ -368,12 +368,12 @@ local function donaterVoteLevel(t, argv, calling_ply, args)
 
 		SetActiveNextRound(args[1])
 	elseif winner == 2 then
-		net.Start("hg_sendchat")
-			net.WriteTable({"#hg.rounds.vote.next.fail"})
+		net.Start("hg_sendchat_simple")
+			net.WriteString("#hg.rounds.vote.next.fail")
 		net.Broadcast()
 	else
-		net.Start("hg_sendchat")
-			net.WriteTable({"#hg.rounds.vote.end.error"})
+		net.Start("hg_sendchat_simple")
+			net.WriteString("#hg.rounds.vote.end.error")
 		net.Broadcast()
 	end
 
@@ -416,9 +416,10 @@ end)
 hook.Add("WeaponEquip", "PlayerManualPickup", function(wep, ply)
 	timer.Simple(0, function()
 		--if WEAPON_PICKUP_OVERIDE then return end
-		if ishgweapon(wep) then
-			local isbig = ishgweapon(wep) and not wep:IsPistolHoldType()
-			local issmall = ishgweapon(wep) and wep:IsPistolHoldType()
+
+		if isHGWeapon(wep) then
+			local isbig = isHGWeapon(wep) and not wep:IsPistolHoldType()
+			local issmall = isHGWeapon(wep) and wep:IsPistolHoldType()
 
 			if ply.SlotBig and isbig then
 				ply:DropWeapon1(ply.SlotBig)

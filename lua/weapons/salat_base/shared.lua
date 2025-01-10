@@ -750,7 +750,7 @@ end
 
 SWEP.ishgweapon = true
 
-function ishgweapon(wep)
+function isHGWeapon(wep)
 	return wep.ishgweapon
 end
 
@@ -920,7 +920,7 @@ end
 hook.Add("UpdateAnimation","weapon_animations",function(ply,vel,maxseqgroundspeed)
 	local wep = ply:GetActiveWeapon()
 
-	if IsValid(wep) and ishgweapon(wep) then
+	if IsValid(wep) and isHGWeapon(wep) then
 		wep:ApplyAnim(ply)
 	end
 

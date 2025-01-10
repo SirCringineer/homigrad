@@ -298,10 +298,8 @@ function SWEP:Think()
 					net.WriteBool(self.mode)
 				net.Send(ply)
 
-				net.Start("hg_sendchat")
-					net.WriteTable({
-						"#hg.hammer.nailing." .. not self.mode
-					})
+				net.Start("hg_sendchat_simple")
+					net.WriteString("#hg.hammer.nailing." .. tostring(not self.mode))
 				net.Send(ply)
 			end
 		else
@@ -371,5 +369,5 @@ function SWEP:DrawHUD()
 
 	Circle(traceResult.HitPos:ToScreen().x, traceResult.HitPos:ToScreen().y, 5 / frac, 32)
 
-	draw.DrawText((not tRes1 and "") or isRag and (language.GetPhrase("hg.hammer.nailin"):format(language.GetPhrase(bonenames[traceResult.Entity:GetBoneName(traceResult.Entity:TranslatePhysBoneToBone(traceResult.PhysicsBone))]))) or (tobool(hitEnt) and tobool(hit)) and "#hg.hammer.nailinprop" or "", "TargetID", traceResult.HitPos:ToScreen().x, traceResult.HitPos:ToScreen().y - 40, color_white, TEXT_ALIGN_CENTER)
+	draw.DrawText(not tRes1 and "" or isRag and language.GetPhrase("hg.hammer.nailin"):format(language.GetPhrase(bonenames[traceResult.Entity:GetBoneName(traceResult.Entity:TranslatePhysBoneToBone(traceResult.PhysicsBone))])) or tobool(hitEnt) and tobool(hit) and "#hg.hammer.nailinprop" or "", "TargetID", traceResult.HitPos:ToScreen().x, traceResult.HitPos:ToScreen().y - 40, color_white, TEXT_ALIGN_CENTER)
 end

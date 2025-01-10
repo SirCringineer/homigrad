@@ -66,10 +66,8 @@ function hideandseek.RoundEndCheck()
 		if not hideandseek.police then
 			hideandseek.police = true
 
-			net.Start("hg_sendchat")
-				net.WriteTable({
-					"#hg.hideandseek.swathere"
-				})
+			net.Start("hg_sendchat_simple")
+				net.WriteString("#hg.hideandseek.swathere")
 			net.Broadcast()
 
 			for _, ply in pairs(tdm.GetListMul(player.GetAll(), 1, function(ply) return not ply:Alive() and not ply.roleT and ply:Team() ~= 1002 end), 1) do

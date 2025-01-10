@@ -1,11 +1,9 @@
-/*
-*
-*	@author		: vectivus
-*	@module		: networking
-*	@website	: https://github.com/projectrebug/
-*	@file		: network.lua
-*
-*/
+--[[
+	@author	: vectivus
+	@module	: networking
+	@website: https://github.com/projectrebug/
+	@file	: network.lua
+--]]
 
 if game.SinglePlayer() then return end
 
