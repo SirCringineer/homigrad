@@ -56,7 +56,7 @@ net.Receive("inventory", function()
 	local lootEnt = net.ReadEntity()
 	local success, items = pcall(net.ReadTable)
 
-	local nickname = lootEnt:IsPlayer() and lootEnt:GetNWString("Nickname") or lootEnt:Name() or ""
+	local nickname = lootEnt:IsPlayer() and lootEnt:Name() or lootEnt:GetNWString("Nickname") or ""
 	if not success or not lootEnt then return end
 
 	if IsValid(lootEnt:GetNWEntity("ActiveWeapon")) and items[lootEnt:GetNWEntity("ActiveWeapon"):GetClass()] then items[lootEnt:GetNWEntity("ActiveWeapon"):GetClass()] = nil end

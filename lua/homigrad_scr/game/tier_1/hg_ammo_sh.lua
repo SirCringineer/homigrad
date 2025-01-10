@@ -269,8 +269,8 @@ if CLIENT then
 
 			DermaButton.DoClick = function()
 				net.Start("drop_ammo")
-					net.WriteInt(k)
-					net.WriteInt(math.min(ammodrop, v))
+					net.WriteFloat(k)
+					net.WriteFloat(math.min(ammodrop, v))
 				net.SendToServer()
 
 				Frame:Close()
@@ -278,8 +278,8 @@ if CLIENT then
 
 			DermaButton.DoRightClick = function()
 				net.Start("drop_ammo")
-					net.WriteInt(k)
-					net.WriteInt(v)
+					net.WriteFloat(k)
+					net.WriteFloat(v)
 				net.SendToServer()
 				Frame:Close()
 			end
@@ -314,8 +314,8 @@ if SERVER then
 	net.Receive("drop_ammo", function(len, ply)
 		if not ply:Alive() or ply.unconscious then return end
 
-		local ammotype = net.ReadInt()
-		local count = net.ReadInt()
+		local ammotype = net.ReadFloat()
+		local count = net.ReadFloat()
 		local pos = ply:EyePos() + ply:EyeAngles():Forward() * 15
 		if ply:GetAmmoCount(ammotype) - count < 0 then
 			net.Start("hg_sendchat_simple")

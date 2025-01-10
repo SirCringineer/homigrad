@@ -96,7 +96,7 @@ net.Receive("hg_sendchat_simple", function(len)
 	if not msg then return end
 
 	if IsValid(ply) then
-		ply:ChatPrint(string.StartsWith(msg, "#") and language.GetPhrase(v) or v)
+		ply:ChatPrint(string.StartsWith(msg, "#") and language.GetPhrase(msg) or msg)
 	end
 end)
 

@@ -1,18 +1,6 @@
-if engine.ActiveGamemode() == "homigrad" then
 if SERVER then
 	AddCSLuaFile()
-	SWEP.Weight = 5
-	SWEP.AutoSwitchTo = false
-	SWEP.AutoSwitchFrom = false
 else
-	SWEP.PrintName = "Hands"
-	SWEP.Slot = 0
-	SWEP.SlotPos = 1
-	SWEP.DrawAmmo = false
-	SWEP.DrawCrosshair = false
-	SWEP.ViewModelFOV = 45
-	SWEP.BounceWeaponIcon = false
-	SWEP.WepSelectIcon = surface.GetTextureID( "vgui/wep_jack_hmcd_hands" )
 	local HandTex, ClosedTex = surface.GetTextureID("vgui/hud/gmod_hand"), surface.GetTextureID("vgui/hud/gmod_closedhand")
 
 	function SWEP:DrawWeaponSelection( x, y, wide, tall, alpha )
@@ -157,28 +145,50 @@ function JMod.WhomILookinAt(ply, cone, dist)
 	return nil, nil, nil
 end
 
+SWEP.Weight = 5
+SWEP.AutoSwitchTo = false
+SWEP.AutoSwitchFrom = false
+
+if CLIENT then
+	SWEP.PrintName = "#hg.hands.name"
+	SWEP.Author = "Homigrad"
+	SWEP.Instructions = "#hg.hands.inst"
+	SWEP.Category = "#hg.category.grenades"
+	SWEP.WepSelectIcon = surface.GetTextureID("vgui/wep_jack_hmcd_hands")
+end
+
+SWEP.Slot = 0
+SWEP.SlotPos = 1
+SWEP.DrawAmmo = false
+SWEP.DrawCrosshair = false
+SWEP.ViewModelFOV = 45
+SWEP.BounceWeaponIcon = false
 SWEP.SwayScale = 3
 SWEP.BobScale = 3
+
 SWEP.InstantPickup = true -- FF compat
-SWEP.Author = ""
-SWEP.Contact = ""
-SWEP.Purpose = ""
-SWEP.Instructions = "Left Click to Ready Fists/Attack.\nRight click to block/drag.\nR when engaged to disengage."
+
 SWEP.Spawnable = true
 SWEP.AdminOnly = false
+
 SWEP.HoldType = "normal"
+
 SWEP.ViewModel = "models/weapons/c_arms_citizen.mdl"
 SWEP.WorldModel = "models/props_junk/cardboard_box004a.mdl"
+
 SWEP.UseHands = true
 SWEP.AttackSlowDown = .5
+
 SWEP.Primary.ClipSize = -1
 SWEP.Primary.DefaultClip = -1
 SWEP.Primary.Automatic = true
 SWEP.Primary.Ammo = "none"
+
 SWEP.Secondary.ClipSize = -1
 SWEP.Secondary.DefaultClip = -1
 SWEP.Secondary.Automatic = false
 SWEP.Secondary.Ammo = "none"
+
 SWEP.ReachDistance = 100
 SWEP.HomicideSWEP = true
 
@@ -252,6 +262,7 @@ function SWEP:SecondaryAttack()
 
 	if SERVER then
 		self:SetCarrying()
+
 		local ply = self:GetOwner()
 		local tr = util.QuickTrace(ply:GetAttachment(ply:LookupAttachment("eyes")).Pos - vector_up * 2, self:GetOwner():GetAimVector() * self.ReachDistance, {self:GetOwner()})
 
@@ -270,9 +281,9 @@ function SWEP:SecondaryAttack()
 
 			if Dist < self.ReachDistance then
 				sound.Play("Flesh.ImpactSoft", self:GetOwner():GetShootPos(), 65, math.random(90, 110))
-				self:GetOwner():SetVelocity(self:GetOwner():GetAimVector() * 20)
-				tr.Entity:SetVelocity(-self:GetOwner():GetAimVector() * 50)
-				self:SetNextSecondaryFire(CurTime() + .25)
+				-- self:GetOwner():SetVelocity(self:GetOwner():GetAimVector() * 20) -- Why exactly?
+				tr.Entity:SetVelocity(self:GetOwner():GetAimVector() * 50)
+				self:SetNextSecondaryFire(CurTime() + .5)
 			end
 		end
 	end
@@ -714,4 +725,4 @@ if CLIENT then
 
 		return pos, ang
 	end
-end end
+end
