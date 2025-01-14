@@ -1,21 +1,20 @@
-if engine.ActiveGamemode() == "homigrad" then
-SWEP.Base = 'salat_base' -- base
+SWEP.Base = "salat_base"
 
-SWEP.PrintName 				= "Remington870 Police"
-SWEP.Author 				= "Homigrad"
-SWEP.Instructions			= "A non-lethal variant of a shotgun, used to fire beanbag rounds."
-SWEP.Category 				= "Weapon"
-SWEP.WepSelectIcon			= "entities/weapon_insurgencymakarov.png"
+if CLIENT then
+	SWEP.PrintName = language.GetPhrase("hg.beanbag.name")
+	SWEP.Author = "Homigrad"
+	SWEP.Instructions = language.GetPhrase("hg.beanbag.inst")
+	SWEP.Category = language.GetPhrase("hg.category.weapons")
+end
 
-SWEP.Spawnable 				= true
-SWEP.AdminOnly 				= false
+SWEP.WepSelectIcon = "entities/weapon_insurgencymakarov.png" -- ??
+SWEP.Spawnable = true
+SWEP.AdminOnly = false
 
-------------------------------------------
-
-SWEP.Primary.ClipSize		= 8
-SWEP.Primary.DefaultClip	= 8
-SWEP.Primary.Automatic		= false
-SWEP.Primary.Ammo			= "12/70 beanbag"
+SWEP.Primary.ClipSize = 8
+SWEP.Primary.DefaultClip = 8
+SWEP.Primary.Automatic = false
+SWEP.Primary.Ammo = "12/70 beanbag"
 SWEP.Primary.Cone = 0
 SWEP.Primary.Damage = 10
 SWEP.RubberBullets = true
@@ -27,34 +26,29 @@ SWEP.ReloadTime = 2
 SWEP.ShootWait = 0.7
 SWEP.TwoHands = true
 
-SWEP.Secondary.ClipSize		= -1
-SWEP.Secondary.DefaultClip	= -1
-SWEP.Secondary.Automatic	= false
-SWEP.Secondary.Ammo			= "none"
+SWEP.Secondary.ClipSize = -1
+SWEP.Secondary.DefaultClip = -1
+SWEP.Secondary.Automatic = false
+SWEP.Secondary.Ammo = "none"
 
-------------------------------------------
-
-SWEP.Weight					= 5
-SWEP.AutoSwitchTo			= false
-SWEP.AutoSwitchFrom			= false
+SWEP.Weight = 5
+SWEP.AutoSwitchTo = false
+SWEP.AutoSwitchFrom = false
 
 SWEP.HoldType = "ar2"
 SWEP.shotgun = true
 
-------------------------------------------
+SWEP.Slot = 2
+SWEP.SlotPos = 0
+SWEP.DrawAmmo = true
+SWEP.DrawCrosshair = false
 
-SWEP.Slot					= 2
-SWEP.SlotPos				= 0
-SWEP.DrawAmmo				= true
-SWEP.DrawCrosshair			= false
+SWEP.ViewModel = "models/pwb2/weapons/w_remington870police.mdl"
+SWEP.WorldModel = "models/pwb2/weapons/w_remington870police.mdl"
 
-SWEP.ViewModel				= "models/pwb2/weapons/w_remington870police.mdl"
-SWEP.WorldModel				= "models/pwb2/weapons/w_remington870police.mdl"
+SWEP.vbwPos = Vector(-8, -6, -6)
 
-SWEP.vbwPos = Vector(-8,-6,-6)
+SWEP.addAng = Angle(0.1, 0, 2)
+SWEP.addPos = Vector(0, 0, 0)
 
-SWEP.addAng = Angle(0.1,0,2)
-SWEP.addPos = Vector(0,0,0)
-
-SWEP.SightPos = Vector(-40,1.95,-0.6)
-end
+SWEP.SightPos = Vector(-40, 1.95, -0.6)

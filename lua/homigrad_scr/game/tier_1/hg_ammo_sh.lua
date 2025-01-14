@@ -54,19 +54,8 @@ local ammotypes = {
 		minsplash = 10,
 		maxsplash = 5
 	},
-	["9х19mm"] = {
-		name = "9х19 mm Parabellum",
-		dmgtype = DMG_BULLET,
-		tracer = TRACER_LINE,
-		plydmg = 0,
-		npcdmg = 0,
-		force = 100,
-		maxcarry = 80,
-		minsplash = 10,
-		maxsplash = 5
-	},
-	[".45rubber"] = {
-		name = ".45 Rubber",
+	["9x19mm"] = {
+		name = "9x19 mm Parabellum",
 		dmgtype = DMG_BULLET,
 		tracer = TRACER_LINE,
 		plydmg = 0,
@@ -120,6 +109,17 @@ local ammotypes = {
 		minsplash = 10,
 		maxsplash = 5
 	},
+	["127x99mm"] = {
+		name = "12.7x99 mm",
+		dmgtype = DMG_BULLET,
+		tracer = TRACER_LINE,
+		plydmg = 0,
+		npcdmg = 0,
+		force = 500,
+		maxcarry = 80,
+		minsplash = 10,
+		maxsplash = 5
+	}
 }
 
 local ammoents = {
@@ -146,12 +146,8 @@ local ammoents = {
 		Scale = 0.9,
 		Color = Color(255, 155, 55)
 	},
-	["9х19mm"] = {
+	["9x19mm"] = {
 		Material = "models/hmcd_ammobox_9",
-		Scale = 0.8,
-	},
-	[".45rubber"] = {
-		Material = "models/hmcd_ammobox_38",
 		Scale = 0.8,
 	},
 	["46x30mm"] = {
@@ -172,12 +168,16 @@ local ammoents = {
 		Scale = 1.2,
 		Color = Color(125, 155, 95)
 	},
+	["127x99mm"] = {
+		Material = "models/hmcd_ammobox_556",
+		Scale = 1.6
+	},
 }
 
 print("[HG} AmmoTypes loaded!")
 
 for k, v in pairs(ammotypes) do
-	--PrintTable(v)
+	-- PrintTable(v)
 
 	game.AddAmmoType(v)
 
@@ -201,7 +201,6 @@ end
 
 timer.Simple(1, function()
 	game.BuildAmmoTypes()
-	-- PrintTable(game.GetAmmoTypes()) -- no you don't do that. I hate that spam.
 end)
 
 if CLIENT then
@@ -294,29 +293,33 @@ if CLIENT then
 	concommand.Add("hg_ammomenu", function(ply, cmd, args) AmmoMenu(ply) end)
 end
 
-local ammolistent = {
-	[38] = ".44magnum",
-	[39] = ".45rubber",
-	[40] = "12/70beanbag",
-	[41] = "12/70gauge",
-	[42] = "46x30mm",
-	[44] = "545x39mm",
-	[45] = "556x45mm",
-	[46] = "57x28mm",
-	[47] = "762x39mm",
-	[48] = "9x39mm",
-	[49] = "9х19mm"
+local ammolist = game.GetAmmoTypes()
+local reverse = {
+	["5.56x45 mm"] = "556x45mm",
+	["7.62x39 mm"] = "762x39mm",
+	["5.45x39 mm"] = "545x39mm",
+	["12/70 gauge"] = "12/70gauge",
+	["12/70 beanbag"] = "12/70beanbag",
+	["9x19 mm Parabellum"] = "9x19mm",
+	["4.6x30 mm"] = "46x30mm",
+	["5.7x28 mm"] = "57x28mm",
+	[".44 Remington Magnum"] = ".44magnum",
+	["9x39 mm"] = "9x39mm",
+	["12.7x99 mm"] = "127x99mm"
 }
 
 if SERVER then
 	util.AddNetworkString("drop_ammo")
 
 	net.Receive("drop_ammo", function(len, ply)
-		if not ply:Alive() or ply.unconscious then return end
+		if not IsValid(ply) or not ply:Alive() or ply.unconscious then return end
 
 		local ammotype = net.ReadFloat()
 		local count = net.ReadFloat()
 		local pos = ply:EyePos() + ply:EyeAngles():Forward() * 15
+		local ammo = reverse[ammolist[ammotype]]
+		count = count == 0 and ply:GetAmmoCount(ammotype) or math.min(count, ply:GetAmmoCount(ammotype))
+
 		if ply:GetAmmoCount(ammotype) - count < 0 then
 			net.Start("hg_sendchat_simple")
 				net.WriteString("#hg.ammo.toomany")
@@ -333,7 +336,7 @@ if SERVER then
 			return
 		end
 
-		if not ammolistent[ammotype] then
+		if not ammo then
 			net.Start("hg_sendchat_simple")
 				net.WriteString("#hg.ammo.notfound")
 			net.Send(ply)
@@ -341,7 +344,7 @@ if SERVER then
 			return
 		end
 
-		local AmmoEnt = ents.Create("ent_ammo_" .. ammolistent[ammotype])
+		local AmmoEnt = ents.Create("ent_ammo_" .. ammo)
 		AmmoEnt:SetPos(pos)
 		AmmoEnt:Spawn()
 		AmmoEnt.AmmoCount = count

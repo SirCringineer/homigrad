@@ -127,7 +127,7 @@ function dm.PlayerSpawn2(ply, teamID)
 	-- This is... something
 	if roundDmType == 1 then
 		local r = math.random(1, 8)
-		local wep1 = ply:Give((r == 1 and "weapon_mp7") or (r == 2 and "weapon_ak74u") or (r == 3 and "weapon_akm") or (r == 4 and "weapon_scout" and "weapon_uzi") or (r == 5 and "weapon_m4a1") or (r == 6 and "weapon_hk416") or (r == 7 and "weapon_m4a1") or (r == 8 and "weapon_galil"))
+		local wep1 = ply:Give((r == 1 and "weapon_mp7") or (r == 2 and "weapon_aks74u") or (r == 3 and "weapon_akm") or (r == 4 and "weapon_scout" and "weapon_uzi") or (r == 5 and "weapon_m4a1") or (r == 6 and "weapon_hk416") or (r == 7 and "weapon_m4a1") or (r == 8 and "weapon_galil"))
 
 		ply:Give("weapon_kabar")
 		ply:Give("medkit")

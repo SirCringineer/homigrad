@@ -10,8 +10,8 @@ local weaponscommon = {"weapon_binokle", "ent_drop_flashlight", "weapon_knife", 
 local weaponsuncommon = {"weapon_hg_shovel", "weapon_hg_fubar", "weapon_bat", "weapon_hg_metalbat", "weapon_hg_hatchet", "*ammo*", "ent_jack_gmod_ezarmor_respirator", "ent_jack_gmod_ezarmor_lhead", "medkit"}
 local weaponsrare = {"weapon_t", "weapon_hg_molotov", "*ammo*", "weapon_hg_sleagehammer", "weapon_hammer", "weapon_hg_fireaxe", "ent_jack_gmod_ezarmor_gasmask", "ent_jack_gmod_ezarmor_mltorso"}
 local weaponsveryrare = {"weapon_m3super", "weapon_beretta", "ent_jack_gmod_ezarmor_mtorso", "ent_jack_gmod_ezarmor_mhead"}
-local weaponslegendary = {"weapon_xm1014", "weapon_ar15", "weapon_civil_famas", "weapon_glock", "weapon_remington870"}
-local ammos = {"ent_ammo_.44magnum", "ent_ammo_12/70gauge", "ent_ammo_762x39mm", "ent_ammo_556x45mm", "ent_ammo_9х19mm"}
+local weaponslegendary = {"weapon_xm1014", "weapon_ar15", "weapon_civil_famas", "weapon_glock", "weapon_remington870", "weapon_barret"}
+local ammos = {"ent_ammo_.44magnum", "ent_ammo_127x99mm", "ent_ammo_12/70beanbag", "ent_ammo_12/70gauge", "ent_ammo_46x30mm", "ent_ammo_545x39mm", "ent_ammo_556x45mm", "ent_ammo_57x28mm", "ent_ammo_762x39mm", "ent_ammo_9x19mm", "ent_ammo_9x39mm"}
 
 local function randomLoot()
 	local func = TableRound().ShouldSpawnLoot

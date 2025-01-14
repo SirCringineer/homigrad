@@ -388,7 +388,7 @@ local function ToggleMenu(toggle)
 
 		if laserweps[wep:GetClass()] then
 			wepMenu:AddOption("#hg.cmenu.laser", function()
-				RunConsoleCommand("hg_togglelaser")
+				LocalPlayer():ConCommand("hg_togglelaser")
 			end)
 		end
 

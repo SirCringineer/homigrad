@@ -1,5 +1,5 @@
 if engine.ActiveGamemode() == "homigrad" then
-SWEP.Base = 'salat_base' -- base 
+SWEP.Base = 'salat_base' -- base
 
 SWEP.PrintName 				= "MP40"
 SWEP.Author 				= "Ce1azz"
@@ -14,7 +14,7 @@ SWEP.AdminOnly 				= false
 SWEP.Primary.ClipSize		= 32
 SWEP.Primary.DefaultClip	= 32
 SWEP.Primary.Automatic		= true
-SWEP.Primary.Ammo			= "9х19 mm Parabellum"
+SWEP.Primary.Ammo			= "9x19 mm Parabellum"
 SWEP.Primary.Cone = 0
 SWEP.Primary.Damage = 20
 SWEP.Primary.Spread = 5
@@ -24,7 +24,7 @@ SWEP.Primary.Force = 85/3
 SWEP.ReloadTime = 2
 SWEP.ShootWait = 0.12
 SWEP.TwoHands = true
-							
+
 SWEP.Secondary.ClipSize		= -1
 SWEP.Secondary.DefaultClip	= -1
 SWEP.Secondary.Automatic	= false

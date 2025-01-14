@@ -22,21 +22,21 @@ function ffa.StartRoundSV()
     freezing = true
     roundTimeRespawn = CurTime() + 10
 
-    
+
     return {roundTimeStart, roundTime}
 end
 
 local function giveAmmoForWeapons(ply)
     for _, weapon in ipairs(ply:GetWeapons()) do
         local ammoType = weapon:GetPrimaryAmmoType()
-        if ammoType >= 0 then 
-            ply:SetAmmo(weapon:GetMaxClip1() * 3, ammoType) 
+        if ammoType >= 0 then
+            ply:SetAmmo(weapon:GetMaxClip1() * 3, ammoType)
         end
     end
 end
 
 local primaryWeapons = {
-    [1] = {"weapon_mp7", "weapon_ak74u", "weapon_akm", "weapon_uzi", "weapon_m4a1", "weapon_hk416", "weapon_galil"},
+    [1] = {"weapon_mp7", "weapon_aks74u", "weapon_akm", "weapon_uzi", "weapon_m4a1", "weapon_hk416", "weapon_galil"},
     [2] = {"weapon_spas12", "weapon_xm1014", "weapon_remington870", "weapon_m590"},
     [3] = {"weapon_mateba"},
     [4] = {"weapon_hk_usp", "weapon_p99", "weapon_beretta"}
@@ -88,7 +88,7 @@ function ffa.PlayerSpawn2(ply)
     giveAmmoForWeapons(ply)
 
     ply:SetLadderClimbSpeed(100)
-    
+
     ply:Give("weapon_hands")
 end
 

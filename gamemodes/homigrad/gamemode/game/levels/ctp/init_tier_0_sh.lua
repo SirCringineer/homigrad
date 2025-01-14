@@ -11,7 +11,7 @@ ctp.WinPoints[2] = ctp.WinPoints[2] or 0
 
 ctp.red = {
 	"#hg.tdm.red", Color(255, 75, 75), weapons = {"weapon_binokle", "weapon_radio", "weapon_gurkha", "weapon_hands", "med_band_big", "med_band_small", "medkit", "painkiller"},
-	main_weapon = {"weapon_ak74u", "weapon_akm", "weapon_remington870", "weapon_galil", "weapon_rpk", "weapon_asval", "weapon_p90", "weapon_scout", "weapon_barret"},
+	main_weapon = {"weapon_aks74u", "weapon_akm", "weapon_remington870", "weapon_galil", "weapon_rpk", "weapon_asval", "weapon_p90", "weapon_scout", "weapon_barret"},
 	secondary_weapon = {"weapon_p220", "weapon_mateba", "weapon_glock"},
 	models = tdm.models
 }

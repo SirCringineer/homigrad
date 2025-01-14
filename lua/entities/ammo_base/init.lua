@@ -25,8 +25,10 @@ end
 
 function ENT:Use(activator)
 	if activator:IsPlayer() then
-		activator:GiveAmmo(self.AmmoCount, self.AmmoType, true)
+		activator:GiveAmmo(self.AmmoCount, self.AmmoType)
+
 		self:EmitSound("snd_jack_hmcd_ammobox.wav", 75, math.random(90, 110), 1, CHAN_ITEM)
+
 		self:Remove()
 	end
 end

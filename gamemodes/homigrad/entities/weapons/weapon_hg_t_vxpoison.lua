@@ -4,7 +4,7 @@ if CLIENT then
 	SWEP.PrintName = language.GetPhrase("hg.vxpoison.name")
 	SWEP.Author = "Secret Society"
 	SWEP.Instructions = language.GetPhrase("hg.vxpoison.inst")
-	SWEP.Category = language.GetPhrase("hg.category.traitor")
+	SWEP.Category = language.GetPhrase("hg.category.traitors")
 end
 
 SWEP.Spawnable = true
