@@ -432,10 +432,12 @@ function Stun(ent)
 		local fake = ent:GetNWEntity("Ragdoll")
 
 		timer.Create("StunEffect" .. ent:EntIndex(), 0.1, 80, function()
+			local owner = RagdollOwner(fake)
 			local rand = math.random(1, 50)
-			if rand == 50 then RagdollOwner(fake):Say("*drop") end
+			if rand == 50 then owner:Say("*drop") end
+			if not IsValid(owner) or not IsValid(fake) then return end
 
-			RagdollOwner(fake).pain = RagdollOwner(fake).pain + 3
+			owner.pain = owner.pain + 3
 
 			fake:GetPhysicsObjectNum(1):SetVelocity(fake:GetPhysicsObjectNum(1):GetVelocity() + Vector(math.random(-55, 55), math.random(-55, 55), 0))
 			fake:EmitSound("ambient/energy/spark2.wav")

@@ -8,6 +8,7 @@ function ReadFogSetting()
 	return util.JSONToTable(file.Read(getName(), "DATA") or "") or {}
 end
 
+-- NOTE: do we need this?
 COMMANDS.fog = {
 	function(ply, args)
 		if not args[1] or args[1] == "" then

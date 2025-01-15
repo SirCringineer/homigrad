@@ -58,6 +58,7 @@ local validUserGroup = {
 	owner = true,
 }
 
+--[[
 COMMANDS.noguilt = {
 	function(ply, args)
 		if not ply:IsAdmin() then return end
@@ -81,7 +82,7 @@ COMMANDS.fake = {
 		end
 	end,
 	1
-}
+} --]]
 
 function GuiltCheck(att, ply)
 	guiltVal = 100

@@ -46,6 +46,7 @@ local function getText(text, limitW)
 	return newText
 end
 
+local panel
 net.Receive("inventory", function()
 	if IsValid(panel) then
 		panel.override = true
@@ -66,7 +67,7 @@ net.Receive("inventory", function()
 
 	items.weapon_hands = nil
 
-	local panel = vgui.Create("DFrame")
+	panel = vgui.Create("DFrame")
 	panel:SetAlpha(255)
 	panel:SetSize(500, 400)
 	panel:Center()
@@ -128,19 +129,14 @@ net.Receive("inventory", function()
 			if IsValid(model) then model:Remove() end
 		end
 
-		button.DoRightClick = function()
-			net.Start("ply_take_item")
-				net.WriteEntity(lootEnt)
-				net.WriteString(wep)
-			net.SendToServer()
-		end
-
 		button.DoClick = function()
 			net.Start("ply_take_item")
 				net.WriteEntity(lootEnt)
 				net.WriteString(wep)
 			net.SendToServer()
 		end
+
+		button.DoRightClick = button.DoClick
 	end
 
 	for ammo, _ in pairs(items_ammo) do
