@@ -46,6 +46,6 @@ Yes! Just like the original repo, this project is under the MIT License, so you�
 ## Credits
 
 - **Sadsalat, Useless, Mr. Point**: For creating the original Homigrad and making it open source. The original repository is available [here](https://github.com/sadsalat/Orignal-Homigrad).
-- **Harrison's Servers**: For open-sourcing their version (I wasted 2 weeks of my NY holidays to fix workshop version (╯‵□′)╯︵┻━┻).
+- **Harrison's Servers**: For open-sourcing their version (I wasted 2 weeks of my NY holidays fixing workshop version (╯‵□′)╯︵┻━┻).
 - **ChatGPT**: Rewriting my crappy attempt at READMEs.
 - **DeXToR**: Ukrainian translation.
