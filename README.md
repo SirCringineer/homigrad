@@ -41,7 +41,7 @@ You’re free to modify the files, adjust values, and tweak the code to suit you
 
 ### Can I create my own gamemode using this codebase?
 
-Yes! Just like the original repo, this project is under the MIT License, so you’re welcome to use it as a base. Contributions are also encouraged — feel free to submit pull requests here or on [Harrison's repository](https://github.com/harrisoniam/homigrad).
+Yes! Just like the original repo, this project is under the MIT License, so you’re welcome to use it as a base. Contributions are also encouraged — feel free to submit a pull request here or on [Harrison's repository](https://github.com/harrisoniam/homigrad).
 
 ## Credits
 
