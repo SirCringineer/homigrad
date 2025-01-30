@@ -11,8 +11,9 @@ Homigrad is a game mode inspired by Trouble in Terrorist Town (TTT) and Murder. 
 ## Installation
 
 1. [Download the repository](https://github.com/JonnyBro/homigrad/archive/refs/heads/main.zip).
-2. Extract the `homigrad-main` folder and place it in your `addons` folder or server’s `addons` directory.
-3. Ensure the gamemode is set to `Homigrad` (use `+gamemode homigrad` for servers).
+2. Subscribe to this collection: [\*click\*](https://steamcommunity.com/sharedfiles/filedetails/?id=3393369855).
+1. Extract the `homigrad-main` folder and place it in your `addons` folder or server’s `addons` directory.
+1. Ensure the gamemode is set to `Homigrad` (use `+gamemode homigrad` for servers).
 
 A tickrate from **99** to **128** is recommended to improve controls when faking.
 
