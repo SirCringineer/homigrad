@@ -64,18 +64,6 @@ hook.Add("Think", "Mul lerp", function()
 	ftlerped = math.Clamp(ft, 0.001, 0.1)
 end)
 
-function hg.FrameTimeClamped(ft)
-	return math.Clamp(1 - math.exp(-0.5 * (ft or ftlerped)), 0.001, 0.01)
-end
-
-function hg.lerpFrameTime(lerp, frameTime)
-	return math.Clamp(1 - lerp ^ (frameTime or FrameTime()), 0, 1)
-end
-
-function hg.lerpFrameTime2(lerp, frameTime)
-	return math.Clamp(lerp * hg.FrameTimeClamped(frameTime) * 150, 0, 1)
-end
-
 SWEP.DrawWeaponSelection = function(...) DrawWeaponSelection(...) end
 
 local hg_skins = CreateClientConVar("hg_skins", "1", true, false, "", 0, 1)
@@ -314,7 +302,8 @@ function SWEP:CanFireBullet()
 	return true
 end
 
-SWEP.ZazhimYaycami = 0
+SWEP.ShootingSpray = 0
+
 function SWEP:PrimaryAttack()
 	self.ShootNext = self.NextShot or NextShot
 
@@ -323,8 +312,6 @@ function SWEP:PrimaryAttack()
 	if timer.Exists("reload" .. self:EntIndex()) then return end
 
 	local canfire = self:CanFireBullet()
-
-	-- self:GetOwner():ChatPrint(tostring(canfire) .. (CLIENT and " client" or " server"))
 
 	if self:Clip1() <= 0 or not canfire then
 		if SERVER then sound.Play("snd_jack_hmcd_click.wav", self:GetPos(), 65, 100) end
@@ -355,7 +342,7 @@ function SWEP:PrimaryAttack()
 		if ply.LeftArm < 1 and self.TwoHands then ply.pain = ply.pain + self.Primary.Damage / 30 * (self.NumBullet or 1) end
 	end
 
-	if CLIENT and ply == LocalPlayer() then self.ZazhimYaycami = math.min(self.ZazhimYaycami + 1, self.Primary.ClipSize) end
+	if CLIENT and ply == LocalPlayer() then self.ShootingSpray = math.min(self.ShootingSpray + 1, self.Primary.ClipSize) end
 	if CLIENT and self:GetOwner() ~= LocalPlayer() then self:GetOwner():SetAnimation(PLAYER_ATTACK1) end
 
 	self.lastShoot = CurTime()
@@ -368,7 +355,7 @@ function SWEP:PrimaryAttack()
 		local func = self.ApplyEyeSpray
 
 		if func then func(self)
-		else self.eyeSpray:Add(Angle(math.Rand(-0.9, 0) * self.Primary.Damage / 30 * math.max(self.ZazhimYaycami / self.Primary.ClipSize, 0.2), math.Rand(-0.5, 0.5) * self.Primary.Damage / 30 * math.max(self.ZazhimYaycami / self.Primary.ClipSize, 0.2), 0)) end
+		else self.eyeSpray:Add(Angle(math.Rand(-0.9, 0) * self.Primary.Damage / 30 * math.max(self.ShootingSpray / self.Primary.ClipSize, 0.2), math.Rand(-0.5, 0.5) * self.Primary.Damage / 30 * math.max(self.ShootingSpray / self.Primary.ClipSize, 0.2), 0)) end
 	end
 end
 
@@ -687,8 +674,6 @@ function SWEP:IsSprinting()
 	return hg.KeyDown(owner, IN_SPEED) or (self:GetNWFloat("DeployTime", 0) or 0) + 0.2 > CurTime()
 end
 
-SWEP.localAng = Angle(10, 0, -90)
-
 function SWEP:Step()
 	local ply = self:GetOwner()
 	local isLocal = self:IsLocal()
@@ -700,7 +685,7 @@ function SWEP:Step()
 		ply:SetEyeAngles(ply:EyeAngles() + self.eyeSpray)
 		self.eyeSpray = LerpAngleFT(0.5, self.eyeSpray, Angle(0, 0, 0))
 
-		if not ply:KeyDown(IN_ATTACK) then self.ZazhimYaycami = math.max((self.ZazhimYaycami or 0) - 3, 0) end
+		if not ply:KeyDown(IN_ATTACK) then self.ShootingSpray = math.max((self.ShootingSpray or 0) - 3, 0) end
 	end
 
 	if SERVER then
@@ -722,6 +707,8 @@ function SWEP:Step()
 		debugoverlay.Sphere(trace.HitPos, 2, 0.1, color_white)
 	end --]]
 end
+
+SWEP.localAngle = Angle(10, 0, -90)
 
 function SWEP:ApplyAnim(ply)
 	local t = {}
@@ -745,7 +732,7 @@ function SWEP:ApplyAnim(ply)
 		if isLocal and ply:GetNWInt("LeftArm") < 1 or ply:GetNWInt("RightArm") < 1 then
 			-- self.eyeSpray = self.eyeSpray + Angle(math.Rand(-0.03, 0.03), math.Rand(-0.03, 0.03), math.Rand(-0.03, 0.03))
 			local p = 0.3 - math.min(painlosing or 0, 0.3)
-			self.eyeSpray = self.eyeSpray + Angle(math.Rand(-p, p), math.Rand(-p, p), math.Rand(-p, p))
+			self.eyeSpray = (self.eyeSpray or Angle()) + Angle(math.Rand(-p, p), math.Rand(-p, p), math.Rand(-p, p))
 		end
 
 		if isLocal or SERVER then
@@ -817,7 +804,7 @@ function SWEP:ApplyAnim(ply)
 	local plyang = ply:EyeAngles()
 	plyang:RotateAroundAxis(plyang:Forward(), 0)
 
-	local _, newAng = LocalToWorld(vector_origin, self.localAng or angle_zero, vector_origin, plyang)
+	local _, newAng = LocalToWorld(vector_origin, self.localAngle or angle_zero, vector_origin, plyang)
 	local ang = newAng
 	-- attAng[3] = attAng[3] + (ply:KeyDown(IN_ALT1) and -30 or ply:KeyDown(IN_ALT2) and 30 or 0) / 3
 	ang:RotateAroundAxis(ang:Forward(), -90)
@@ -841,8 +828,8 @@ function SWEP:ApplyAnim(ply)
 	localAng:RotateAroundAxis(localAng:Forward(), 0)
 
 	if not ply:GetNWBool("Suiciding") and not self:IsSprinting() and not self.isClose then
-		self.localAng = LerpFT(0.1, self.localAng or angle_zero, localAng)
-		-- print(self.localAng)
+		self.localAngle = LerpFT(0.1, self.localAngle or angle_zero, localAng)
+		-- print(self.localAngle)
 	end
 
 	ply:ManipulateBoneAngles(forearm_index, forearm, false)

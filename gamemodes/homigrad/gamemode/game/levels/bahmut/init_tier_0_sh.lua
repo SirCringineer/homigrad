@@ -3,7 +3,7 @@ bahmut = {}
 bahmut.Name = "Конфликт Хомиграда"
 
 bahmut.red = {
-	"ЧВК\"ВАГНЕР\"", Color(60, 75, 60), weapons = {"megamedkit", "weapon_binokle", "weapon_gurkha", "weapon_hands", "med_band_big", "med_band_small", "medkit", "painkiller", "weapon_hg_rgd5", "weapon_handcuffs", "weapon_radio"},
+	"ЧВК\"ВАГНЕР\"", Color(60, 75, 60), weapons = {"megamedkit", "weapon_binokle", "weapon_kukri", "weapon_hands", "med_band_big", "med_band_small", "medkit", "painkiller", "weapon_hg_rgd5", "weapon_handcuffs", "weapon_radio"},
 	main_weapon = {"weapon_aks74u", "weapon_akm", "weapon_galil", "weapon_rpk", "weapon_asval"},
 	secondary_weapon = {"weapon_p220", "weapon_mateba", "weapon_glock"},
 	models = {"models/knyaje pack/sso_politepeople/sso_politepeople.mdl"}

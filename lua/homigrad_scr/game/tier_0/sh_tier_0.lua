@@ -14,7 +14,7 @@ function hg.PrecahceSound(name)
 end
 
 hook.Add("Initialize", "homigrad-prechache", function()
-	for i, name in pairs(queue) do
+	for _, name in pairs(queue) do
 		game.GetWorld():EmitSound(name)
 	end
 end)
@@ -22,20 +22,18 @@ end)
 FrameTimeClamped = 1 / 66
 ftlerped = 1 / 66
 
-local math_Clamp = math.Clamp
-
 function hg.FrameTimeClamped(ft)
-	return math_Clamp(1 - math.exp(-0.5 * (ft or ftlerped)), 0.001, 0.01)
+	return math.Clamp(1 - math.exp(-0.5 * (ft or ftlerped)), 0.001, 0.01)
 end
 
 local FrameTimeClamped_ = hg.FrameTimeClamped
 
 local function lerpFrameTime(lerp, frameTime)
-	return math_Clamp(1 - lerp ^ (frameTime or FrameTime()), 0, 1)
+	return math.Clamp(1 - lerp ^ (frameTime or FrameTime()), 0, 1)
 end
 
 local function lerpFrameTime2(lerp, frameTime)
-	return math_Clamp(lerp * FrameTimeClamped_(frameTime) * 150, 0, 1)
+	return math.Clamp(lerp * FrameTimeClamped_(frameTime) * 150, 0, 1)
 end
 
 hg.lerpFrameTime2 = lerpFrameTime2

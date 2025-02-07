@@ -393,12 +393,10 @@ COMMANDS.forcepolice = {
 }
 
 function homicide.EndRound(winner)
-	local tbl = TableRound()
-
 	net.Start("hg_sendchat_format")
 		net.WriteTable({
 			"#hg.modes.teamwin",
-			(winner == 0 and "#hg.modes.draw") or (tbl[tbl.teamEncoder[winner]] and tbl[tbl.teamEncoder[winner]][1]) or "#hg.modes.draw",
+			winner == 0 and "#hg.modes.draw" or (winner ~= 0 and "#hg.homicide.team" .. winner or "#hg.modes.draw")
 		})
 	net.Broadcast()
 
@@ -504,7 +502,7 @@ end
 
 local common = {"food_lays", "weapon_pipe", "weapon_bat", "med_band_big", "med_band_small", "medkit", "food_monster", "food_fishcan", "food_spongebob_home"}
 local uncommon = {"medkit", "weapon_hammer", "weapon_pepperspray", "painkiller"}
-local rare = {"weapon_fiveseven", "weapon_gurkha", "weapon_t", "weapon_mateba", "weapon_m590"}
+local rare = {"weapon_fiveseven", "weapon_kukri", "weapon_tomahawk", "weapon_mateba", "weapon_m590"}
 
 function homicide.ShouldSpawnLoot()
 	if roundTimeStart + roundTimeLoot - CurTime() > 0 then return false end

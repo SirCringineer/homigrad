@@ -114,7 +114,7 @@ net.Receive("hg_sendchat_format", function(len)
 	local args = {unpack(tbl, 2)} -- Extract other args
 
 	if IsValid(ply) then
-		ply:ChatPrint(language.GetPhrase(text):format(unpack(args) or ""))
+		ply:ChatPrint(language.GetPhrase(text):format(unpack(args)))
 	end
 end)
 
@@ -281,17 +281,17 @@ local laserweps = {
 	["weapon_hk_usp"] = true,
 	["weapon_hk416"] = true,
 	["weapon_p99"] = true,
-	--["weapon_hk_usps"] = true,
+	-- ["weapon_hk_usps"] = true,
+	["weapon_fiveseven"] = true,
 	["weapon_m4a1"] = true,
 	["weapon_ar15"] = true,
-	["weapon_m3super"] = true,
+	["weapon_m4super"] = true,
 	["weapon_mp7"] = true,
 	["weapon_p220"] = true,
 	["weapon_galil"] = true,
 	["weapon_mateba"] = true,
 	["weapon_beanbag"] = true,
 	["weapon_glock"] = true,
-	--	["weapon_hg_crossbow"] = true
 }
 
 laserplayers = laserplayers or {}
@@ -447,7 +447,7 @@ end
 
 local active, oldValue
 
-hook.Add("Think", "Thinkhuyhuy", function()
+hook.Add("Think", "hgContextMenu", function()
 	active = input.IsKeyDown(KEY_C)
 
 	if oldValue ~= active then

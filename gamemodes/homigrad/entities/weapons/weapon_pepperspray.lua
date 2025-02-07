@@ -148,7 +148,7 @@ else
 	local sprites = {}
 	local red = Color(122, 0, 0, 255)
 	local mat = Material("pwb/sprites/explosion")
-	local vecHuy = Vector(4, -2, -3)
+	local vectt = Vector(4, -2, -3)
 	local vecZero = Vector(0, 0, 0)
 
 	hook.Add("PostPlayerDraw", "hg_pepperspray_effect", function(ply)
@@ -165,7 +165,7 @@ else
 
 			if wep:GetNWBool("Attack") and wep:Clip1() > 0 then
 				local vec = vecZero
-				vec:Set(vecHuy)
+				vec:Set(vectt)
 				vec:Rotate(matrix:GetAngles())
 
 				sprites[#sprites + 1] = {matrix:GetTranslation() + vec, CurTime(), ply:EyeAngles():Forward() + VectorRand(-0.03, 0.03) + ply:GetVelocity() / 300}

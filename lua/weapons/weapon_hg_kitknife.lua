@@ -1,11 +1,13 @@
 SWEP.Base = "weapon_hg_melee_base"
 
-SWEP.PrintName = "Kitchen knife"
-SWEP.Category = "[HG] Melee"
-SWEP.Instructions = ""
+if CLIENT then
+	SWEP.PrintName = language.GetPhrase("hg.kitknife.name")
+	SWEP.Instructions = language.GetPhrase("hg.kitknife.inst")
+	SWEP.Category = language.GetPhrase("hg.category.melee")
+end
 
-SWEP.Spawnable= true
-SWEP.AdminSpawnable= true
+SWEP.Spawnable = true
+SWEP.AdminSpawnable = true
 SWEP.AdminOnly = false
 
 SWEP.ViewModelFOV = 60
@@ -21,7 +23,7 @@ SWEP.SlotPos = 2
 
 SWEP.UseHands = true
 
----SWEP.HoldType = "knife"
+-- SWEP.HoldType = "knife"
 
 SWEP.FiresUnderwater = false
 

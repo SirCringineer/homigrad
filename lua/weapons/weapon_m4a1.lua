@@ -1,14 +1,12 @@
-if engine.ActiveGamemode() == "homigrad" then
-SWEP.Base = 'weapon_ar15' -- base
+SWEP.Base = "weapon_ar15"
 
-SWEP.PrintName 				= "M4A1"
-SWEP.Author 				= "Homigrad"
-SWEP.Instructions			= "Do you really need an introduction to this weapon?"
-SWEP.Category 				= "Weapon"
+if CLIENT then
+	SWEP.PrintName = language.GetPhrase("hg.m4a1.name")
+	SWEP.Author = "Homigrad"
+	SWEP.Instructions = language.GetPhrase("hg.m4a1.inst")
+	SWEP.Category = language.GetPhrase("hg.category.weapons")
+end
 
-
-SWEP.Primary.Automatic		= true
+SWEP.Primary.Automatic = true
 
 SWEP.ShootWait = 0.07
-
-end

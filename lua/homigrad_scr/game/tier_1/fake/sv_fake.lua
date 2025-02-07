@@ -290,8 +290,10 @@ end)
 
 function RagdollOwner(rag)
 	if not IsValid(rag) then return end
-	local ent = rag:GetNWEntity("RagdollController")
-	return IsValid(ent) and ent
+
+	local ply = rag:GetNWEntity("RagdollController")
+
+	return IsValid(ply) and ply
 end
 
 function PlayerMeta:DropWeapon1(wep)
@@ -346,12 +348,15 @@ hook.Add("DoPlayerDeath", "hgPlayerDeath", function(ply, att, dmginfo)
 		ply:SetNWEntity("Ragdoll", rag)
 	end
 
-	rag:SetEyeTarget(Vector(0, 0, 0))
+	rag:SetEyeTarget(Vector())
+
 	local phys = rag:GetPhysicsObject()
 	if IsValid(phys) then phys:SetMass(30) end
+
 	if IsValid(rag.bull) then rag.bull:Remove() end
 
-	rag:SetNWEntity("RagdollController", Entity(-1))
+	rag:SetNWEntity("OldRagdollController", ply)
+	rag:SetNWEntity("RagdollController", NULL)
 
 	rag.Info = ply.Info
 
@@ -852,9 +857,9 @@ hook.Add("Player Think", "FakeControl", function(ply, time)
 
 	ply:SetPos(head1)
 
-	ply.bullshithuy = ply.bullshithuy or CurTime()
+	ply.bullshit = ply.bullshit or CurTime()
 
-	if ply.bullshithuy + 1 < CurTime() then ply:SetRenderMode(RENDERMODE_NONE) end
+	if ply.bullshit + 1 < CurTime() then ply:SetRenderMode(RENDERMODE_NONE) end
 
 	local deltatime = SysTime() - (rag.ZacLastCallTime or SysTime())
 	rag.ZacLastCallTime = SysTime()

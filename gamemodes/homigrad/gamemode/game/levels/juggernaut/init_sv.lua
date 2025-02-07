@@ -5,7 +5,7 @@ local function makeT(ply)
     table.insert(juggernaut.t,ply)
 
     ply:Give("weapon_hg_rgd5")
-    ply:Give("weapon_hg_sleagehammer")
+    ply:Give("weapon_hg_sledgehammer")
 
     local wep = ply:Give("weapon_m249")
     wep:SetClip1(wep:GetMaxClip1())
@@ -69,7 +69,7 @@ function juggernaut.StartRoundSV()
     tdm.SpawnCommand(players,aviable,function(ply)
         ply.roleT = false
 
-        ply:Give("weapon_gurkha")
+        ply:Give("weapon_kukri")
         local wep = ply:Give("weapon_hk_usp")
         wep:SetClip1(wep:GetMaxClip1())
         ply:GiveAmmo(2 * wep:GetMaxClip1(),wep:GetPrimaryAmmoType())
@@ -153,7 +153,7 @@ function juggernaut.PlayerSpawn2(ply,teamID)
 
     EasyAppearance.SetAppearance( ply )
     ply:SetPlayerColor(color:ToVector())
-    
+
 
 	ply:Give("weapon_hands")
     timer.Simple(0,function() ply.allowFlashlights = false end)
@@ -192,7 +192,7 @@ function juggernaut.PlayerDeath(ply,inf,att) return false end
 
 local common = {"food_lays","weapon_pipe","weapon_bat","med_band_big","med_band_small","medkit","food_monster","food_fishcan","food_spongebob_home"}
 local uncommon = {"medkit","weapon_hammer","painkiller"}
-local rare = {"weapon_fiveseven","weapon_gurkha","weapon_t","weapon_pepperspray","*ammo*"}
+local rare = {"weapon_fiveseven","weapon_kukri","weapon_tomahawk","weapon_pepperspray","*ammo*"}
 
 function juggernaut.ShouldSpawnLoot()
     return false

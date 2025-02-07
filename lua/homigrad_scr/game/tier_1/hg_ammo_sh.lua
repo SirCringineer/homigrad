@@ -65,6 +65,17 @@ local ammotypes = {
 		minsplash = 10,
 		maxsplash = 5
 	},
+	[".380"] = {
+		name = ".380 ACP",
+		dmgtype = DMG_BULLET,
+		tracer = TRACER_LINE,
+		plydmg = 0,
+		npcdmg = 0,
+		force = 90,
+		maxcarry = 80,
+		minsplash = 10,
+		maxsplash = 5
+	},
 	["46x30mm"] = {
 		name = "4.6x30 mm",
 		dmgtype = DMG_BULLET,
@@ -88,7 +99,7 @@ local ammotypes = {
 		maxsplash = 5
 	},
 	[".44magnum"] = {
-		name = ".44 Remington Magnum",
+		name = ".44 Magnum",
 		dmgtype = DMG_BULLET,
 		tracer = TRACER_LINE,
 		plydmg = 0,
@@ -150,6 +161,10 @@ local ammoents = {
 		Material = "models/hmcd_ammobox_9",
 		Scale = 0.8,
 	},
+	[".380"] = {
+		Material = "models/hmcd_ammobox_9",
+		Scale = 0.7,
+	},
 	["46x30mm"] = {
 		Material = "models/hmcd_ammobox_22",
 		Scale = 1,
@@ -160,7 +175,7 @@ local ammoents = {
 	},
 	["9x39mm"] = {
 		Material = "models/hmcd_ammobox_9",
-		Scale = 0.9,
+		Scale = 1,
 		Color = Color(125, 155, 95)
 	},
 	["57x28mm"] = {
@@ -301,9 +316,10 @@ local reverse = {
 	["12/70 gauge"] = "12/70gauge",
 	["12/70 beanbag"] = "12/70beanbag",
 	["9x19 mm Parabellum"] = "9x19mm",
+	[".380 ACP"] = ".380",
 	["4.6x30 mm"] = "46x30mm",
 	["5.7x28 mm"] = "57x28mm",
-	[".44 Remington Magnum"] = ".44magnum",
+	[".44 Magnum"] = ".44magnum",
 	["9x39 mm"] = "9x39mm",
 	["12.7x99 mm"] = "127x99mm"
 }

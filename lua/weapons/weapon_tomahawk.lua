@@ -1,8 +1,12 @@
 SWEP.Base = "weapon_base"
 
 if CLIENT then
-	SWEP.PrintName = language.GetPhrase("hg.kabar.name")
-	SWEP.Instructions = language.GetPhrase("hg.kabar.inst")
+	SWEP.DrawWeaponInfoBox = false
+	SWEP.BounceWeaponIcon = false
+
+	SWEP.PrintName = language.GetPhrase("hg.tomahawk.name")
+	SWEP.Author = "Homigrad"
+	SWEP.Instructions = language.GetPhrase("hg.tomahawk.inst")
 	SWEP.Category = language.GetPhrase("hg.category.melee")
 end
 
@@ -11,8 +15,8 @@ SWEP.AdminSpawnable = true
 SWEP.AdminOnly = false
 
 SWEP.ViewModelFOV = 60
-SWEP.ViewModel = "models/weapons/insurgency/w_marinebayonet.mdl"
-SWEP.WorldModel = "models/weapons/insurgency/w_marinebayonet.mdl"
+SWEP.ViewModel = "models/pwb/weapons/w_tomahawk.mdl"
+SWEP.WorldModel = "models/pwb/weapons/w_tomahawk.mdl"
 SWEP.ViewModelFlip = false
 
 SWEP.AutoSwitchTo = false
@@ -31,14 +35,19 @@ SWEP.DrawCrosshair = false
 
 SWEP.DrawAmmo = true
 
+SWEP.CSMuzzleFlashes = true
+
+SWEP.Vehicle = 0
+SWEP.Sprint = 0
+
 SWEP.Primary.Sound = Sound("Weapon_Knife.Single")
-SWEP.Primary.Damage = 25
+SWEP.Primary.Damage = 45
 SWEP.Primary.Ammo = "none"
 SWEP.Primary.DefaultClip = 0
 SWEP.Primary.Automatic = true
 SWEP.Primary.Recoil = 0.5
-SWEP.Primary.Delay = 0.65
-SWEP.Primary.Force = 240
+SWEP.Primary.Delay = 1
+SWEP.Primary.Force = 1000
 
 SWEP.Secondary.ClipSize = 0
 SWEP.Secondary.DefaultClip = 0
@@ -110,15 +119,6 @@ function Circle(x, y, radius, seg)
 	surface.DrawPoly(cir)
 end
 
-local tr = {}
-function EyeTrace(ply)
-	tr.start = ply:GetAttachment(ply:LookupAttachment("eyes")).Pos
-	tr.endpos = tr.start + ply:GetAngles():Forward() * 80
-	tr.filter = ply
-
-	return util.TraceLine(tr)
-end
-
 function SWEP:DrawHUD()
 	if GetViewEntity() ~= LocalPlayer() then return end
 	if LocalPlayer():InVehicle() then return end
@@ -127,33 +127,30 @@ function SWEP:DrawHUD()
 
 	local t = {}
 	t.start = ply:GetAttachment(ply:LookupAttachment("eyes")).Pos
-	t.endpos = t.start + ply:GetAngles():Forward() * 80
+	t.endpos = t.start + ply:GetAngles():Forward() * 90
 	t.filter = self:GetOwner()
 	local Tr = util.TraceLine(t)
-	local hitPos = Tr.HitPos
 
 	if Tr.Hit then
-		local Size = math.Clamp(1 - ((hitPos - self:GetOwner():GetShootPos()):Length() / 80) ^ 2, .1, .3)
+		local Size = math.Clamp(1 - ((Tr.HitPos - self:GetOwner():GetShootPos()):Length() / 90) ^ 2, .1, .3)
 
 		surface.SetDrawColor(Color(200, 200, 200, 200))
 		draw.NoTexture()
-		Circle(hitPos:ToScreen().x, hitPos:ToScreen().y, 55 * Size, 32)
+		Circle(Tr.HitPos:ToScreen().x, Tr.HitPos:ToScreen().y, 55 * Size, 32)
 
-		surface.SetDrawColor(Color(255, 255, 255, 200))
+		surface.SetDrawColor(Color(255, 255, 255, 255 * Size / 0.5))
 		draw.NoTexture()
-		Circle(hitPos:ToScreen().x, hitPos:ToScreen().y, 40 * Size, 32)
+		Circle(Tr.HitPos:ToScreen().x, Tr.HitPos:ToScreen().y, 40 * Size, 32)
 	end
 end
 
 function SWEP:Initialize()
-	self:SetHoldType("knife")
+	self:SetHoldType("melee")
 end
 
 function SWEP:Deploy()
-	self:SetNextPrimaryFire(CurTime())
-	self:SetHoldType("knife")
-
-	if SERVER then self:GetOwner():EmitSound("snd_jack_hmcd_knifedraw.wav", 60) end
+	self:SetNextPrimaryFire(CurTime() + self:GetOwner():GetViewModel():SequenceDuration())
+	self:SetHoldType("melee")
 end
 
 function SWEP:Holster()
@@ -166,7 +163,7 @@ function SWEP:PrimaryAttack()
 
 	if SERVER then
 		self:GetOwner():EmitSound("weapons/slam/throw.wav", 60)
-		self:GetOwner().stamina = math.max(self:GetOwner().stamina - 0.5, 0)
+		self:GetOwner().stamina = math.max(self:GetOwner().stamina - 10, 0)
 	end
 
 	self:GetOwner():LagCompensation(true)
@@ -187,8 +184,8 @@ function SWEP:PrimaryAttack()
 		t.start = ply:GetAttachment(ply:LookupAttachment("eyes")).Pos
 		t.endpos = t.start + ply:GetAngles():Forward() * 80
 		t.filter = function(ent) return ent ~= self:GetOwner() and (ent:IsPlayer() or ent:IsRagdoll()) end
-		t.mins = -Vector(6, 6, 6)
-		t.maxs = Vector(6, 6, 6)
+		t.mins = -Vector(10, 10, 10)
+		t.maxs = Vector(10, 10, 10)
 		tr = util.TraceHull(t)
 	else
 		tr = util.TraceLine(tra)
@@ -198,7 +195,7 @@ function SWEP:PrimaryAttack()
 	pos2 = tr.HitPos - tr.HitNormal
 
 	if true then
-		if SERVER and tr.HitWorld then self:GetOwner():EmitSound("snd_jack_hmcd_knifehit.wav", 50) end
+		if SERVER and tr.HitWorld then self:GetOwner():EmitSound("snd_jack_hmcd_knifehit.wav", 60) end
 
 		if IsValid(tr.Entity) and SERVER then
 			local dmginfo = DamageInfo()
@@ -210,26 +207,21 @@ function SWEP:PrimaryAttack()
 
 			local angle = self:GetOwner():GetAngles().y - tr.Entity:GetAngles().y
 			if angle < -180 then angle = 360 + angle end
-			if angle <= 90 and angle >= -90 then
-				dmginfo:SetDamage(self.Primary.Damage * 1.5)
-			else
-				dmginfo:SetDamage(self.Primary.Damage / 1.5)
-			end
+
+			dmginfo:SetDamage(self.Primary.Damage / 1.5)
 
 			if tr.Entity:IsNPC() or tr.Entity:IsPlayer() then
-				self:GetOwner():EmitSound("snd_jack_hmcd_knifestab.wav", 50)
+				self:GetOwner():EmitSound("snd_jack_hmcd_axehit.wav", 60)
 			else
 				if tr.Entity:GetClass() == "prop_ragdoll" then
-					self:GetOwner():EmitSound("snd_jack_hmcd_knifestab.wav", 50)
+					self:GetOwner():EmitSound("snd_jack_hmcd_axehit.wav", 60)
 				else
-					self:GetOwner():EmitSound("snd_jack_hmcd_knifehit.wav", 50)
+					self:GetOwner():EmitSound("snd_jack_hmcd_knifehit.wav", 60)
 				end
 			end
 
 			tr.Entity:TakeDamageInfo(dmginfo)
 		end
-
-		self:GetOwner():EmitSound(Sound("Weapon_Knife.Single"), 50)
 	end
 
 	if SERVER and Tr.Hit then

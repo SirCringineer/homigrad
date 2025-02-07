@@ -83,7 +83,7 @@ hook.Add("HUDPaint", "homigrad-roundstate", function()
 		draw.RoundedBox(5, ScrW() - 270 - math.max(#nextName, #name) * 4, ScrH() - 65, 800, 70, Color(0, 0, 0, showRoundInfoColor.a - 30))
 		draw.SimpleText(language.GetPhrase("hg.levels.current"):format(language.GetPhrase(name)), "HomigradFont", ScrW() - 15, ScrH() - 40, showRoundInfoColor, TEXT_ALIGN_RIGHT)
 
-		if math.Round(roundTimeStart + roundTime - CurTime()) > 0 then
+		if roundTimeStart and math.Round(roundTimeStart + roundTime - CurTime()) > 0 then
 			if roundActiveName == "homicide" or roundActiveName == "hideandseek" then
 				draw.SimpleText(language.GetPhrase("hg.levels.policearrive"):format(tostring(math.Round(roundTimeStart + roundTime - CurTime()))), "HomigradFont", ScrW() - 15, ScrH() - 60, showRoundInfoColor, TEXT_ALIGN_RIGHT)
 				-- elseif roundActiveName == "scp" then

@@ -2,6 +2,8 @@ util.AddNetworkString("inventory")
 util.AddNetworkString("ply_take_item")
 util.AddNetworkString("ply_take_ammo")
 
+CreateConVar("hg_lootalive", "1", {FCVAR_ARCHIVE, FCVAR_NOTIFY, FCVAR_REPLICATED}, "Toggles ability to loot alive players that are faking.")
+
 local function send(ply, lootEnt, remove)
 	if ply then
 		net.Start("inventory")
@@ -74,7 +76,7 @@ local blackList = {
 	gmod_tool = true
 }
 
-hook.Add("DoPlayerDeath", "huyhuy", function(ply)
+hook.Add("DoPlayerDeath", "hgDoPlayerDeath", function(ply)
 	local info = SavePlyInfo(ply)
 
 	ply.weps = {}

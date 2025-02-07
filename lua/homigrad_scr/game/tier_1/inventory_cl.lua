@@ -54,10 +54,14 @@ net.Receive("inventory", function()
 	end
 
 	local lootEnt = net.ReadEntity()
+	if lootEnt:GetClass() == "prop_ragdoll" then lootEnt = lootEnt:GetNWEntity("OldRagdollController") end -- If player is dead (lootEnt is prop_ragdoll) return who's ragdoll it was
+
+	if not GetConVar("hg_lootalive"):GetBool() and lootEnt:Alive() then return end
+
 	local success, items = pcall(net.ReadTable)
+	if not success or not lootEnt then return end
 
 	local nickname = lootEnt:IsPlayer() and lootEnt:Name() or lootEnt:GetNWString("Nickname") or ""
-	if not success or not lootEnt then return end
 
 	if IsValid(lootEnt:GetNWEntity("ActiveWeapon")) and items[lootEnt:GetNWEntity("ActiveWeapon"):GetClass()] then items[lootEnt:GetNWEntity("ActiveWeapon"):GetClass()] = nil end
 

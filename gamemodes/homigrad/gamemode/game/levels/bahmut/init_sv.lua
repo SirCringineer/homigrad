@@ -312,7 +312,7 @@ function bahmut.PlayerSpawn2(ply, teamID)
 	end
 
 	if math.random(1, 4) == 4 then
-		ply:Give("weapon_hg_sleagehammer")
+		ply:Give("weapon_hg_sledgehammer")
 	end
 
 	JMod.EZ_Equip_Armor(ply, "Medium-Helmet", color)

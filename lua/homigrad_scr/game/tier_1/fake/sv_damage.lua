@@ -236,12 +236,13 @@ hook.Add("EntityTakeDamage", "ragdamage", function(ent, dmginfo)
 	if rag then
 		if dmginfo:GetDamageType() == DMG_CRUSH then dmginfo:ScaleDamage(1 / 40 / 15) end
 
-		--[[
 		ply:SetHealth(ply:Health() - dmginfo:GetDamage())
-		if ply:Health() <= 0 then ply:Kill() end --]]
+		if ply:Health() <= 0 then ply:Kill() end
 
 		ply.overridedmg = true
+
 		ply:TakeDamageInfo(dmginfo)
+
 		ply.overridedmg = nil
 	end
 end)
@@ -274,7 +275,7 @@ local function velocityDamage(ent, data)
 	-- ent.dodamage = nil
 end
 
-hook.Add("Ragdoll Collide", "organismhuy", function(ragdoll, data)
+hook.Add("Ragdoll Collide", "hgOrgansDamage", function(ragdoll, data)
 	if ragdoll == data.HitEntity then return end
 	if data.DeltaTime < 0.25 then return end
 	if not ragdoll:IsRagdoll() then return end

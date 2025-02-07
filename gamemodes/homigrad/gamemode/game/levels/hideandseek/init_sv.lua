@@ -224,7 +224,7 @@ end
 
 local common = {"food_lays", "weapon_pipe", "weapon_bat", "med_band_big", "med_band_small", "medkit", "food_monster", "food_fishcan", "food_spongebob_home"}
 local uncommon = {"medkit", "weapon_molotok", "painkiller"}
-local rare = {"weapon_fiveseven", "weapon_gurkha", "weapon_t", "weapon_pepperspray"}
+local rare = {"weapon_fiveseven", "weapon_kukri", "weapon_tomahawk", "weapon_pepperspray"}
 
 function hideandseek.ShouldSpawnLoot()
 	if roundTimeStart + roundTimeLoot - CurTime() > 0 then return false end

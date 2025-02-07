@@ -20,11 +20,11 @@ tdm.SupportCenter = true
 
 hook.Add("HUDPaint", "bahmut", function()
 	local lply = LocalPlayer()
-	-- if true then return end -- ?
 
 	if not TableRound().SupportCenter then return end
 	if not GetGlobalVar("Center") or not lply:Alive() then return end
 
+	if not SpawnPointsList.center then return end
 	local point = SpawnPointsList.center[3]
 	if #point == 0 then return end
 
@@ -38,12 +38,15 @@ hook.Add("HUDPaint", "bahmut", function()
 	surface.SetMaterial(grtodown)
 	surface.SetDrawColor(128, 0, 0, 64)
 	surface.DrawTexturedRect(0, 0, w, h * k)
+
 	surface.SetMaterial(grtoup)
 	surface.SetDrawColor(128, 0, 0, 64)
 	surface.DrawTexturedRect(0, h - h * k, w, h * k + 1)
+
 	surface.SetMaterial(grtoright)
 	surface.SetDrawColor(128, 0, 0, 64)
 	surface.DrawTexturedRect(0, 0, w * k / 2, h)
+
 	surface.SetMaterial(grtoleft)
 	surface.SetDrawColor(128, 0, 0, 64)
 	surface.DrawTexturedRect(w - w * k / 2, 0, w * k / 2 + 1, h)

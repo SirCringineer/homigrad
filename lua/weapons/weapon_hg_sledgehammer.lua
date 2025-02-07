@@ -1,10 +1,13 @@
 SWEP.Base = "weapon_hg_melee_base"
 
-SWEP.PrintName = "Sledgehammer"
-SWEP.Category = "[HG] Melee"
-SWEP.Instructions = ""
-SWEP.Spawnable= true
-SWEP.AdminSpawnable= true
+if CLIENT then
+	SWEP.PrintName = language.GetPhrase("hg.sledgehammer.name")
+	SWEP.Instructions = language.GetPhrase("hg.sledgehammer.inst")
+	SWEP.Category = language.GetPhrase("hg.category.melee")
+end
+
+SWEP.Spawnable = true
+SWEP.AdminSpawnable = true
 SWEP.AdminOnly = false
 
 SWEP.ViewModelFOV = 60
@@ -20,7 +23,7 @@ SWEP.SlotPos = 2
 
 SWEP.UseHands = true
 
----SWEP.HoldType = "knife"
+-- SWEP.HoldType = "knife"
 
 SWEP.FiresUnderwater = false
 

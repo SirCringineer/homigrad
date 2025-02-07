@@ -1,9 +1,9 @@
 SWEP.Base = "salat_base"
 
 if CLIENT then
-	SWEP.PrintName = language.GetPhrase("AT4")
+	SWEP.PrintName = language.GetPhrase("hg.at4.name")
 	SWEP.Author = "Homigrad"
-	SWEP.Instructions = language.GetPhrase("WARNING: DO NOT ATTEMPT TO ROCKET JUMP.")
+	SWEP.Instructions = language.GetPhrase("hg.at4.inst")
 	SWEP.Category = language.GetPhrase("hg.category.weapons")
 end
 

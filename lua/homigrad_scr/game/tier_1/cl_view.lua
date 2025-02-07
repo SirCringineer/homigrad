@@ -122,8 +122,10 @@ local whitelistweps = {
 
 function RagdollOwner(rag)
 	if not IsValid(rag) then return end
-	local ent = rag:GetNWEntity("RagdollController")
-	return IsValid(ent) and ent
+
+	local ply = rag:GetNWEntity("RagdollController")
+
+	return IsValid(ply) and ply
 end
 
 --[[

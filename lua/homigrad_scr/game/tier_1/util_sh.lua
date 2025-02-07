@@ -140,7 +140,7 @@ if CLIENT then
 end --]]
 
 if CLIENT then
-	hook.Add("NetworkEntityCreated", "huyhuy", function(ent)
+	hook.Add("NetworkEntityCreated", "hgSyncRagdollsIDK", function(ent)
 		if not ent:IsRagdoll() then return end
 
 		timer.Simple(LocalPlayer():Ping() / 100 + 0.1, function()
@@ -258,7 +258,7 @@ end
 if SERVER then
 	util.AddNetworkString("keyDownply2")
 
-	hook.Add("KeyPress", "huy-hg", function(ply, key)
+	hook.Add("KeyPress", "hgKeyDown", function(ply, key)
 		net.Start("keyDownply2")
 			net.WriteInt(key, 26)
 			net.WriteBool(true)
@@ -266,7 +266,7 @@ if SERVER then
 		net.Broadcast()
 	end)
 
-	hook.Add("KeyRelease", "huy-hg2", function(ply, key)
+	hook.Add("KeyRelease", "hgKeyDown2", function(ply, key)
 		net.Start("keyDownply2")
 			net.WriteInt(key, 26)
 			net.WriteBool(false)
@@ -319,9 +319,9 @@ game.AddParticles("particles/muzzleflashes_test_b.pcf")
 game.AddParticles("particles/pcfs_jack_muzzleflashes.pcf")
 game.AddParticles("particles/ar2_muzzle.pcf")
 
-local huyprecahche = {"muzzleflash_SR25", "pcf_jack_mf_tpistol", "pcf_jack_mf_mshotgun", "pcf_jack_mf_msmg", "pcf_jack_mf_spistol", "pcf_jack_mf_mrifle2", "pcf_jack_mf_mrifle1", "pcf_jack_mf_mpistol", "pcf_jack_mf_suppressed", "muzzleflash_pistol_rbull", "muzzleflash_m24", "muzzleflash_m79", "muzzleflash_M3", "muzzleflash_m14", "muzzleflash_g3", "muzzleflash_FAMAS", "muzzleflash_ak74", "muzzleflash_ak47", "muzzleflash_mp5", "muzzleflash_suppressed", "muzzleflash_MINIMI", "muzzleflash_svd", "new_ar2_muzzle"}
+local precahche = {"muzzleflash_SR25", "pcf_jack_mf_tpistol", "pcf_jack_mf_mshotgun", "pcf_jack_mf_msmg", "pcf_jack_mf_spistol", "pcf_jack_mf_mrifle2", "pcf_jack_mf_mrifle1", "pcf_jack_mf_mpistol", "pcf_jack_mf_suppressed", "muzzleflash_pistol_rbull", "muzzleflash_m24", "muzzleflash_m79", "muzzleflash_M3", "muzzleflash_m14", "muzzleflash_g3", "muzzleflash_FAMAS", "muzzleflash_ak74", "muzzleflash_ak47", "muzzleflash_mp5", "muzzleflash_suppressed", "muzzleflash_MINIMI", "muzzleflash_svd", "new_ar2_muzzle"}
 
-for _, v in ipairs(huyprecahche) do
+for _, v in ipairs(precahche) do
 	PrecacheParticleSystem(v)
 end
 

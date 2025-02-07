@@ -1,27 +1,26 @@
 SWEP.Base = "salat_base"
 
 if CLIENT then
-	SWEP.PrintName = language.GetPhrase("hg.rpk.name")
+	SWEP.PrintName = language.GetPhrase("hg.sa80.name")
 	SWEP.Author = "Homigrad"
-	SWEP.Instructions = language.GetPhrase("hg.rpk.inst")
+	SWEP.Instructions = language.GetPhrase("hg.sa80.inst")
 	SWEP.Category = language.GetPhrase("hg.category.weapons")
 end
 
 SWEP.Spawnable = true
 SWEP.AdminOnly = false
 
-SWEP.Primary.ClipSize = 45
-SWEP.Primary.DefaultClip = 45
+SWEP.Primary.ClipSize = 30
+SWEP.Primary.DefaultClip = 30
 SWEP.Primary.Automatic = true
-SWEP.Primary.Ammo = "7.62x39 mm"
+SWEP.Primary.Ammo = "5.56x45 mm"
 SWEP.Primary.Cone = 0
-SWEP.Primary.Damage = 45
+SWEP.Primary.Damage = 40
 SWEP.Primary.Spread = 0
-SWEP.Primary.Sound = "pwb2/weapons/rpk/rpk-1.wav"
--- SWEP.Primary.SoundFar = "ak74/ak74_dist.wav"
+SWEP.Primary.Sound = "pwb/weapons/l85a1/shoot.wav"
 SWEP.Primary.Force = 240 / 3
 SWEP.ReloadTime = 2
-SWEP.ShootWait = 0.08
+SWEP.ShootWait = 0.1
 SWEP.ReloadSound = "weapons/ar2/ar2_reload.wav"
 SWEP.TwoHands = true
 
@@ -41,9 +40,13 @@ SWEP.SlotPos = 0
 SWEP.DrawAmmo = true
 SWEP.DrawCrosshair = false
 
-SWEP.ViewModel = "models/pwb2/weapons/w_rpk.mdl"
-SWEP.WorldModel = "models/pwb2/weapons/w_rpk.mdl"
+SWEP.ViewModel = "models/pwb/weapons/w_l85a1.mdl"
+SWEP.WorldModel = "models/pwb/weapons/w_l85a1.mdl"
 
-SWEP.addAng = Angle(0, -0.8, 0.5)
+SWEP.vbwPos = Vector(12, -2.7, -12)
+SWEP.vbwAng = Angle(5, -30, 0)
 
-SWEP.SightPos = Vector(-36, 4, -0.2)
+SWEP.addPos = Vector(0, 0, 0)
+SWEP.addAng = Angle(0, 0, 0)
+
+SWEP.SightPos = Vector(-27, 3.25, -0.32)

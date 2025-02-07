@@ -9,7 +9,7 @@ css.WinPoints[2] = css.WinPoints[2] or 0
 
 css.terrorists = {"Terrorists",Color(176,0,0),
 	weapons = {"megamedkit","weapon_binokle","weapon_hands","weapon_hg_hatchet","med_band_small","med_band_big","med_band_small","painkiller","weapon_handcuffs","weapon_radio"},
-	main_weapon = {"weapon_asval", "weapon_mp5", "weapon_m3super"},
+	main_weapon = {"weapon_asval", "weapon_mp5", "weapon_m4super"},
 	secondary_weapon = {"weapon_beretta","weapon_p99","weapon_beretta"},
 	models = {"models/player/leet.mdl","models/player/phoenix.mdl"}
 }
@@ -31,7 +31,7 @@ function css.StartRound()
 	game.CleanUpMap(false)
     css.points = {}
     if !file.Read( "homigrad/maps/controlpoint/"..game.GetMap()..".txt", "DATA" ) and SERVER then
-        print("Tell the admin to add points using \"!point control_point\" or fight without control points") 
+        print("Tell the admin to add points using \"!point control_point\" or fight without control points")
         PrintMessage(HUD_PRINTCENTER, "Tell the admin to add points using \"!point control_point\" or fight without control points")
     end
 
