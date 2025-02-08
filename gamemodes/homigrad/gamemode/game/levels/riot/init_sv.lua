@@ -22,8 +22,8 @@ function riot.RoundEndCheck()
 
 	if roundTimeStart + roundTime - CurTime() <= 0 then EndRound() end
 
-	local TAlive = tdm.GetCountLive(team.GetPlayers(1))
-	local CTAlive = tdm.GetCountLive(team.GetPlayers(2))
+	local TAlive = tdm.GetCountAlive(team.GetPlayers(1))
+	local CTAlive = tdm.GetCountAlive(team.GetPlayers(2))
 
 	if TAlive == 0 and CTAlive == 0 then EndRound() return end
 

@@ -364,8 +364,8 @@ end
 function homicide.RoundEndCheck()
 	tdm.Center()
 
-	local TAlive = tdm.GetCountLive(homicide.t)
-	local Alive = tdm.GetCountLive(team.GetPlayers(1), function(ply) if ply.roleT or ply.isContr then return false end end)
+	local TAlive = tdm.GetCountAlive(homicide.t)
+	local Alive = tdm.GetCountAlive(team.GetPlayers(1), function(ply) if ply.roleT or ply.isContr then return false end end)
 
 	if roundTimeStart + roundTime < CurTime() then
 		if not homicide.police then SpawnPolicePlayers() end
@@ -373,9 +373,9 @@ function homicide.RoundEndCheck()
 		return EndRound()
 	end
 
-	if TAlive == 0 and Alive == 0 then return EndRound(1) end
-	if TAlive == 0 then return EndRound(2) end
-	if Alive == 0 then return EndRound(1) end
+	if TAlive == 0 and Alive == 0 then return EndRound(0) end
+	if TAlive == 0 then return EndRound(1) end
+	if Alive == 0 then return EndRound(2) end
 end
 
 function homicide.PlayerInitialSpawn(ply)
@@ -396,7 +396,7 @@ function homicide.EndRound(winner)
 	net.Start("hg_sendchat_format")
 		net.WriteTable({
 			"#hg.modes.teamwin",
-			winner == 0 and "#hg.modes.draw" or (winner ~= 0 and "#hg.homicide.team" .. winner or "#hg.modes.draw")
+			winner == 0 and "#hg.modes.draw" or winner ~= 0 and "#hg.homicide.team" .. (winner or "0") or "#hg.modes.draw"
 		})
 	net.Broadcast()
 

@@ -126,7 +126,7 @@ function tdm.StartRoundSV()
 	bahmut.SelectRandomPlayers(team.GetPlayers(2), 2, bahmut.GiveAidPhone)
 end
 
-function tdm.GetCountLive(list, func)
+function tdm.GetCountAlive(list, func)
 	local count = 0
 	local result
 
@@ -157,8 +157,8 @@ function tdm.RoundEndCheck()
 
 	if roundTimeStart + roundTime - CurTime() <= 0 then return EndRound() end
 
-	local TAlive = tdm.GetCountLive(team.GetPlayers(1))
-	local CTAlive = tdm.GetCountLive(team.GetPlayers(2))
+	local TAlive = tdm.GetCountAlive(team.GetPlayers(1))
+	local CTAlive = tdm.GetCountAlive(team.GetPlayers(2))
 
 	if TAlive == 0 and CTAlive == 0 then return EndRound() end
 	if TAlive == 0 then return EndRound(2) end

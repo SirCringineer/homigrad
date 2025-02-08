@@ -81,7 +81,7 @@ function zombie.RoundEndCheck()
 
 	local OAlive = 0
 
-	CTAlive = tdm.GetCountLive(team.GetPlayers(1),function(ply)
+	CTAlive = tdm.GetCountAlive(team.GetPlayers(1),function(ply)
 		if ply.exit then CTExit = CTExit + 1 return false end
 	end)
 

@@ -98,8 +98,8 @@ function juggernaut.RoundEndCheck()
     tdm.Center()
 
     if roundTimeStart + roundTime - CurTime() <= 0 then EndRound() end
-	local TAlive = tdm.GetCountLive(juggernaut.t)
-	local Alive = tdm.GetCountLive(team.GetPlayers(1),function(ply) if ply.roleT or ply.isContr then return false end end)
+	local TAlive = tdm.GetCountAlive(juggernaut.t)
+	local Alive = tdm.GetCountAlive(team.GetPlayers(1),function(ply) if ply.roleT or ply.isContr then return false end end)
 
     if roundTimeStart + roundTime < CurTime() then
         EndRound()

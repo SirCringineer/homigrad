@@ -87,11 +87,11 @@ function hideandseek.RoundEndCheck()
 		end
 	end
 
-	local TAlive = tdm.GetCountLive(team.GetPlayers(1))
+	local TAlive = tdm.GetCountAlive(team.GetPlayers(1))
 	local CTAlive, CTExit = 0, 0
 	local OAlive = 0
 
-	CTAlive = tdm.GetCountLive(team.GetPlayers(2), function(ply)
+	CTAlive = tdm.GetCountAlive(team.GetPlayers(2), function(ply)
 		if ply.exit then
 			CTExit = CTExit + 1
 
@@ -125,7 +125,7 @@ function hideandseek.RoundEndCheck()
 		end
 	end
 
-	OAlive = tdm.GetCountLive(team.GetPlayers(3))
+	OAlive = tdm.GetCountAlive(team.GetPlayers(3))
 
 	if CTExit > 0 and CTAlive == 0 then return EndRound(2) end
 	if OAlive == 0 and TAlive == 0 and CTAlive == 0 then return EndRound() end

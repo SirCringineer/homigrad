@@ -162,7 +162,7 @@ function css.Think()
     end
 end
 
-function css.GetCountLive(list,func)
+function css.GetCountAlive(list,func)
 	local count = 0
 	local result
 
@@ -255,8 +255,8 @@ end
 /*function css.RoundEndCheck()
 	if roundTimeStart + roundTime - CurTime() <= 0 then EndRound() end
 
-	local TAlive = css.GetCountLive(team.GetPlayers(1))
-	local CTAlive = css.GetCountLive(team.GetPlayers(2))
+	local TAlive = css.GetCountAlive(team.GetPlayers(1))
+	local CTAlive = css.GetCountAlive(team.GetPlayers(2))
 
 	if TAlive == 0 and CTAlive == 0 then EndRound() return end
 

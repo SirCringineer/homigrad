@@ -114,8 +114,8 @@ end
 
 function basedefence.RoundEndCheck()
     tdm.Center()
-    
-    local Alive = tdm.GetCountLive(team.GetPlayers(1))
+
+    local Alive = tdm.GetCountAlive(team.GetPlayers(1))
 
     if Alive == 0 then EndRound() return end
 

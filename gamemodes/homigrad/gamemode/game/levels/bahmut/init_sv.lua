@@ -140,7 +140,7 @@ function bahmut.Think()
 	end
 end
 
-function bahmut.GetCountLive(list, func)
+function bahmut.GetCountAlive(list, func)
 	local count = 0
 	local result
 
@@ -217,8 +217,8 @@ end
 
 --[[
 function bahmut.RoundEndCheck()
-	local TAlive = tdm.GetCountLive(team.GetPlayers(1))
-	local CTAlive = tdm.GetCountLive(team.GetPlayers(2))
+	local TAlive = tdm.GetCountAlive(team.GetPlayers(1))
+	local CTAlive = tdm.GetCountAlive(team.GetPlayers(2))
 
 	if roundTimeStart + roundTime - CurTime() <= 0 then
 		EndRound()
