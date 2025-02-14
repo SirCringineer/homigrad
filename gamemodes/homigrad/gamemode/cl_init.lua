@@ -195,7 +195,6 @@ hook.Add("HUDPaint", "spectate", function()
 
 		if keyOld ~= key and key then
 			SpectateHideNick = not SpectateHideNick
-			--chat.AddText("Ники игроков: " .. tostring(not SpectateHideNick))
 		end
 
 		keyOld = key
@@ -338,6 +337,7 @@ hook.Add("PostDrawOpaqueRenderables", "laser", function()
 				if not tra.Hit then
 					render.DrawSprite(tr.HitPos, Size, Size, Color(255, 0, 0))
 				end
+
 				-- render.DrawQuadEasy(tr.HitPos, (tr.StartPos - tr.HitPos):GetNormal(), Size, Size, Color(255, 0, 0), 0)
 			cam.End3D()
 		end

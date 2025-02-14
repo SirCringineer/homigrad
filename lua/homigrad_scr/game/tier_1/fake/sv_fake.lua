@@ -385,7 +385,7 @@ hook.Add("PlayerDisconnected", "hgSavePlayerInfo", function(ply) if ply:Alive() 
 hook.Add("PhysgunPickup", "hgPickUpPlayer", function(ply, ent)
 	-- if ply:GetUserGroup()=="servermanager" or ply:GetUserGroup()=="superadmin" or ply:GetUserGroup()=="owner" or ply:GetUserGroup()=="admin" or ply:GetUserGroup()=="operator" then
 
-	if GetConVar("sv_construct"):GetBool() == true then
+	if GetConVar("hg_ConstructOnly"):GetBool() == true then
 		if ent:IsPlayer() and not IsValid(ent.FakeRagdoll) or ent:IsRagdoll() then
 			return false
 		else

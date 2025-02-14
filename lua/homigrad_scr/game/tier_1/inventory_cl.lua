@@ -78,6 +78,7 @@ net.Receive("inventory", function()
 	panel:SetDraggable(false)
 	panel:MakePopup()
 	panel:SetTitle("")
+
 	function panel:OnKeyCodePressed(key)
 		if key == KEY_W or key == KEY_S or key == KEY_A or key == KEY_D then self:Remove() end
 	end
@@ -90,98 +91,111 @@ net.Receive("inventory", function()
 		net.SendToServer()
 	end
 
+	local corner = 6
+	local x, y = 40, 40
+	local lootingTime = GetConVar("hg_DisableSearchTime"):GetBool() and 0 or 2
+	local looted = false
+
 	panel.Paint = function(self, w, h)
 		if not IsValid(lootEnt) or not LocalPlayer():Alive() then return panel:Remove() end
 
 		draw.RoundedBox(0, 0, 0, w, h, black)
 		surface.SetDrawColor(255, 255, 255, 128)
 		surface.DrawOutlinedRect(1, 1, w - 2, h - 2)
-		draw.SimpleText(language.GetPhrase("hg.inventory.title"):format(nickname), "DefaultFixedDropShadow", 6, 6, color_white)
+		draw.SimpleText(language.GetPhrase("hg.inventory.title"):format(nickname), "DefaultFixedDropShadow", corner, corner, color_white)
+
+		if not looted then draw.SimpleText(language.GetPhrase("hg.inventory.searching"), "DefaultFixedDropShadow", corner, corner * 4, color_white) end
 	end
 
-	local x, y = 40, 40
-	local corner = 6
+	timer.Simple(lootingTime, function()
+		if not IsValid(panel) then return end
 
-	for wep, weapon in pairs(items) do
-		local button = vgui.Create("DButton", panel)
-		button:SetPos(x, y)
-		button:SetSize(64, 64)
-		x = x + button:GetWide() + 6
-		if x + button:GetWide() >= panel:GetWide() then
-			x = 40
-			y = y + button:GetTall() + 6
-		end
-		button:SetText("")
+		for wep, weapon in pairs(items) do
+			local button = vgui.Create("DButton", panel)
+			button:SetPos(x, y)
+			button:SetSize(64, 64)
 
-		local text = weapon.PrintName or wep
-		text = getText(text, button:GetWide() - corner * 2)
+			x = x + button:GetWide() + 6
 
-		button.Paint = function(self, w, h)
-			draw.RoundedBox(0, 0, 0, w, h, self:IsHovered() and black2 or black)
-			surface.SetDrawColor(255, 255, 255, 128)
-			surface.DrawOutlinedRect(1, 1, w - 2, h - 2)
-
-			for i, text in pairs(text) do
-				draw.SimpleText(text, "DefaultFixedDropShadow", corner, corner + (i - 1) * 12, color_white)
+			if x + button:GetWide() >= panel:GetWide() then
+				x = 40
+				y = y + button:GetTall() + 6
 			end
 
-			local x, y = self:LocalToScreen(0, 0)
-			DrawWeaponSelectionEX(weapon, x, y, w, h)
-		end
+			button:SetText("")
 
-		function button:OnRemove()
-			if IsValid(model) then model:Remove() end
-		end
+			local text = weapon.PrintName or wep
+			text = getText(text, button:GetWide() - corner * 2)
 
-		button.DoClick = function()
-			net.Start("ply_take_item")
-				net.WriteEntity(lootEnt)
-				net.WriteString(wep)
-			net.SendToServer()
-		end
+			button.Paint = function(self, w, h)
+				draw.RoundedBox(0, 0, 0, w, h, self:IsHovered() and black2 or black)
+				surface.SetDrawColor(255, 255, 255, 128)
+				surface.DrawOutlinedRect(1, 1, w - 2, h - 2)
 
-		button.DoRightClick = button.DoClick
-	end
+				for i, text in pairs(text) do
+					draw.SimpleText(text, "DefaultFixedDropShadow", corner, corner + (i - 1) * 12, color_white)
+				end
 
-	for ammo, _ in pairs(items_ammo) do
-		if blackListedAmmo[ammo] then continue end
-
-		local button = vgui.Create("DButton", panel)
-		button:SetPos(x, y)
-		button:SetSize(64, 64)
-		x = x + button:GetWide() + 6
-		if x + button:GetWide() >= panel:GetWide() then
-			x = 40
-			y = y + button:GetTall() + 6
-		end
-
-		button:SetText("")
-		local text = game.GetAmmoName(ammo)
-		text = getText(text, button:GetWide() - corner * 2)
-
-		button.Paint = function(self, w, h)
-			draw.RoundedBox(0, 0, 0, w, h, self:IsHovered() and black2 or black)
-			surface.SetDrawColor(255, 255, 255, 128)
-			surface.DrawOutlinedRect(1, 1, w - 2, h - 2)
-
-			local round = Material(AmmoTypes[tonumber(ammo)] or "vgui/hud/hmcd_person", "noclamp smooth")
-
-			surface.SetMaterial(round)
-			surface.SetDrawColor(255, 255, 255, 255)
-			surface.DrawTexturedRect(2, 2, w - 4, h - 4)
-
-			for i, text in pairs(text) do
-				draw.SimpleText(text, "DefaultFixedDropShadow", corner, corner + (i - 1) * 12, color_white)
+				local x, y = self:LocalToScreen(0, 0)
+				DrawWeaponSelectionEX(weapon, x, y, w, h)
 			end
+
+			function button:OnRemove()
+				if IsValid(model) then model:Remove() end
+			end
+
+			button.DoClick = function()
+				net.Start("ply_take_item")
+					net.WriteEntity(lootEnt)
+					net.WriteString(wep)
+				net.SendToServer()
+			end
+
+			button.DoRightClick = button.DoClick
 		end
 
-		button.DoClick = function()
-			net.Start("ply_take_ammo")
-				net.WriteEntity(lootEnt)
-				net.WriteFloat(tonumber(ammo))
-			net.SendToServer()
+		for ammo, _ in pairs(items_ammo) do
+			if blackListedAmmo[ammo] then continue end
+
+			local button = vgui.Create("DButton", panel)
+			button:SetPos(x, y)
+			button:SetSize(64, 64)
+			x = x + button:GetWide() + 6
+			if x + button:GetWide() >= panel:GetWide() then
+				x = 40
+				y = y + button:GetTall() + 6
+			end
+
+			button:SetText("")
+			local text = game.GetAmmoName(ammo)
+			text = getText(text, button:GetWide() - corner * 2)
+
+			button.Paint = function(self, w, h)
+				draw.RoundedBox(0, 0, 0, w, h, self:IsHovered() and black2 or black)
+				surface.SetDrawColor(255, 255, 255, 128)
+				surface.DrawOutlinedRect(1, 1, w - 2, h - 2)
+
+				local round = Material(AmmoTypes[tonumber(ammo)] or "vgui/hud/hmcd_person", "noclamp smooth")
+
+				surface.SetMaterial(round)
+				surface.SetDrawColor(255, 255, 255, 255)
+				surface.DrawTexturedRect(2, 2, w - 4, h - 4)
+
+				for i, text in pairs(text) do
+					draw.SimpleText(text, "DefaultFixedDropShadow", corner, corner + (i - 1) * 12, color_white)
+				end
+			end
+
+			button.DoClick = function()
+				net.Start("ply_take_ammo")
+					net.WriteEntity(lootEnt)
+					net.WriteFloat(tonumber(ammo))
+				net.SendToServer()
+			end
+
+			button.DoRightClick = button.DoClick
 		end
 
-		button.DoRightClick = button.DoClick
-	end
+		looted = true
+	end)
 end)

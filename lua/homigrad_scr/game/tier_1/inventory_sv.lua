@@ -43,6 +43,7 @@ hook.Add("Player Think", "Looting", function(ply)
 		tr.endpos = tr.start + ply:EyeAngles():Forward() * 64
 		tr.filter = ply
 		local tracea = util.TraceLine(tr)
+
 		local hitEnt = tracea.Entity
 		if not IsValid(hitEnt) then return end
 

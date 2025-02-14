@@ -9,7 +9,7 @@
 	{
 		1
 		{
-			"name"		"sv_construct"
+			"name"		"hg_ConstructOnly"
 			"text"		"Construct Gamemode (Doesn't Work)"
 			"help"		"Spawns all players with a physgun & ability to use the Spawn Menu."
 			"type"		"CheckBox"
@@ -18,7 +18,7 @@
 		}
 		2
 		{
-			"name"		"sv_homicideonly"
+			"name"		"hg_HomicideOnly"
 			"text"		"Homicide Only"
 			"help"		"Homicide is the only round type queued. Other gamemodes like TDM, Capture The Point, etc, are not queued."
 			"type"		"CheckBox"
@@ -27,7 +27,7 @@
 		}
 		3
 		{
-			"name"		"sv_disablesearch"
+			"name"		"hg_DisableSearchTime"
 			"text"		"Disable Inventory Search Wait"
 			"help"		"Searching a player inventory will instantly appear."
 			"type"		"CheckBox"
@@ -36,11 +36,11 @@
 		}
 		4
 		{
-			"name"		"sv_announcetraitorsonpolicespawn"
+			"name"		"hg_TellPoliceWhoTraitorsAre"
 			"text"		"Announce Traitors on Police Spawn"
 			"help"		"If enabled, Police will be alerted to who the traitors are when they arrive."
 			"type"		"CheckBox"
-			"default"	"1"
+			"default"	"0"
 			"singleplayer"
 		}
 	}
