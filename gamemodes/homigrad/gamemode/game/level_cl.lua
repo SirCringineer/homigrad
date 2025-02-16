@@ -15,6 +15,8 @@ net.Receive("round_state", function()
 			func(data)
 		end
 	else
+		hg_searched = {}
+
 		endDataRound = data
 		local func = TableRound().EndRound
 
@@ -77,8 +79,11 @@ hook.Add("HUDPaint", "homigrad-roundstate", function()
 
 	if k > 0 then
 		k = math.min(k, 1)
+
 		showRoundInfoColor.a = k * 255
+
 		yellow.a = showRoundInfoColor.a
+
 		local name, nextName = TableRound().Name, TableRound(roundActiveNameNext).Name
 		draw.RoundedBox(5, ScrW() - 270 - math.max(#nextName, #name) * 4, ScrH() - 65, 800, 70, Color(0, 0, 0, showRoundInfoColor.a - 30))
 		draw.SimpleText(language.GetPhrase("hg.levels.current"):format(language.GetPhrase(name)), "HomigradFont", ScrW() - 15, ScrH() - 40, showRoundInfoColor, TEXT_ALIGN_RIGHT)

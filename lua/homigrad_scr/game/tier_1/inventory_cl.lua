@@ -20,7 +20,7 @@ local AmmoTypes = {
 }
 
 local black = Color(0, 0, 0, 128)
-local black2 = Color(64, 64, 64, 128)
+local grey = Color(64, 64, 64, 128)
 
 local function getText(text, limitW)
 	local newText = {}
@@ -47,6 +47,8 @@ local function getText(text, limitW)
 end
 
 local panel
+hg_searched = {}
+
 net.Receive("inventory", function()
 	if IsValid(panel) then
 		panel.override = true
@@ -80,7 +82,11 @@ net.Receive("inventory", function()
 	panel:SetTitle("")
 
 	function panel:OnKeyCodePressed(key)
-		if key == KEY_W or key == KEY_S or key == KEY_A or key == KEY_D then self:Remove() end
+		if key == KEY_W or key == KEY_S or key == KEY_A or key == KEY_D then
+			if timer.Exists(LocalPlayer():Name() .. "_hg_searching") then timer.Remove(LocalPlayer():Name() .. "_hg_searching") end
+
+			self:Remove()
+		end
 	end
 
 	function panel:OnRemove()
@@ -91,10 +97,13 @@ net.Receive("inventory", function()
 		net.SendToServer()
 	end
 
+	local lootingTime = GetConVar("hg_SearchTime"):GetInt()
+	if lootingTime < 0 then lootingTime = 0 end
+	if lootingTime > 10 then lootingTime = 10 end
+
+	local targetID = IsValid(lootEnt) and lootEnt:SteamID64()
 	local corner = 6
 	local x, y = 40, 40
-	local lootingTime = GetConVar("hg_DisableSearchTime"):GetBool() and 0 or 2
-	local looted = false
 
 	panel.Paint = function(self, w, h)
 		if not IsValid(lootEnt) or not LocalPlayer():Alive() then return panel:Remove() end
@@ -104,11 +113,15 @@ net.Receive("inventory", function()
 		surface.DrawOutlinedRect(1, 1, w - 2, h - 2)
 		draw.SimpleText(language.GetPhrase("hg.inventory.title"):format(nickname), "DefaultFixedDropShadow", corner, corner, color_white)
 
-		if not looted then draw.SimpleText(language.GetPhrase("hg.inventory.searching"), "DefaultFixedDropShadow", corner, corner * 4, color_white) end
+		if not hg_searched[targetID] then draw.SimpleText(language.GetPhrase("hg.inventory.searching"), "HomigradDefaultFixedDropShadow", corner * 36, corner * 30, color_white) end
 	end
 
-	timer.Simple(lootingTime, function()
+	if hg_searched[targetID] then lootingTime = 0 end
+
+	timer.Create(LocalPlayer():Name() .. "_hg_searching", lootingTime, 1, function()
 		if not IsValid(panel) then return end
+
+		hg_searched[targetID] = true
 
 		for wep, weapon in pairs(items) do
 			local button = vgui.Create("DButton", panel)
@@ -128,7 +141,7 @@ net.Receive("inventory", function()
 			text = getText(text, button:GetWide() - corner * 2)
 
 			button.Paint = function(self, w, h)
-				draw.RoundedBox(0, 0, 0, w, h, self:IsHovered() and black2 or black)
+				draw.RoundedBox(0, 0, 0, w, h, self:IsHovered() and grey or black)
 				surface.SetDrawColor(255, 255, 255, 128)
 				surface.DrawOutlinedRect(1, 1, w - 2, h - 2)
 
@@ -160,18 +173,21 @@ net.Receive("inventory", function()
 			local button = vgui.Create("DButton", panel)
 			button:SetPos(x, y)
 			button:SetSize(64, 64)
+
 			x = x + button:GetWide() + 6
+
 			if x + button:GetWide() >= panel:GetWide() then
 				x = 40
 				y = y + button:GetTall() + 6
 			end
 
 			button:SetText("")
+
 			local text = game.GetAmmoName(ammo)
 			text = getText(text, button:GetWide() - corner * 2)
 
 			button.Paint = function(self, w, h)
-				draw.RoundedBox(0, 0, 0, w, h, self:IsHovered() and black2 or black)
+				draw.RoundedBox(0, 0, 0, w, h, self:IsHovered() and grey or black)
 				surface.SetDrawColor(255, 255, 255, 128)
 				surface.DrawOutlinedRect(1, 1, w - 2, h - 2)
 
@@ -195,7 +211,5 @@ net.Receive("inventory", function()
 
 			button.DoRightClick = button.DoClick
 		end
-
-		looted = true
 	end)
 end)

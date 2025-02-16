@@ -10,7 +10,7 @@
 		1
 		{
 			"name"		"hg_ConstructOnly"
-			"text"		"Construct Gamemode (Doesn't Work)"
+			"text"		"Construct Gamemode"
 			"help"		"Spawns all players with a physgun & ability to use the Spawn Menu."
 			"type"		"CheckBox"
 			"default"	"0"
@@ -27,17 +27,17 @@
 		}
 		3
 		{
-			"name"		"hg_DisableSearchTime"
-			"text"		"Disable Inventory Search Wait"
-			"help"		"Searching a player inventory will instantly appear."
-			"type"		"CheckBox"
-			"default"	"0"
+			"name"		"hg_SearchTime"
+			"text"		"Inventory Search Wait Time (seconds)"
+			"help"		"Items in a player's inventory will appear after a given time (between 0 and 10)"
+			"type"		"Numeric"
+			"default"	"2"
 			"singleplayer"
 		}
 		4
 		{
 			"name"		"hg_TellPoliceWhoTraitorsAre"
-			"text"		"Announce Traitors on Police Spawn"
+			"text"		"Announce Traitors on Police Spawn (Not realized for now)"
 			"help"		"If enabled, Police will be alerted to who the traitors are when they arrive."
 			"type"		"CheckBox"
 			"default"	"0"

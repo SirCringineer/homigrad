@@ -50,6 +50,14 @@ surface.CreateFont("HomigradFontSmall", {
 	outline = false
 })
 
+surface.CreateFont("HomigradDefaultFixedDropShadow", {
+	font = "Lucida Console",
+	size = 14,
+	weight = 0,
+	shadow = true,
+	outline = false
+})
+
 -- Harrisons puts ConVar in worst script, asked to leave
 CreateClientConVar("hg_scopespeed", "0.5", true, false, "Changes the speed of the sniper scope when zoomed in.", 0, 5)
 CreateClientConVar("hg_usecustommodel", "false", true, true, "Allows usage of custom models.")

@@ -50,7 +50,7 @@ hook.Add("Player Think", "Looting", function(ply)
 		if IsValid(RagdollOwner(hitEnt)) then
 			hitEnt = RagdollOwner(hitEnt)
 
-			ply:EmitSound("npc/combine_soldier/gear" .. math.random(1, 7) .. ".wav", 50, math.random(95, 105))
+			ply:EmitSound("npc/combine_soldier/gear" .. math.random(1, 6) .. ".wav", 50, math.random(95, 105))
 		end
 
 		if IsValid(hitEnt) and hitEnt.IsJModArmor then hitEnt = hitEnt.Owner end
@@ -101,13 +101,10 @@ hook.Add("DoPlayerDeath", "hgDoPlayerDeath", function(ply)
 
 			ent:SetClip1(clip1)
 			ent:SetTable(tbl)
-			-- ent:SetOwner(rag)
 			ent:SetParent(rag, 0)
-			-- ent:SetSubMaterial(-1, "null")
 			ent:SetMaterial("null")
 
 			ent.Spawned = true
-			-- timer.Simple(0, function() ent:SetRenderMode(RENDERMODE_NONE) end)
 		end)
 
 		ent:Spawn()
@@ -115,9 +112,6 @@ hook.Add("DoPlayerDeath", "hgDoPlayerDeath", function(ply)
 
 		ent.Spawned = true
 
-		-- ent:SetRenderMode(RENDERMODE_NONE)
-		-- ent:SetMaterial("")
-		-- ent:SetNoDraw(true)
 		ent:DrawShadow(false)
 		ent:AddSolidFlags(FSOLID_NOT_SOLID)
 
