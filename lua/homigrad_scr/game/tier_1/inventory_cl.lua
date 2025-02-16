@@ -113,14 +113,17 @@ net.Receive("inventory", function()
 		surface.DrawOutlinedRect(1, 1, w - 2, h - 2)
 		draw.SimpleText(language.GetPhrase("hg.inventory.title"):format(nickname), "DefaultFixedDropShadow", corner, corner, color_white)
 
+		-- Don't show the text if player "remembers" target's inventory
 		if not hg_searched[targetID] then draw.SimpleText(language.GetPhrase("hg.inventory.searching"), "HomigradDefaultFixedDropShadow", corner * 36, corner * 30, color_white) end
 	end
 
+	-- Set timer to 0 if player "remembers" target's inventory
 	if hg_searched[targetID] then lootingTime = 0 end
 
 	timer.Create(LocalPlayer():Name() .. "_hg_searching", lootingTime, 1, function()
 		if not IsValid(panel) then return end
 
+		-- "Remember" this target's inventory
 		hg_searched[targetID] = true
 
 		for wep, weapon in pairs(items) do
@@ -211,5 +214,10 @@ net.Receive("inventory", function()
 
 			button.DoRightClick = button.DoClick
 		end
+	end)
+
+	-- "Forget" target's inventory after 1 min
+	timer.Simple(60, function()
+		hg_searched[targetID] = nil
 	end)
 end)
