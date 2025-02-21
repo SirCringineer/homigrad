@@ -51,7 +51,9 @@ INCLUDE_BREAK = 1
 
 function GM.includeDir(path, includes)
 	includes = includes or {}
+
 	if includes[path] then return end
+
 	includes[path] = path
 
 	local _files, _dirs = file_Find(path .. "*", "LUA")
@@ -131,12 +133,14 @@ function GM.includeDir(path, includes)
 
 		for i = 1, #v2 do
 			result = hg_includeFile(path .. v2[i])
+
 			if result == INCLUDE_BREAK then return end
 		end
 	end
 
 	for i = 1, #files do
 		result = hg_includeFile(path .. files[i])
+
 		if result == INCLUDE_BREAK then return end
 	end
 
