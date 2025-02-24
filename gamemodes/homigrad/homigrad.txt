@@ -29,7 +29,7 @@
 		{
 			"name"		"hg_SearchTime"
 			"text"		"Inventory Search Time (seconds)"
-			"help"		"Items in a player's inventory will appear after a given time (between 0 and 10)"
+			"help"		"Items in a player's inventory will appear after a given time (between 0 and 10)."
 			"type"		"Numeric"
 			"default"	"2"
 			"singleplayer"
@@ -38,7 +38,7 @@
 		{
 			"name"		"hg_LootAlive"
 			"text"		"Loot Alive Players"
-			"help"		"Enables/Disables Looting Alive Players."
+			"help"		"Toggles the ability to loot alive faking players."
 			"type"		"CheckBox"
 			"default"	"1"
 			"singleplayer"
