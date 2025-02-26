@@ -216,6 +216,6 @@ net.Receive("inventory", function()
 end)
 
 -- Forget all inventories after cleanup (mode change)
-hook.Add("PostCleanupMap", function()
+hook.Add("PostCleanupMap", "hg_ForgetInventories", function()
 	hg_searched = {}
 end)
