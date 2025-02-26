@@ -15,9 +15,8 @@ net.Receive("round_state", function()
 			func(data)
 		end
 	else
-		hg_searched = {}
-
 		endDataRound = data
+
 		local func = TableRound().EndRound
 
 		if func then
