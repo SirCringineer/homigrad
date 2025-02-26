@@ -390,6 +390,8 @@ COMMANDS.forcepolice = {
 }
 
 function homicide.EndRound(winner)
+	local tbl = TableRound()
+
 	net.Start("hg_sendchat_format")
 		net.WriteTable({
 			"#hg.modes.teamwin",
