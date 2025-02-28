@@ -4,7 +4,7 @@ if CLIENT then
 	SWEP.PrintName = language.GetPhrase("hg.pipe.name")
 	SWEP.Author = "Homigrad"
 	SWEP.Instructions = language.GetPhrase("hg.pipe.inst")
-	SWEP.Category = language.GetPhrase("hg.category.weapons")
+	SWEP.Category = language.GetPhrase("hg.category.melee")
 end
 
 SWEP.Spawnable = true
