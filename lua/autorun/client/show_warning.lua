@@ -1,3 +1,5 @@
+if engine.ActiveGamemode() ~= "homigrad" then return end
+
 net.Receive("ShowWelcomeWindow", function()
 	-- Create main frame
 	local frame = vgui.Create("DFrame")

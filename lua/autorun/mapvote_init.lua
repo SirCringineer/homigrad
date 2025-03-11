@@ -1,3 +1,5 @@
+if engine.ActiveGamemode() ~= "homigrad" then return end
+
 SolidMapVote = SolidMapVote or {}
 SolidMapVote["Config"] = SolidMapVote["Config"] or {}
 

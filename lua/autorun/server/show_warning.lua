@@ -1,3 +1,5 @@
+if engine.ActiveGamemode() ~= "homigrad" then return end
+
 util.AddNetworkString("ShowWelcomeWindow")
 
 -- Check if the player has already joined the server before

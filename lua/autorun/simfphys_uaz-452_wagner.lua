@@ -1,4 +1,7 @@
+if engine.ActiveGamemode() ~= "homigrad" then return end
+
 AddCSLuaFile()
+
 local NameLang = "UAZ-452"
 
 local light_table = {

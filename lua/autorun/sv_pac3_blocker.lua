@@ -1,3 +1,5 @@
+if engine.ActiveGamemode() ~= "homigrad" then return end
+
 if SERVER then
 	local ranks = {
 		["superadmin"] = true,

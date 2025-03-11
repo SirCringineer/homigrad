@@ -3,6 +3,8 @@
 -- Based on: https://github.com/garrynewman/garrysmod/blob/1a2c317eeeef691e923453018236cf9f66ee74b4/garrysmod/gamemodes/sandbox/gamemode/editor_player.lua
 -- From: https://github.com/harrisoniam/homigrad/blob/main/lua/autorun/lf_playermodel_selector.lua
 
+if engine.ActiveGamemode() ~= "homigrad" then return end
+
 local flag = {FCVAR_REPLICATED}
 if SERVER then
 	flag = {FCVAR_ARCHIVE, FCVAR_REPLICATED}

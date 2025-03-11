@@ -1,4 +1,6 @@
 --[[ This function iterates through all entities and removes any that are weapons.
+if engine.ActiveGamemode() ~= "homigrad" then return end
+
 local function RemoveMapWeapons()
 	for _, ent in ipairs(ents.GetAll()) do
 		if ent:IsWeapon() then

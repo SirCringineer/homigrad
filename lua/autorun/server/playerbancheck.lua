@@ -1,4 +1,5 @@
 --[[ You can uncomment this file if you want this functionality
+if engine.ActiveGamemode() ~= "homigrad" then return end
 if not util.IsBinaryModuleInstalled("mysqloo") then return end
 
 local STEAM_API_KEY = "changeme" -- Don't use your main account steam key.
