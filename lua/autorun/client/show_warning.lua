@@ -1,7 +1,8 @@
 if engine.ActiveGamemode() ~= "homigrad" then return end
 
-net.Receive("ShowWelcomeWindow", function()
-	-- Create main frame
+hook.Add("InitPostEntity", "hg_BindFakeCommandWarning", function()
+	if cookie.GetString("jhg_bindfakewarning") == "1" then return end
+
 	local frame = vgui.Create("DFrame")
 	frame:SetTitle("#hg.warning.title")
 	frame:ShowCloseButton(false)
@@ -44,6 +45,8 @@ net.Receive("ShowWelcomeWindow", function()
 	-- Don't allow player to skip this part until he actually binds `fake`
 	closeButton.DoClick = function()
 		if input.LookupBinding("fake") then
+			cookie.Set("jhg_bindfakewarning", "1")
+
 			frame:Close()
 		else
 			closeButton:SetText("#hg.warning.no")
