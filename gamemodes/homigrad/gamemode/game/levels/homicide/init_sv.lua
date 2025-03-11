@@ -10,7 +10,7 @@ local function GetFriends(ply)
 		table.insert(tbl, p:Name())
 	end
 
-	return tlb
+	return tbl
 end
 
 COMMANDS.homicide_get = {
