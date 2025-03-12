@@ -22,7 +22,7 @@
 			"text"		"Homicide Only"
 			"help"		"Homicide is the only round type queued. Other gamemodes like TDM, Capture The Point, etc, are not queued."
 			"type"		"CheckBox"
-			"default"	"0"
+			"default"	"1"
 			"singleplayer"
 		}
 		3
@@ -31,7 +31,7 @@
 			"text"		"Inventory Search Time (seconds)"
 			"help"		"Items in a player's inventory will appear after a given time (between 0 and 10)."
 			"type"		"Numeric"
-			"default"	"2"
+			"default"	"3"
 			"singleplayer"
 		}
 		4
@@ -49,7 +49,7 @@
 			"text"		"Announce Traitors on Police Spawn (Not realized for now)"
 			"help"		"If enabled, Police will be alerted to who the traitors are when they arrive."
 			"type"		"CheckBox"
-			"default"	"0"
+			"default"	"1"
 			"singleplayer"
 		}
 	}
